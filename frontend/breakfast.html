@@ -42,5 +42,24 @@
             <button id="location-btn">SSH Home London, UK</button>
         </div>
     </header>
+
+    <section id="breakfast-section">
+        <h2>Breakfast Products</h2>
+        <div class="breakfast-container">
+            <div class="breakfast-item">
+                <div class="image-container">
+                    <img src="https://pngimg.com/d/croissant_PNG47.png" alt="Croissant">
+                </div>
+                <p>Fresh Croissant</p>
+                <p class="price">£1.50 per piece</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
