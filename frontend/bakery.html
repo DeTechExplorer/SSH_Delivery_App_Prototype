@@ -448,6 +448,24 @@
                         </div>
                        </section>
 
-        
+                       
+    <div class="bottom-nav">
+        <button>Categories</button>
+        <button>Home</button>
+        <button id="cart-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart">
+            Cart (0)
+        </button>
+    </div>
+
+    <script>
+        function updateQuantity(button, change) {
+            const counter = button.parentElement;
+            const display = counter.querySelector('.quantity-display');
+            let quantity = parseInt(display.textContent);
+            quantity = Math.max(0, quantity + change);
+            display.textContent = quantity;
+        }
+    </script>  
 </body>
 </html>
