@@ -28,5 +28,26 @@
                 <button id="location-btn">SSH Home London, UK</button>
             </div>
         </header>
+
+        <section id="bakery-section">
+            <h2>Bakery Products</h2>
+            <div class="bakery-container">
+                <div class="bakery-item">
+                    <div class="image-container">
+                        <img src="https://bonnibakery.com/wp-content/uploads/2021/01/ChocolateCake-2-scaled.jpg" alt="Chocolate Cake">
+                    </div>
+                    <p>Chocolate Cake</p>
+                    <p class="price">£18.99 per cake</p>
+                    <div class="quantity-counter">
+                        <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                        <span class="quantity-display">0</span>
+                        <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                    <button>Add to Cart</button>
+                </div>
+             
+            </div>
+        </section>
+        
 </body>
 </html>
