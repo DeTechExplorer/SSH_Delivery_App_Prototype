@@ -29,6 +29,13 @@ function HomePage() {
           <div className="location-bar">
             SSH Delivery
           </div>
+
+          <header className="top-bar">
+            <div className="top-buttons">
+              <button>Shared Orders</button>
+              <button>Individual Orders</button>
+            </div>
+          </header>
         </>
     );
 }
