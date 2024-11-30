@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -23,9 +25,133 @@ function HomePage() {
                 top: 0;
                 z-index: 100;
               }
+
+              .top-bar {
+                background-color: white;
+                padding: 10px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: sticky;
+                top: 40px;
+                z-index: 100;
+              }
+
+              .top-buttons {
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                display: flex;
+                gap: 20px;
+              }
+
+              .top-buttons button {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+              }
+
+              .logo-search-location {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-grow: 1;
+                justify-content: center;
+              }
+
+              #logo-img {
+                max-height: 130px;
+              }
+
+              #search-box input {
+                width: 300px;
+                padding: 10px;
+                border: 2px solid #3498db;
+                border-radius: 20px;
+              }
+
+              #location-btn-container {
+                margin-left: auto;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+              }
+
+              #categories {
+                text-align: center;
+                padding: 20px;
+                margin-bottom: 80px;
+              }
+
+              .category-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 20px;
+              }
+
+              .category-item {
+                text-align: center;
+                background-color: white;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease;
+              }
+
+              .category-item img {
+                width: 130px;
+                height: 130px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 3px solid #3498db;
+              }
+
+              .category-item:hover {
+                transform: scale(1.05);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+              }
+
+              .bottom-nav {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                background-color: white;
+                display: flex;
+                justify-content: space-around;
+                padding: 10px;
+                box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+              }
+
+              .bottom-nav button {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+              }
+
+              #cart-btn {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background-color: #3498db;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+              }
             `}
           </style>
-
           <div className="location-bar">
             SSH Delivery
           </div>
