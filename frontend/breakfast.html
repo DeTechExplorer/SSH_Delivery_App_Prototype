@@ -134,6 +134,27 @@
 .breakfast-item button:hover {
     background-color: #2980b9;
 }
+
+@media (max-width: 768px) {
+            .breakfast-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .top-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            #search-box input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .breakfast-container {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
