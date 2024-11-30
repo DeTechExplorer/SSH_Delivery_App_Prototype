@@ -191,5 +191,15 @@
         </button>
     </div>
 
+    <script>
+        function updateQuantity(button, change) {
+            const counter = button.parentElement;
+            const display = counter.querySelector('.quantity-display');
+            let quantity = parseInt(display.textContent);
+            quantity = Math.max(0, quantity + change);
+            display.textContent = quantity;
+        }
+    </script>
+
 </body>
 </html>
