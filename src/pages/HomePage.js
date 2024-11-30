@@ -60,8 +60,17 @@ function HomePage() {
               </div>
             </div>
           </section>
+
+          <div className="bottom-nav">
+            <button>Home</button>
+            <div id="cart-btn">
+              <img src="cart_image_url" alt="Cart" style={{ width: '120%', height: '120%' }} />
+              Cart
+            </div>
+          </div>
         </>
     );
 }
+
 
 export default HomePage;
