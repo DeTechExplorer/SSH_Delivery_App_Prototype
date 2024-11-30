@@ -36,6 +36,20 @@ function HomePage() {
               <button>Individual Orders</button>
             </div>
           </header>
+
+          <div className="logo-search-location">
+            <div id="logo">
+              <img src="./images/logo.png" alt="Logo" id="logo-img" />
+            </div>
+            <div id="search-box">
+              <input type="text" placeholder="Search products..." />
+            </div>
+          </div>
+
+          <div id="location-btn-container">
+            <span id="location-text">Deliver to:</span>
+            SSH Home London, UK
+          </div>
         </>
     );
 }
