@@ -50,6 +50,16 @@ function HomePage() {
             <span id="location-text">Deliver to:</span>
             SSH Home London, UK
           </div>
+
+          <section id="categories">
+            <h2>Categories</h2>
+            <div className="category-container">
+              <div className="category-item">
+                <img src="category_image_url" alt="Category Name" />
+                <p>Fruits & Vegetables</p>
+              </div>
+            </div>
+          </section>
         </>
     );
 }
