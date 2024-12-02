@@ -6,7 +6,7 @@ import { getAllCategories } from './productsData';
 function HomePage() {
   const [cartCount, setCartCount] = useState(0);
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
 
   useEffect(() => {
