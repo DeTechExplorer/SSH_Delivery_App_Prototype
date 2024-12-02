@@ -1,45 +1,31 @@
+// HomePage.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getProductsByCategory } from './productsData'; // Make sure to import the correct function
+import { getAllCategories } from './productsData';
 
-function BakeryPage() {
+function HomePage() {
   const [cartCount, setCartCount] = useState(0);
-  const [quantities, setQuantities] = useState({});
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchCategories = async () => {
       try {
-        const data = await getProductsByCategory('bakery'); // Fetch bakery products
-        setProducts(data.products);
+        const data = await getAllCategories();
+        setCategories(data);
       } catch (error) {
-        console.error('Error fetching bakery products:', error);
+        console.error('Error fetching categories:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProducts();
+    fetchCategories();
   }, []);
 
-  const updateQuantity = (itemId, change) => {
-    setQuantities(prev => ({
-      ...prev,
-      [itemId]: Math.max(0, (prev[itemId] || 0) + change)
-    }));
-  };
-
-  const handleAddToCart = (productId) => {
-    const quantity = quantities[productId] || 0;
-    if (quantity > 0) {
-      setCartCount(prev => prev + quantity);
-      setQuantities(prev => ({
-        ...prev,
-        [productId]: 0
-      }));
-    }
+  const handleCategoryClick = (categoryId) => {
+    navigate(`/category/${categoryId}`);
   };
 
   return (
@@ -67,13 +53,36 @@ function BakeryPage() {
           .top-bar {
             background-color: white;
             padding: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 40px;
             z-index: 100;
+          }
+
+          .top-buttons {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 20px;
+          }
+
+          .top-buttons button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+          }
+
+          .top-buttons button:hover {
+            background-color: #2980b9;
           }
 
           .logo-search-location {
@@ -121,18 +130,41 @@ function BakeryPage() {
             background-color: #2980b9;
           }
 
-          #bakery-section {
+          .promo-box {
+            background-color: #fff;
+            width: 100%;
+            height: 300px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
+
+          .promo-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          }
+
+          .promo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 0;
+          }
+
+          #categories {
             text-align: center;
             padding: 20px;
             margin-bottom: 80px;
           }
 
-          #bakery-section h2 {
+          #categories h2 {
             color: #3498db;
-            margin-bottom: 20px;
           }
 
-          .bakery-container {
+          .category-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             justify-content: center;
@@ -141,107 +173,51 @@ function BakeryPage() {
             margin: 0 auto;
           }
 
-          .bakery-item {
+          .category-item {
+            text-align: center;
+            width: 100%;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             padding: 15px;
-            text-align: center;
             transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            cursor: pointer;
           }
 
-          .bakery-item:hover {
+          .category-item:hover {
             transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
           }
 
-          .image-container {
+          .category-item img {
             width: 130px;
             height: 130px;
             border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid #3498db;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: white;
-            position: relative;
-          }
-
-          .image-container img {
-            width: 90%;
-            height: 90%;
             object-fit: cover;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            border: 3px solid #3498db;
+            transition: border-color 0.3s ease;
           }
 
-          .quantity-counter {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 10px 0;
+          .category-item:hover img {
+            border-color: #2980b9;
           }
 
-          .quantity-btn {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s;
-            padding: 0;
-            line-height: 1;
-          }
-
-          .quantity-btn:hover {
-            background-color: #2980b9;
-          }
-
-          .quantity-display {
-            font-size: 14px;
-            font-weight: bold;
-            color: #2c3e50;
-            min-width: 20px;
-            text-align: center;
-          }
-
-          .bakery-item p {
-            margin: 10px 0;
-            color: #2c3e50;
-            font-weight: bold;
-          }
-
-          .bakery-item .price {
-            color: #3498db;
-            font-size: 18px;
-          }
-
-          .bakery-item button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+          .category-item p {
             margin-top: 10px;
-            width: 120px;
+            color: #2c3e50;
+            font-weight: bold;
+            transition: color 0.3s ease;
           }
 
-          .bakery-item button:hover {
-            background-color: #2980b9;
+          .category-item:hover p {
+            color: #3498db;
+          }
+
+          .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2rem;
+            color: #3498db;
           }
 
           .bottom-nav {
@@ -265,6 +241,11 @@ function BakeryPage() {
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+          }
+
+          .bottom-nav button:hover {
+            background-color: #2980b9;
           }
 
           #cart-btn img {
@@ -273,14 +254,23 @@ function BakeryPage() {
           }
 
           @media (max-width: 768px) {
-            .bakery-container {
+            .category-container {
               grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .top-bar {
+              flex-direction: column;
+              gap: 10px;
+            }
+
+            #search-box input {
+              width: 100%;
             }
           }
 
           @media (max-width: 480px) {
-            .bakery-container {
-              grid-template-columns: repeat(1, 1fr);
+            .category-container {
+              grid-template-columns: repeat(2, 1fr);
             }
           }
         `}
@@ -291,12 +281,17 @@ function BakeryPage() {
       </div>
 
       <header className="top-bar">
+        <div className="top-buttons">
+          <button id="shared-orders">Shared Orders</button>
+          <button id="individual-orders">Individual Orders</button>
+        </div>
+        
         <div className="logo-search-location">
           <div id="logo">
             <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" />
           </div>
           <div id="search-box">
-            <input type="text" placeholder="Search bakery items..." />
+            <input type="text" placeholder="Search products..." />
           </div>
         </div>
         <div id="location-btn-container">
@@ -305,39 +300,24 @@ function BakeryPage() {
         </div>
       </header>
 
-      <section id="bakery-section">
-        <h2>Bakery Products</h2>
+      <section className="promo-box">
+        <img src="/api/placeholder/1200/300" alt="20% Off on Selected Items" />
+      </section>
+
+      <section id="categories">
+        <h2>Categories</h2>
         {loading ? (
-          <div className="loading">Loading bakery products...</div>
+          <div className="loading">Loading categories...</div>
         ) : (
-          <div className="bakery-container">
-            {products.map(product => (
-              <div key={product.id} className="bakery-item">
-                <div className="image-container">
-                  <img src={product.image} alt={product.name} />
-                </div>
-                <p>{product.name}</p>
-                <p className="price">£{product.price.toFixed(2)} per {product.unit}</p>
-                <div className="quantity-counter">
-                  <button 
-                    className="quantity-btn" 
-                    onClick={() => updateQuantity(product.id, -1)}
-                  >
-                    -
-                  </button>
-                  <span className="quantity-display">
-                    {quantities[product.id] || 0}
-                  </span>
-                  <button 
-                    className="quantity-btn" 
-                    onClick={() => updateQuantity(product.id, 1)}
-                  >
-                    +
-                  </button>
-                </div>
-                <button onClick={() => handleAddToCart(product.id)}>
-                  Add to Cart
-                </button>
+          <div className="category-container">
+            {categories.map(category => (
+              <div 
+                key={category.id} 
+                className="category-item" 
+                onClick={() => handleCategoryClick(category.id)}
+              >
+                <img src={category.image} alt={category.name} />
+                <p>{category.name}</p>
               </div>
             ))}
           </div>
@@ -345,7 +325,6 @@ function BakeryPage() {
       </section>
 
       <div className="bottom-nav">
-        <button onClick={() => navigate('/')}>Categories</button>
         <button onClick={() => navigate('/')}>Home</button>
         <button id="cart-btn">
           <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
@@ -356,4 +335,4 @@ function BakeryPage() {
   );
 }
 
-export default BakeryPage;
+export default HomePage;

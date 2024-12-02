@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import BakeryPage from './components/bakery';
 import BreakfastPage from './components/breakfast';
 import FruitesAndVegPage from './components/fruitesandveg';  
+import CartPage from './components/cart';
+import Homepage from './components/homepage';
 
 function App() {
   return (
@@ -12,27 +14,33 @@ function App() {
         <nav>
           <ul>
             <li>
-              <Link to="/bakery">Bakery</Link>
+              <Link to="/homepage">Homepage</Link>
             </li>
             <li>
-              <Link to="/breakfast">Breakfast</Link>
+              <Link to="/category/bakery">Bakery</Link>
             </li>
             <li>
-              <Link to="/fruitesandveg">Fruits and Vegetables</Link> 
+              <Link to="/category/breakfast">Breakfast</Link>
+            </li>
+            <li>
+              <Link to="/category/fruits-vegetables">Fruits and Vegetables</Link> 
+            </li>
+            <li>
+              <Link to="/cart">Cart</Link>
             </li>
           </ul>
         </nav>
 
-        {/* Define Routes */}
         <Routes>
-          {/* Route for Bakery Page */}
-          <Route path="/bakery" element={<BakeryPage />} />
-
-          {/* Route for Breakfast Page */}
-          <Route path="/breakfast" element={<BreakfastPage />} />
-
-          {/* Route for Fruits and Vegetables Page */}
-          <Route path="/fruitesandveg" element={<FruitesAndVegPage/>} /> 
+          {/* Default redirect to homepage */}
+          <Route path="/" element={<Homepage />} />
+          
+          {/* Main routes */}
+          <Route path="/homepage" element={<Homepage />} />
+          <Route path="/category/bakery" element={<BakeryPage />} />
+          <Route path="/category/breakfast" element={<BreakfastPage />} />
+          <Route path="/category/fruits-vegetables" element={<FruitesAndVegPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </div>
     </Router>
