@@ -5,6 +5,7 @@ import BreakfastPage from './components/breakfast';
 import FruitesAndVegPage from './components/fruitesandveg';  
 import CartPage from './components/cart';
 import Homepage from './components/homepage';
+import PromotionsPage from './components/promotions';
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
             <li>
               <Link to="/cart">Cart</Link>
             </li>
+            <li>
+              <Link to="/promotion">promotions</Link> 
+            </li>
           </ul>
         </nav>
 
@@ -41,6 +45,7 @@ function App() {
           <Route path="/category/breakfast" element={<BreakfastPage />} />
           <Route path="/category/fruits-vegetables" element={<FruitesAndVegPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/promotions" element={<PromotionsPage />} />
         </Routes>
       </div>
     </Router>
