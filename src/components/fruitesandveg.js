@@ -453,19 +453,17 @@ function BreakfastPage() {
             </div>
             <button>Add to Cart</button>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-          </div>
+ </div>
           </section>
+
+          <div className="bottom-nav">
+        <button>Categories</button>
+        <button>Home</button>
+        <button id="cart-btn">
+          <img src="/api/placeholder/20/20" alt="Cart" />
+          Cart ({cartCount})
+        </button>
+      </div>
     </>
   );
 }
