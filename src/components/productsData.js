@@ -1100,3 +1100,4 @@ export const searchProducts = (query) => {
     }, 300);
   });
 };
+
