@@ -300,6 +300,159 @@ function BreakfastPage() {
             <button>Add to Cart</button>
           </div>
 
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Apple" />
+            </div>
+            <p>Apple</p>
+            <p className="price">£0.75 each</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('apple', -1)}>-</button>
+              <span className="quantity-display">{quantities['apple'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('apple', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Orange" />
+            </div>
+            <p>Orange</p>
+            <p className="price">£0.60 each</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('orange', -1)}>-</button>
+              <span className="quantity-display">{quantities['orange'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('orange', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Strawberry" />
+            </div>
+            <p>Strawberry</p>
+            <p className="price">£2.50 per punnet</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('strawberry', -1)}>-</button>
+              <span className="quantity-display">{quantities['strawberry'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('strawberry', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Mango" />
+            </div>
+            <p>Mango</p>
+            <p className="price">£1.20 each</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('mango', -1)}>-</button>
+              <span className="quantity-display">{quantities['mango'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('mango', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Kiwi" />
+            </div>
+            <p>Kiwi</p>
+            <p className="price">£0.80 each</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('kiwi', -1)}>-</button>
+              <span className="quantity-display">{quantities['kiwi'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('kiwi', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Fresh Carrots" />
+            </div>
+            <p>Fresh Carrots</p>
+            <p className="price">£0.90 per bunch</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('carrots', -1)}>-</button>
+              <span className="quantity-display">{quantities['carrots'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('carrots', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Fresh Broccoli" />
+            </div>
+            <p>Fresh Broccoli</p>
+            <p className="price">£1.25 per head</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('broccoli', -1)}>-</button>
+              <span className="quantity-display">{quantities['broccoli'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('broccoli', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Baby Spinach" />
+            </div>
+            <p>Baby Spinach</p>
+            <p className="price">£1.50 per bag</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('spinach', -1)}>-</button>
+              <span className="quantity-display">{quantities['spinach'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('spinach', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Vine Tomatoes" />
+            </div>
+            <p>Vine Tomatoes</p>
+            <p className="price">£2.20 per pack</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('tomatoes', -1)}>-</button>
+              <span className="quantity-display">{quantities['tomatoes'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('tomatoes', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Mixed Bell Peppers" />
+            </div>
+            <p>Mixed Bell Peppers</p>
+            <p className="price">£1.80 for 3</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('bell-peppers', -1)}>-</button>
+              <span className="quantity-display">{quantities['bell-peppers'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('bell-peppers', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Cucumber" />
+            </div>
+            <p>Cucumber</p>
+            <p className="price">£0.80 each</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('cucumber', -1)}>-</button>
+              <span className="quantity-display">{quantities['cucumber'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('cucumber', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
 
 
 
@@ -309,7 +462,8 @@ function BreakfastPage() {
 
 
 
-          
+
+
           </div>
           </section>
     </>
