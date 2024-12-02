@@ -288,6 +288,7 @@ function BakeryPage() {
       <section id="bakery-section">
         <h2>Bakery Products</h2>
         <div className="bakery-container">
+          
           <div className="bakery-item">
             <div className="image-container">
               <img src="https://bonnibakery.com/wp-content/uploads/2021/01/ChocolateCake-2-scaled.jpg" alt="Chocolate Cake" />

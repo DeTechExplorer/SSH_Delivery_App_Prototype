@@ -243,7 +243,7 @@ function BreakfastPage() {
           }
 
           @media (max-width: 768px) {
-            .bakery-container {
+            .breakfast-container {
               grid-template-columns: repeat(2, 1fr);
             }
             
@@ -258,7 +258,7 @@ function BreakfastPage() {
           }
 
           @media (max-width: 480px) {
-            .bakery-container {
+            .breakfast-container {
               grid-template-columns: repeat(1, 1fr);
             }
           }
@@ -317,7 +317,8 @@ function BreakfastPage() {
       <button>Add to Cart</button>
     </div>
 
-    {/* Continue with remaining items... */}
+  
+    {/* Third item */}
     <div className="breakfast-item">
       <div className="image-container">
         <img src="https://images-static.nykaa.com/media/catalog/product/a/4/a4d30b8ALPIN00000013_1.jpg" alt="Alpen Muesli" />
@@ -331,6 +332,7 @@ function BreakfastPage() {
       </div>
       <button>Add to Cart</button>
     </div>
+
 
     <div className="breakfast-item">
       <div className="image-container">
@@ -456,10 +458,9 @@ function BreakfastPage() {
         <button className="quantity-btn" onClick={() => updateQuantity('honey', 1)}>+</button>
       </div>
       <button>Add to Cart</button>
-
-      </div>
-        </div>
-      </section>
+    </div>
+  </div>
+</section>
 
       <div className="bottom-nav">
         <button>Categories</button>
