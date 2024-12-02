@@ -284,6 +284,25 @@ function BreakfastPage() {
         </div>
       </header>
 
+      <section id="breakfast-section">
+  <h2>Breakfast Products</h2>
+  <div className="breakfast-container">
+    <div className="breakfast-item">
+      <div className="image-container">
+        <img src="https://pngimg.com/d/croissant_PNG47.png" alt="Croissant" />
+      </div>
+      <p>Fresh Croissant</p>
+      <p className="price">£1.50 per piece</p>
+      <div className="quantity-counter">
+        <button className="quantity-btn" onClick={() => updateQuantity('croissant', -1)}>-</button>
+        <span className="quantity-display">{quantities['croissant'] || 0}</span>
+        <button className="quantity-btn" onClick={() => updateQuantity('croissant', 1)}>+</button>
+      </div>
+      <button>Add to Cart</button>
+    </div>
+  </div>
+</section>
+
 
 
 
