@@ -300,9 +300,13 @@ function HomePage() {
         </div>
       </header>
 
-      <section className="promo-box">
-        <img src="/api/placeholder/1200/300" alt="20% Off on Selected Items" />
-      </section>
+      <section 
+  className="promo-box" 
+  onClick={() => navigate('/promotions')}
+  style={{ cursor: 'pointer' }}
+>
+  <img src="/api/placeholder/1200/300" alt="20% Off on Selected Items" />
+</section>
 
       <section id="categories">
         <h2>Categories</h2>
