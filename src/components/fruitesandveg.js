@@ -1,8 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getProductsByCategory } from './productsData'; // Import the helper function to fetch products
 
 function FruitesAndVegPage() {
   const [cartCount, setCartCount] = useState(0);
   const [quantities, setQuantities] = useState({});
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  // Fetch products for the fruits and vegetables category
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProductsByCategory('fruits-vegetables'); // Fetch fruits and vegetables products
+        setProducts(data.products);
+      } catch (error) {
+        console.error('Error fetching fruits and vegetables products:', error);
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const updateQuantity = (itemId, change) => {
     setQuantities(prev => ({
@@ -11,10 +32,20 @@ function FruitesAndVegPage() {
     }));
   };
 
+  const handleAddToCart = (productId) => {
+    const quantity = quantities[productId] || 0;
+    if (quantity > 0) {
+      setCartCount(prev => prev + quantity);
+      setQuantities(prev => ({
+        ...prev,
+        [productId]: 0
+      }));
+    }
+  };
+
   return (
     <>
-
-<style>
+      <style>
         {`
           body {
             font-family: Arial, sans-serif;
@@ -246,15 +277,6 @@ function FruitesAndVegPage() {
             .fruits-container {
               grid-template-columns: repeat(2, 1fr);
             }
-            
-            .top-bar {
-              flex-direction: column;
-              gap: 10px;
-            }
-
-            #search-box input {
-              width: 100%;
-            }
           }
 
           @media (max-width: 480px) {
@@ -271,10 +293,10 @@ function FruitesAndVegPage() {
       <header className="top-bar">
         <div className="logo-search-location">
           <div id="logo">
-            <img src="./images/WhatsApp Image 2024-11-27 at 9.58.28 AM.jpeg" alt="Logo" id="logo-img" />
+            <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" />
           </div>
           <div id="search-box">
-            <input type="text" placeholder="Search breakfast items..." />
+            <input type="text" placeholder="Search fruits and vegetables..." />
           </div>
         </div>
         <div id="location-btn-container">
@@ -285,182 +307,48 @@ function FruitesAndVegPage() {
 
       <section id="fruits-section">
         <h2>Fruits & Vegetables</h2>
-        <div className="fruits-container">
-          <div className="fruit-item">
-            <div className="image-container">
-              <img src="https://media.istockphoto.com/id/173242750/photo/banana-bunch.jpg?s=612x612&w=0&k=20&c=MAc8AXVz5KxwWeEmh75WwH6j_HouRczBFAhulLAtRUU=" alt="Banana" />
-            </div>
-            <p>Banana</p>
-            <p className="price">£0.50 each</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('banana', -1)}>-</button>
-              <span className="quantity-display">{quantities['banana'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('banana', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
+        {loading ? (
+          <div className="loading">Loading fruits and vegetables...</div>
+        ) : (
+          <div className="fruits-container">
+            {products.map(product => (
+              <div key={product.id} className="fruit-item">
+                <div className="image-container">
+                  <img src={product.image} alt={product.name} />
+                </div>
+                <p>{product.name}</p>
+                <p className="price">£{product.price.toFixed(2)} per {product.unit}</p>
+                <div className="quantity-counter">
+                  <button 
+                    className="quantity-btn" 
+                    onClick={() => updateQuantity(product.id, -1)}
+                  >
+                    -
+                  </button>
+                  <span className="quantity-display">
+                    {quantities[product.id] || 0}
+                  </span>
+                  <button 
+                    className="quantity-btn" 
+                    onClick={() => updateQuantity(product.id, 1)}
+                  >
+                    +
+                  </button>
+                </div>
+                <button onClick={() => handleAddToCart(product.id)}>
+                  Add to Cart
+                </button>
+              </div>
+            ))}
           </div>
+        )}
+      </section>
 
-          <div className="fruit-item">
-            <div className="image-container">
-              <img src="https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w=" alt="Apple" />
-            </div>
-            <p>Apple</p>
-            <p className="price">£0.75 each</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('apple', -1)}>-</button>
-              <span className="quantity-display">{quantities['apple'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('apple', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="fruit-item">
-            <div className="image-container">
-            <img src="https://www.dole.com/-/media/project/dole/produce-images/fruit/oranges_cut_web.png" alt="Orange" />
-            </div>
-            <p>Orange</p>
-            <p className="price">£0.60 each</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('orange', -1)}>-</button>
-              <span className="quantity-display">{quantities['orange'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('orange', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="fruit-item">
-            <div className="image-container">
-            <img src="https://pngimg.com/d/strawberry_PNG2598.png" alt="Strawberry" />
-            </div>
-            <p>Strawberry</p>
-            <p className="price">£2.50 per punnet</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('strawberry', -1)}>-</button>
-              <span className="quantity-display">{quantities['strawberry'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('strawberry', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="fruit-item">
-            <div className="image-container">
-            <img src="https://pngimg.com/d/mango_PNG9168.png" alt="Mango" />
-            </div>
-            <p>Mango</p>
-            <p className="price">£1.20 each</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('mango', -1)}>-</button>
-              <span className="quantity-display">{quantities['mango'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('mango', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="fruit-item">
-            <div className="image-container">
-            <img src="https://www.dole.com/-/media/project/dole/produce-images/fruit/kiwi_cut_web.png"alt="Kiwi" />
-            </div>
-            <p>Kiwi</p>
-            <p className="price">£0.80 each</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('kiwi', -1)}>-</button>
-              <span className="quantity-display">{quantities['kiwi'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('kiwi', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="fruit-item">
-            <div className="image-container">
-            <img src="https://pngimg.com/d/carrot_PNG4985.png" alt="Fresh Carrots" />
-            </div>
-            <p>Fresh Carrots</p>
-            <p className="price">£0.90 per bunch</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('carrots', -1)}>-</button>
-              <span className="quantity-display">{quantities['carrots'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('carrots', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="fruit-item">
-            <div className="image-container">
-            <img src="https://organicandreal.com/cdn/shop/products/or100000130_8be5157d-15e4-4888-b023-e18e7f7f16dd.jpg?v=1623744634" alt="Fresh Broccoli" />
-            </div>
-            <p>Fresh Broccoli</p>
-            <p className="price">£1.25 per head</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('broccoli', -1)}>-</button>
-              <span className="quantity-display">{quantities['broccoli'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('broccoli', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="fruit-item">
-            <div className="image-container">
-            <img src="https://pngimg.com/d/spinach_PNG64.png" alt="Baby Spinach" />
-            </div>
-            <p>Baby Spinach</p>
-            <p className="price">£1.50 per bag</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('spinach', -1)}>-</button>
-              <span className="quantity-display">{quantities['spinach'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('spinach', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="fruit-item">
-            <div className="image-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg" alt="Tomatoes" />
-            </div>
-            <p>Vine Tomatoes</p>
-            <p className="price">£2.20 per pack</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('tomatoes', -1)}>-</button>
-              <span className="quantity-display">{quantities['tomatoes'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('tomatoes', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="fruit-item">
-            <div className="image-container">
-            <img src="https://thumbs.dreamstime.com/b/yellow-orange-red-sweet-bell-pepper-isolated-white-background-top-view-flat-lay-yellow-orange-red-sweet-bell-pepper-340730832.jpg" alt="Mixed Bell Peppers" />
-            </div>
-            <p>Mixed Bell Peppers</p>
-            <p className="price">£1.80 for 3</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('bell-peppers', -1)}>-</button>
-              <span className="quantity-display">{quantities['bell-peppers'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('bell-peppers', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
-
-          <div className="fruit-item">
-            <div className="image-container">
-            <img src="https://www.earthytales.in/uploads/products/3x/organic-cucumber-desi_(1).jpg?v=14112024" alt="Cucumber" />
-            </div>
-            <p>Cucumber</p>
-            <p className="price">£0.80 each</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity('cucumber', -1)}>-</button>
-              <span className="quantity-display">{quantities['cucumber'] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity('cucumber', 1)}>+</button>
-            </div>
-            <button>Add to Cart</button>
-          </div>
- </div>
-          </section>
-
-          <div className="bottom-nav">
+      <div className="bottom-nav">
         <button>Categories</button>
         <button>Home</button>
         <button id="cart-btn">
-        <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
           Cart ({cartCount})
         </button>
       </div>
