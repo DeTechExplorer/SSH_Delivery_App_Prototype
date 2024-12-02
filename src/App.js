@@ -1,48 +1,50 @@
-// App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import BakeryPage from './components/bakery';
-import BreakfastPage from './components/breakfast';
-import FruitesAndVegPage from './components/fruitesandveg';
-import CartPage from './components/cart';
-import Homepage from './components/homepage';
-import DairyPage from './components/dairy';
-import BeveragesPage from './components/beverages';
-import SnacksPage from './components/snacks';
-import KitchenStaplesPage from './components/kitchenstaples';
-import BeautyPersonalCarePage from './components/beauty';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';  
+import BakeryPage from './components/bakery';  // Corrected path
+import BreakfastPage from './components/breakfast';  // Corrected path
+import FruitesAndVegPage from './components/fruitesandveg';  // Corrected path
 
+import Homepage from './components/homepage';  // Corrected path
 
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* Default route redirects to homepage */}
-        <Route path="/" element={<Navigate to="/homepage" replace />} />
-        
-        {/* Main homepage */}
-        <Route path="/homepage" element={<Homepage />} />
+      <div className="App">
+        {/* Navigation links to switch between pages */}
+        <nav>
+          <ul>
+            <li>
+              <Link to="/bakery">Bakery</Link>
+            </li>
+            <li>
+              <Link to="/breakfast">Breakfast</Link>
+            </li>
+            <li>
+              <Link to="/fruitesandveg">Fruits and Vegetables</Link> 
+            </li>
+            <li>
+              <Link to="/homepage">Homepage</Link>
+            </li>
+          </ul>
+        </nav>
 
-        {/* Category routes */}
-        <Route path="/category">
-          <Route path="bakery" element={<BakeryPage />} />
-          <Route path="breakfast" element={<BreakfastPage />} />
-          <Route path="fruits-vegetables" element={<FruitesAndVegPage />} />
-          <Route path="dairy" element={<DairyPage />} />
-          <Route path="beverages" element={<BeveragesPage />} />
-          <Route path="snacks" element={<SnacksPage />} />
-          <Route path="kitchen-staples" element={<KitchenStaplesPage />} />
-          <Route path="beauty-personal-care" element={<BeautyPersonalCarePage />} />
-        </Route>
+        {/* Define Routes for all the components */}
+        <Routes>
+          {/* Route for Bakery Page */}
+          <Route path="/bakery" element={<BakeryPage />} />
 
-        {/* Cart page */}
-        <Route path="/cart" element={<CartPage />} />
+          {/* Route for Breakfast Page */}
+          <Route path="/breakfast" element={<BreakfastPage />} />
 
-        {/* Legacy routes for backward compatibility */}
-        <Route path="/bakery" element={<Navigate to="/category/bakery" replace />} />
-        <Route path="/breakfast" element={<Navigate to="/category/breakfast" replace />} />
-        <Route path="/fruitesandveg" element={<Navigate to="/category/fruits-vegetables" replace />} />
-      </Routes>
+          {/* Route for Fruits and Vegetables Page */}
+          <Route path="/fruitesandveg" element={<FruitesAndVegPage />} /> 
+
+         
+
+          {/* Route for Homepage */}
+          <Route path="/homepage" element={<Homepage />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
