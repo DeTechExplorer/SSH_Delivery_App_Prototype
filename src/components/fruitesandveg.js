@@ -282,6 +282,36 @@ function BreakfastPage() {
           <button id="location-btn">SSH Home London, UK</button>
         </div>
       </header>
+
+      <section id="fruits-section">
+        <h2>Fruits & Vegetables</h2>
+        <div className="fruits-container">
+          <div className="fruit-item">
+            <div className="image-container">
+              <img src="/api/placeholder/130/130" alt="Banana" />
+            </div>
+            <p>Banana</p>
+            <p className="price">£0.50 each</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity('banana', -1)}>-</button>
+              <span className="quantity-display">{quantities['banana'] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity('banana', 1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+
+
+
+
+
+
+
+
+
+
+          
+          </div>
+          </section>
     </>
   );
 }
