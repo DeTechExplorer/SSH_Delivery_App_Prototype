@@ -279,6 +279,26 @@ function BakeryPage() {
         </div>
       </header>
 
+      <section id="bakery-section">
+        <h2>Bakery Products</h2>
+        <div className="bakery-container">
+          {/* Bakery items */}
+          <div className="bakery-item">
+            <div className="image-container">
+              <img src="https://bonnibakery.com/wp-content/uploads/2021/01/ChocolateCake-2-scaled.jpg" alt="Chocolate Cake" />
+            </div>
+            <p>Chocolate Cake</p>
+            <p className="price">£18.99 per cake</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity(-1)}>-</button>
+              <span className="quantity-display">0</span>
+              <button className="quantity-btn" onClick={() => updateQuantity(1)}>+</button>
+            </div>
+            <button>Add to Cart</button>
+          </div>
+        </div>
+      </section>
+
       
       <div className="bottom-nav">
         <button>Categories</button>
