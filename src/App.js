@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';  // Import necessary components
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';  
 import BakeryPage from './components/bakery';
 import BreakfastPage from './components/breakfast';
-import FruitsAndVegPage from './components/fruitsandveg';  // Import your new Fruits and Veg component
+import FruitesAndVegPage from './components/fruitesandveg';  
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
               <Link to="/breakfast">Breakfast</Link>
             </li>
             <li>
-              <Link to="/fruitsandveg">Fruits & Vegetables</Link> {/* New link */}
+              <Link to="/fruitesandveg">Fruits and Vegetables</Link> 
             </li>
           </ul>
         </nav>
@@ -32,7 +32,7 @@ function App() {
           <Route path="/breakfast" element={<BreakfastPage />} />
 
           {/* Route for Fruits and Vegetables Page */}
-          <Route path="/fruitsandveg" element={<FruitsAndVegPage />} /> {/* New route */}
+          <Route path="/fruitesandveg" element={<FruitesAndVegPage/>} /> 
         </Routes>
       </div>
     </Router>

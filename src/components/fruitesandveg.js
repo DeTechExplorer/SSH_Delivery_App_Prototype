@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function BreakfastPage() {
+function FruitesAndVegPage() {
   const [cartCount, setCartCount] = useState(0);
   const [quantities, setQuantities] = useState({});
 
@@ -288,7 +288,7 @@ function BreakfastPage() {
         <div className="fruits-container">
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Banana" />
+              <img src="https://media.istockphoto.com/id/173242750/photo/banana-bunch.jpg?s=612x612&w=0&k=20&c=MAc8AXVz5KxwWeEmh75WwH6j_HouRczBFAhulLAtRUU=" alt="Banana" />
             </div>
             <p>Banana</p>
             <p className="price">£0.50 each</p>
@@ -302,7 +302,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Apple" />
+              <img src="https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w=" alt="Apple" />
             </div>
             <p>Apple</p>
             <p className="price">£0.75 each</p>
@@ -316,7 +316,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Orange" />
+            <img src="https://www.dole.com/-/media/project/dole/produce-images/fruit/oranges_cut_web.png" alt="Orange" />
             </div>
             <p>Orange</p>
             <p className="price">£0.60 each</p>
@@ -330,7 +330,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Strawberry" />
+            <img src="https://pngimg.com/d/strawberry_PNG2598.png" alt="Strawberry" />
             </div>
             <p>Strawberry</p>
             <p className="price">£2.50 per punnet</p>
@@ -344,7 +344,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Mango" />
+            <img src="https://pngimg.com/d/mango_PNG9168.png" alt="Mango" />
             </div>
             <p>Mango</p>
             <p className="price">£1.20 each</p>
@@ -358,7 +358,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Kiwi" />
+            <img src="https://www.dole.com/-/media/project/dole/produce-images/fruit/kiwi_cut_web.png"alt="Kiwi" />
             </div>
             <p>Kiwi</p>
             <p className="price">£0.80 each</p>
@@ -372,7 +372,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Fresh Carrots" />
+            <img src="https://pngimg.com/d/carrot_PNG4985.png" alt="Fresh Carrots" />
             </div>
             <p>Fresh Carrots</p>
             <p className="price">£0.90 per bunch</p>
@@ -386,7 +386,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Fresh Broccoli" />
+            <img src="https://organicandreal.com/cdn/shop/products/or100000130_8be5157d-15e4-4888-b023-e18e7f7f16dd.jpg?v=1623744634" alt="Fresh Broccoli" />
             </div>
             <p>Fresh Broccoli</p>
             <p className="price">£1.25 per head</p>
@@ -400,7 +400,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Baby Spinach" />
+            <img src="https://pngimg.com/d/spinach_PNG64.png" alt="Baby Spinach" />
             </div>
             <p>Baby Spinach</p>
             <p className="price">£1.50 per bag</p>
@@ -414,7 +414,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Vine Tomatoes" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg" alt="Tomatoes" />
             </div>
             <p>Vine Tomatoes</p>
             <p className="price">£2.20 per pack</p>
@@ -428,7 +428,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Mixed Bell Peppers" />
+            <img src="https://thumbs.dreamstime.com/b/yellow-orange-red-sweet-bell-pepper-isolated-white-background-top-view-flat-lay-yellow-orange-red-sweet-bell-pepper-340730832.jpg" alt="Mixed Bell Peppers" />
             </div>
             <p>Mixed Bell Peppers</p>
             <p className="price">£1.80 for 3</p>
@@ -442,7 +442,7 @@ function BreakfastPage() {
 
           <div className="fruit-item">
             <div className="image-container">
-              <img src="/api/placeholder/130/130" alt="Cucumber" />
+            <img src="https://www.earthytales.in/uploads/products/3x/organic-cucumber-desi_(1).jpg?v=14112024" alt="Cucumber" />
             </div>
             <p>Cucumber</p>
             <p className="price">£0.80 each</p>
@@ -468,4 +468,4 @@ function BreakfastPage() {
   );
 }
 
-export default FruitsPage;
+export default FruitesAndVegPage;
