@@ -1,8 +1,30 @@
-import React, { useState } from 'react';
+// BreakfastPage.js
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getProductsByCategory } from './productsData';
+import Logo from '../images/logo.jpeg';
 
 function BreakfastPage() {
   const [cartCount, setCartCount] = useState(0);
   const [quantities, setQuantities] = useState({});
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProductsByCategory('breakfast');
+        setProducts(data.products);
+      } catch (error) {
+        console.error('Error fetching breakfast products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const updateQuantity = (itemId, change) => {
     setQuantities(prev => ({
@@ -11,9 +33,21 @@ function BreakfastPage() {
     }));
   };
 
+  const handleAddToCart = (productId) => {
+    const quantity = quantities[productId] || 0;
+    if (quantity > 0) {
+      setCartCount(prev => prev + quantity);
+      // Reset quantity after adding to cart
+      setQuantities(prev => ({
+        ...prev,
+        [productId]: 0
+      }));
+    }
+  };
+
   return (
     <>
-   <style>
+      <style>
         {`
           body {
             font-family: Arial, sans-serif;
@@ -85,7 +119,6 @@ function BreakfastPage() {
             cursor: pointer;
             transition: background-color 0.3s;
           }
-            
 
           #location-btn:hover {
             background-color: #2980b9;
@@ -235,11 +268,23 @@ function BreakfastPage() {
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
+          }
+
+          .bottom-nav button:hover {
+            background-color: #2980b9;
           }
 
           #cart-btn img {
             max-height: 20px;
             margin-right: 10px;
+          }
+
+          .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2rem;
+            color: #3498db;
           }
 
           @media (max-width: 768px) {
@@ -265,206 +310,67 @@ function BreakfastPage() {
         `}
       </style>
 
-<div className="location-bar">
-  SSH Delivery
-</div>
+      <div className="location-bar">
+        SSH Delivery
+      </div>
 
-<header className="top-bar">
-  <div className="logo-search-location">
-    <div id="logo">
-      <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" />
-    </div>
-    <div id="search-box">
-      <input type="text" placeholder="Search breakfast items..." />
-    </div>
-  </div>
-  <div id="location-btn-container">
-    <span id="location-text">Deliver to:</span>
-    <button id="location-btn">SSH Home London, UK</button>
-  </div>
-</header>
+      <header className="top-bar">
+        <div className="logo-search-location">
+          <div id="logo">
+            <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" />
+          </div>
+          <div id="search-box">
+            <input type="text" placeholder="Search breakfast items..." />
+          </div>
+        </div>
+        <div id="location-btn-container">
+          <span id="location-text">Deliver to:</span>
+          <button id="location-btn">SSH Home London, UK</button>
+        </div>
+      </header>
 
-<section id="breakfast-section">
-  <h2>Breakfast Products</h2>
-  <div className="breakfast-container">
-    {/* First item */}
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://pngimg.com/d/croissant_PNG47.png" alt="Croissant" />
-      </div>
-      <p>Fresh Croissant</p>
-      <p className="price">£1.50 per piece</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('croissant', -1)}>-</button>
-        <span className="quantity-display">{quantities['croissant'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('croissant', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-    {/* Second item */}
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://pngimg.com/d/pancake_PNG97.png" alt="Pancakes" />
-      </div>
-      <p>Stack of Pancakes</p>
-      <p className="price">£3.20 per stack</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('pancakes', -1)}>-</button>
-        <span className="quantity-display">{quantities['pancakes'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('pancakes', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-  
-    {/* Third item */}
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://images-static.nykaa.com/media/catalog/product/a/4/a4d30b8ALPIN00000013_1.jpg" alt="Alpen Muesli" />
-      </div>
-      <p>Healthy Muesli</p>
-      <p className="price">£1.80 per 500g</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('muesli', -1)}>-</button>
-        <span className="quantity-display">{quantities['muesli'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('muesli', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://pngimg.com/d/bagel_PNG72.png" alt="Bagel" />
-      </div>
-      <p>Fresh Bagels</p>
-      <p className="price">£2.20 per pack</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('bagels', -1)}>-</button>
-        <span className="quantity-display">{quantities['bagels'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('bagels', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://millerandbean.com/cdn/shop/files/BelGaufreWaffles_934x700.jpg?v=1711390490" alt="Waffles" />
-      </div>
-      <p>Belgian Waffles</p>
-      <p className="price">£1.30 per piece</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('waffles', -1)}>-</button>
-        <span className="quantity-display">{quantities['waffles'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('waffles', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://www.fruitsbox.ae/cdn/shop/products/BrownEggs30_528x.jpg?v=1613217638" alt="Eggs" />
-      </div>
-      <p>Fresh Eggs</p>
-      <p className="price">£1.90 per dozen</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('eggs', -1)}>-</button>
-        <span className="quantity-display">{quantities['eggs'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('eggs', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://images.cdn.shoprite.com/detail/00077782030181_1" alt="Sausages" />
-      </div>
-      <p>Breakfast Sausages</p>
-      <p className="price">£3.25 per pack</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('sausages', -1)}>-</button>
-        <span className="quantity-display">{quantities['sausages'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('sausages', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://images-cdn.ubuy.ae/6588477d420c1b46ec21f5b4-branded-quaker-old-fashioned-oats-5.jpg" alt="Oats" />
-      </div>
-      <p>Jumbo Oats</p>
-      <p className="price">£2.15 per kg</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('oats', -1)}>-</button>
-        <span className="quantity-display">{quantities['oats'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('oats', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://assets.totalfoodservice.co.uk/9/54102_8f0a0aabcddfbad04ac2f1f9b6ed810d.png" alt="Cornflakes" />
-      </div>
-      <p>Kellogg's Cornflakes</p>
-      <p className="price">£2.85 per 750g</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('cornflakes', -1)}>-</button>
-        <span className="quantity-display">{quantities['cornflakes'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('cornflakes', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://m.media-amazon.com/images/I/71NSoXxLUHL.jpg" alt="Nutella" />
-      </div>
-      <p>Nutella Spread</p>
-      <p className="price">£3.75 per 400g</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('nutella', -1)}>-</button>
-        <span className="quantity-display">{quantities['nutella'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('nutella', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTANwULRGuyYU48kiixthqeeNSoRr6hBcUVGw&s" alt="Strawberry Jam" />
-      </div>
-      <p>Strawberry Jam</p>
-      <p className="price">£2.45 per 340g</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('jam', -1)}>-</button>
-        <span className="quantity-display">{quantities['jam'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('jam', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="breakfast-item">
-      <div className="image-container">
-        <img src="https://m.media-amazon.com/images/I/61B9UN6WIoL.jpg" alt="Honey" />
-      </div>
-      <p>Natural Honey</p>
-      <p className="price">£4.50 per 500g</p>
-      <div className="quantity-counter">
-        <button className="quantity-btn" onClick={() => updateQuantity('honey', -1)}>-</button>
-        <span className="quantity-display">{quantities['honey'] || 0}</span>
-        <button className="quantity-btn" onClick={() => updateQuantity('honey', 1)}>+</button>
-      </div>
-      <button>Add to Cart</button>
-    </div>
-  </div>
-</section>
+      <section id="breakfast-section">
+        <h2>Breakfast Products</h2>
+        {loading ? (
+          <div className="loading">Loading breakfast products...</div>
+        ) : (
+          <div className="breakfast-container">
+            {products.map(product => (
+              <div key={product.id} className="breakfast-item">
+                <div className="image-container">
+                  <img src={product.image} alt={product.name} />
+                </div>
+                <p>{product.name}</p>
+                <p className="price">£{product.price.toFixed(2)} per {product.unit}</p>
+                <div className="quantity-counter">
+                  <button 
+                    className="quantity-btn" 
+                    onClick={() => updateQuantity(product.id, -1)}
+                  >
+                    -
+                  </button>
+                  <span className="quantity-display">
+                    {quantities[product.id] || 0}
+                  </span>
+                  <button 
+                    className="quantity-btn" 
+                    onClick={() => updateQuantity(product.id, 1)}
+                  >
+                    +
+                  </button>
+                </div>
+                <button onClick={() => handleAddToCart(product.id)}>
+                  Add to Cart
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
 
       <div className="bottom-nav">
-        <button>Categories</button>
-        <button>Home</button>
+        <button onClick={() => navigate('/')}>Categories</button>
+        <button onClick={() => navigate('/')}>Home</button>
         <button id="cart-btn">
           <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
           Cart ({cartCount})
