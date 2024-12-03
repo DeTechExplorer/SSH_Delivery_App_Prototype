@@ -264,7 +264,7 @@ function HomePage() {
             color: #3498db;
           }
 
-          .bottom-nav {
+        .bottom-nav {
             position: fixed;
             bottom: 0;
             width: 100%;
@@ -276,7 +276,9 @@ function HomePage() {
             z-index: 100;
           }
 
-          .bottom-nav button {
+          .bottom-nav button, #cart-btn {
+            display: flex;
+            align-items: center;
             background-color: #3498db;
             color: white;
             border: none;
@@ -288,6 +290,11 @@ function HomePage() {
 
           .bottom-nav button:hover {
             background-color: #2980b9;
+          }
+
+          #cart-btn img {
+            max-height: 20px;
+            margin-right: 10px;
           }
 
           /* Modal styles */
@@ -626,10 +633,11 @@ function HomePage() {
       </section>
 
       <div className="bottom-nav">
+        <button onClick={() => navigate('/')}>Categories</button>
         <button onClick={() => navigate('/')}>Home</button>
-        <button id="cart-btn" onClick={() => navigate(isSharedOrder ? '/shared-cart' : '/cart')}>
-          <img src="/api/placeholder/20/20" alt="Cart" />
-          Cart ({cartCount}) {isSharedOrder && '(Shared)'}
+        <button id="cart-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+          Cart ({cartCount})
         </button>
       </div>
     </>
