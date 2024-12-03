@@ -8,12 +8,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent the default form submission
 
-    if (email && password) {
-      // Redirect to homepage
-      window.location.href = "homepage.html";
-    } else {
-      alert("Please enter both email and password");
-    }
+    
   };
 
   return (
