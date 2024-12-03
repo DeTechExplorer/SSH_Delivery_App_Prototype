@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-ro
 import BakeryPage from './components/bakery';
 import BreakfastPage from './components/breakfast';
 import FruitesAndVegPage from './components/fruitesandveg';  
-import CartPage from './components/cart';
+import IndividualCartPage from './components/individualCart';
+import CartPage from './components/sharedcart';
 import Homepage from './components/homepage';
 import PromotionsPage from './components/promotions';
 
@@ -26,10 +27,13 @@ function App() {
               <Link to="/category/fruits-vegetables">Fruits and Vegetables</Link> 
             </li>
             <li>
-              <Link to="/cart">Cart</Link>
+              <Link to="/individualCart">IndividualCartPage</Link>
             </li>
             <li>
               <Link to="/promotions">Promotions</Link> 
+            </li>
+            <li>
+              <Link to="/sharedcart">CartPage</Link>
             </li>
           </ul>
         </nav>
@@ -43,7 +47,8 @@ function App() {
           <Route path="/category/bakery" element={<BakeryPage />} />
           <Route path="/category/breakfast" element={<BreakfastPage />} />
           <Route path="/category/fruits-vegetables" element={<FruitesAndVegPage />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/individualCart" element={<IndividualCartPage />} />
+          <Route path="/sharedcart" element={<CartPage />} />
           <Route path="/promotions" element={<PromotionsPage />} />
 
           {/* Catch all route for 404 */}
