@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../images/logo.jpeg';
 
+const DELIVERY_FEE = 7.99;
+const SHARED_DISCOUNT = 0.5; // 50% discount on delivery for shared orders
+
 function CartPage() {
+  const navigate = useNavigate();
+  const [isSharedOrder, setIsSharedOrder] = useState(true);
   const [cartCount, setCartCount] = useState(0);
   const [myItems, setMyItems] = useState([
     {
@@ -10,63 +16,118 @@ function CartPage() {
       price: 18.99,
       quantity: 1,
       image: '/api/placeholder/130/130'
+    },
+    {
+      id: 'organic-milk',
+      name: 'Organic Milk',
+      price: 3.99,
+      quantity: 2,
+      image: '/api/placeholder/130/130'
     }
   ]);
 
-  const [sharedItems, setSharedItems] = useState([
-    {
-      id: 'sourdough-bread',
-      name: 'Sourdough Bread',
-      price: 4.50,
-      quantity: 2,
-      image: '/api/placeholder/130/130',
-      addedBy: 'John'
-    },
-    {
+  // Group shared items by user
+  const [sharedOrders] = useState({
+    'John': [
+      {
+        id: 'sourdough-bread',
+        name: 'Sourdough Bread',
+        price: 4.50,
+        quantity: 2,
+        image: '/api/placeholder/130/130'
+      },
+      {
+        id: 'organic-eggs',
+        name: 'Organic Eggs',
+        price: 3.99,
+        quantity: 1,
+        image: '/api/placeholder/130/130'
+      }
+    ],
+    'Sarah': [
+      {
         id: 'vanilla-cupcakes',
         name: 'Vanilla Cupcakes',
         price: 2.50,
         quantity: 6,
-        image: '/api/placeholder/130/130',
-        addedBy: 'Sarah'
+        image: '/api/placeholder/130/130'
       },
+      {
+        id: 'fresh-berries',
+        name: 'Fresh Berries',
+        price: 4.99,
+        quantity: 2,
+        image: '/api/placeholder/130/130'
+      }
+    ],
+    'Mike': [
       {
         id: 'fresh-bagels',
         name: 'Fresh Bagels',
         price: 2.20,
         quantity: 4,
-        image: '/api/placeholder/130/130',
-        addedBy: 'Mike'
+        image: '/api/placeholder/130/130'
+      },
+      {
+        id: 'cream-cheese',
+        name: 'Cream Cheese',
+        price: 3.49,
+        quantity: 1,
+        image: '/api/placeholder/130/130'
       }
-    ]);
- 
-  const updateQuantity = (itemType, itemId, change) => {
-    const updateItems = (items) => items.map(item => 
-      item.id === itemId 
-        ? { ...item, quantity: Math.max(0, item.quantity + change) }
-        : item
-    );
+    ]
+  });
 
+  const updateQuantity = (itemType, itemId, change) => {
     if (itemType === 'my') {
-      setMyItems(updateItems(myItems));
-    } else {
-      setSharedItems(updateItems(sharedItems));
+      setMyItems(myItems.map(item =>
+        item.id === itemId
+          ? { ...item, quantity: Math.max(0, item.quantity + change) }
+          : item
+      ));
     }
   };
 
+  // Function to add items to cart
+  const addToCart = (item) => {
+    setMyItems(prevItems => {
+      const existingItem = prevItems.find(i => i.id === item.id);
+      if (existingItem) {
+        return prevItems.map(i => 
+          i.id === item.id 
+            ? { ...i, quantity: i.quantity + 1 }
+            : i
+        );
+      }
+      return [...prevItems, { ...item, quantity: 1 }];
+    });
+    setCartCount(prev => prev + 1);
+  };
+
+
   const calculateTotals = () => {
     const myTotal = myItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const sharedTotal = sharedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const shipping = 3.99;
-    const tax = 2.00;
+    
+    const sharedTotals = Object.entries(sharedOrders).reduce((acc, [person, items]) => {
+      const personTotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      return { ...acc, [person]: personTotal };
+    }, {});
+
+    const totalShared = Object.values(sharedTotals).reduce((sum, total) => sum + total, 0);
+    const discountedDelivery = DELIVERY_FEE * SHARED_DISCOUNT;
+    
     return {
       myTotal,
-      sharedTotal,
-      shipping,
-      tax,
-      grandTotal: myTotal + sharedTotal + shipping + tax
+      sharedTotals,
+      totalShared,
+      deliveryFee: DELIVERY_FEE,
+      discountedDelivery,
+      finalDelivery: discountedDelivery,
+      grandTotal: myTotal + totalShared + discountedDelivery
     };
   };
+
+  const totals = calculateTotals();
 
   return (
     <>
@@ -400,12 +461,128 @@ function CartPage() {
               justify-content: center;
             }
           }
+        
+          .shared-order-badge {
+            background-color: #2ecc71;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 4px;
+            font-size: 14px;
+          }
+
+          .user-section {
+            margin-bottom: 30px;
+          }
+
+          .user-header {
+            color: #3498db;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #3498db;
+          }
+
+          .delivery-savings {
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+          }
+
+          .user-total {
+            text-align: right;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+          }
+
+      
+          /* Updated styles */
+          .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-bottom: 80px;
+          }
+
+          .cart-section {
+            width: 100%;
+          }
+
+          .summary-section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 180px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          .empty-cart-message {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            margin: 20px 0;
+          }
+
+          .empty-cart-message h3 {
+            color: #3498db;
+            margin-bottom: 10px;
+          }
+
+          .empty-cart-message p {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+          }
+
+          .start-shopping-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+          }
+
+          .start-shopping-btn:hover {
+            background-color: #2980b9;
+          }
+
+          @media (max-width: 1024px) {
+            .container {
+              grid-template-columns: 1fr;
+            }
+            
+            .summary-section {
+              position: relative;
+              top: 0;
+              width: 100%;
+            
+          }
         `}
       </style>
 
+       
+
       <div className="location-bar">
         SSH Delivery
+        <div className="shared-order-badge">
+          Shared Order Active with 4 participants
+        </div>
       </div>
+
 
       <header className="top-bar">
         <div className="logo-search-location">
@@ -427,75 +604,100 @@ function CartPage() {
           <h1>Shopping Cart</h1>
           <p className="items-count">
             {myItems.reduce((sum, item) => sum + item.quantity, 0) + 
-             sharedItems.reduce((sum, item) => sum + item.quantity, 0)} Items
+             Object.values(sharedOrders).flat().reduce((sum, item) => sum + item.quantity, 0)} Items
           </p>
 
-          <h2 style={{ color: '#3498db', marginBottom: '15px' }}>My Items</h2>
-          <div className="items-container">
-            {myItems.map(item => (
-              <div key={item.id} className="cart-item">
-                <div className="item-image">
-                  <img src={item.image} alt={item.name} />
-                </div>
-                <div className="item-details">
-                  <div className="item-name">{item.name}</div>
-                  <div className="item-price">£{item.price.toFixed(2)} / piece</div>
-                  <div className="quantity-counter">
-                    <button className="quantity-btn" onClick={() => updateQuantity('my', item.id, -1)}>-</button>
-                    <span className="quantity-display">{item.quantity}</span>
-                    <button className="quantity-btn" onClick={() => updateQuantity('my', item.id, 1)}>+</button>
-                  </div>
-                </div>
-                <div className="item-total">£{(item.price * item.quantity).toFixed(2)}</div>
+          <div className="user-section">
+            <h2 className="user-header">My Items</h2>
+            {myItems.length === 0 ? (
+              <div className="empty-cart-message">
+                <h3>Your cart is empty</h3>
+                <p>Add items from categories to start your order</p>
+                <button 
+                  className="start-shopping-btn"
+                  onClick={() => navigate('/categories')}
+                >
+                  Start Shopping
+                </button>
               </div>
-            ))}
+            ) : (
+              <div className="items-container">
+                {myItems.map(item => (
+                  <div key={item.id} className="cart-item">
+                    <div className="item-image">
+                      <img src={item.image} alt={item.name} />
+                    </div>
+                    <div className="item-details">
+                      <div className="item-name">{item.name}</div>
+                      <div className="item-price">£{item.price.toFixed(2)} / piece</div>
+                      <div className="quantity-counter">
+                        <button className="quantity-btn" onClick={() => updateQuantity('my', item.id, -1)}>-</button>
+                        <span className="quantity-display">{item.quantity}</span>
+                        <button className="quantity-btn" onClick={() => updateQuantity('my', item.id, 1)}>+</button>
+                      </div>
+                    </div>
+                    <div className="item-total">£{(item.price * item.quantity).toFixed(2)}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {myItems.length > 0 && (
+              <div className="user-total">
+                My Total: £{totals.myTotal.toFixed(2)}
+              </div>
+            )}
           </div>
 
-          <h2 style={{ color: '#3498db', marginBottom: '15px' }}>Shared Items</h2>
-          <div className="items-container">
-            {sharedItems.map(item => (
-              <div key={item.id} className="cart-item">
-                <div className="item-image">
-                  <img src={item.image} alt={item.name} />
-                </div>
-                <div className="item-details">
-                  <div className="item-name">{item.name}</div>
-                  <div className="item-price">£{item.price.toFixed(2)} / piece</div>
-                  <div className="added-by">Added by {item.addedBy}</div>
-                  <div className="quantity-counter">
-                    <button className="quantity-btn" onClick={() => updateQuantity('shared', item.id, -1)}>-</button>
-                    <span className="quantity-display">{item.quantity}</span>
-                    <button className="quantity-btn" onClick={() => updateQuantity('shared', item.id, 1)}>+</button>
+          <h2 className="user-header" style={{ marginTop: '30px' }}>Other Participants' Items</h2>
+          {Object.entries(sharedOrders).map(([person, items]) => (
+            <div key={person} className="user-section">
+              <h3 className="user-header" style={{ fontSize: '16px' }}>{person}'s Items</h3>
+              <div className="items-container">
+                {items.map(item => (
+                  <div key={item.id} className="cart-item">
+                    <div className="item-image">
+                      <img src={item.image} alt={item.name} />
+                    </div>
+                    <div className="item-details">
+                      <div className="item-name">{item.name}</div>
+                      <div className="item-price">£{item.price.toFixed(2)} / piece</div>
+                      <div className="quantity-counter">
+                        <span className="quantity-display">{item.quantity}</span>
+                      </div>
+                    </div>
+                    <div className="item-total">£{(item.price * item.quantity).toFixed(2)}</div>
                   </div>
-                </div>
-                <div className="item-total">£{(item.price * item.quantity).toFixed(2)}</div>
+                ))}
               </div>
-            ))}
-          </div>
+              <div className="user-total">
+                {person}'s Total: £{totals.sharedTotals[person].toFixed(2)}
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="summary-section">
           <h2>Order Summary</h2>
           <div className="summary-row">
             <span>My Items Total</span>
-            <span>£{calculateTotals().myTotal.toFixed(2)}</span>
+            <span>£{totals.myTotal.toFixed(2)}</span>
           </div>
           <div className="summary-row">
             <span>Shared Items Total</span>
-            <span>£{calculateTotals().sharedTotal.toFixed(2)}</span>
+            <span>£{totals.totalShared.toFixed(2)}</span>
           </div>
           <div className="summary-row">
-            <span>Shipping</span>
-            <span>£{calculateTotals().shipping.toFixed(2)}</span>
+            <span>Delivery Fee</span>
+            <span>£{totals.deliveryFee.toFixed(2)}</span>
           </div>
-          <div className="summary-row">
-            <span>Tax</span>
-            <span>£{calculateTotals().tax.toFixed(2)}</span>
+          <div className="delivery-savings">
+            <span>50% Off Delivery Fee Savings</span>
+            <span>-£{(totals.deliveryFee - totals.discountedDelivery).toFixed(2)}</span>
           </div>
           <div className="summary-divider"></div>
           <div className="summary-row total-row">
             <span>Total</span>
-            <span>£{calculateTotals().grandTotal.toFixed(2)}</span>
+            <span>£{totals.grandTotal.toFixed(2)}</span>
           </div>
           <button className="checkout-btn">
             Continue to checkout →
@@ -504,8 +706,8 @@ function CartPage() {
       </div>
 
       <div className="bottom-nav">
-        <button>Categories</button>
-        <button>Home</button>
+        <button onClick={() => navigate('/categories')}>Categories</button>
+        <button onClick={() => navigate('/')}>Home</button>
         <button id="cart-btn">
           <img src="/api/placeholder/20/20" alt="Cart" />
           Cart ({cartCount})
