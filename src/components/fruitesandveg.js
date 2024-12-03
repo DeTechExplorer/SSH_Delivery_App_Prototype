@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getProductsByCategory } from './productsData'; // Import the helper function to fetch products
+import { getProductsByCategory } from './productsData';
 
 function FruitsAndVegPage() {
   const [cartCount, setCartCount] = useState(0);
@@ -9,16 +9,15 @@ function FruitsAndVegPage() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Fetch products for the fruits and vegetables category
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await getProductsByCategory('fruits-vegetables'); // Fetch fruits and vegetables products
+        const data = await getProductsByCategory('fruits-vegetables');
         setProducts(data.products);
       } catch (error) {
         console.error('Error fetching fruits and vegetables products:', error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -289,6 +288,15 @@ function FruitsAndVegPage() {
             .fruits-container {
               grid-template-columns: repeat(2, 1fr);
             }
+            
+            .top-bar {
+              flex-direction: column;
+              gap: 10px;
+            }
+
+            #search-box input {
+              width: 100%;
+            }
           }
 
           @media (max-width: 480px) {
@@ -325,7 +333,7 @@ function FruitsAndVegPage() {
         ) : (
           <div className="fruits-container">
             {products.map(product => (
-              <div key={product.id} className="fruit-item">
+              <div key={product.id} className="fruits-item">
                 <div className="image-container">
                   <img src={product.image} alt={product.name} />
                 </div>
@@ -361,7 +369,7 @@ function FruitsAndVegPage() {
         <button onClick={() => navigate('/')}>Categories</button>
         <button onClick={() => navigate('/')}>Home</button>
         <button id="cart-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+          <img src="/api/placeholder/20/20" alt="Cart" />
           Cart ({cartCount})
         </button>
       </div>
