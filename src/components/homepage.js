@@ -91,9 +91,9 @@ function HomePage() {
  
   const handleCartClick = () => {
     if (isSharedOrder) {
-      navigate('/shared-cart');
+      navigate('/sharedcart');
     } else {
-      navigate('/cart');
+      navigate('/individualCart');
     }
   };
   return (
