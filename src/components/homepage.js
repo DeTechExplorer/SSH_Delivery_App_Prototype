@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllCategories } from './productsData';
+import bannerImage from '../images/promotion banner.png';
+import Logo from '../images/logo.jpeg';
 
 function HomePage() {
   const [cartCount, setCartCount] = useState(0);
@@ -288,7 +290,9 @@ function HomePage() {
         
         <div className="logo-search-location">
           <div id="logo">
-            <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" />
+            <img 
+            src={Logo}
+            alt="Logo" id="logo-img" />
           </div>
           <div id="search-box">
             <input type="text" placeholder="Search products..." />
@@ -300,9 +304,15 @@ function HomePage() {
         </div>
       </header>
 
-      <section className="promo-box">
-        <img src="/api/placeholder/1200/300" alt="20% Off on Selected Items" />
-      </section>
+      <section 
+  className="promo-box" 
+  onClick={() => navigate('/promotions')}
+  style={{ cursor: 'pointer' }}
+>
+  <img 
+  src={bannerImage}
+  alt="20% Off on Selected Items" />
+</section>
 
       <section id="categories">
         <h2>Categories</h2>

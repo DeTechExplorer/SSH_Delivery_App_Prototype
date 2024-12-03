@@ -24,13 +24,13 @@ function App() {
               <Link to="/category/breakfast">Breakfast</Link>
             </li>
             <li>
-              <Link to="/category/fruits-vegetables">Fruits and Vegetables</Link> 
+              <Link to="/category/fruitsandvegs">Fruits and Vegetables</Link> 
             </li>
             <li>
               <Link to="/cart">Cart</Link>
             </li>
             <li>
-              <Link to="/promotion">promotions</Link> 
+              <Link to="/promotions">Promotions</Link> 
             </li>
           </ul>
         </nav>
