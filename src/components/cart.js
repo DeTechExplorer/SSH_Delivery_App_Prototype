@@ -8,23 +8,7 @@ const SHARED_DISCOUNT = 0.5; // 50% discount on delivery for shared orders
 function CartPage() {
   const navigate = useNavigate();
   const [isSharedOrder, setIsSharedOrder] = useState(true);
-  const [cartCount, setCartCount] = useState(0);
-  const [myItems, setMyItems] = useState([
-    {
-      id: 'chocolate-cake',
-      name: 'Chocolate Cake',
-      price: 18.99,
-      quantity: 1,
-      image: '/api/placeholder/130/130'
-    },
-    {
-      id: 'organic-milk',
-      name: 'Organic Milk',
-      price: 3.99,
-      quantity: 2,
-      image: '/api/placeholder/130/130'
-    }
-  ]);
+  const [myItems, setMyItems] = useState([]); 
 
   // Group shared items by user
   const [sharedOrders] = useState({
@@ -78,6 +62,12 @@ function CartPage() {
     ]
   });
 
+  // Calculate initial cart count from shared orders
+  const [cartCount, setCartCount] = useState(() => {
+    return Object.values(sharedOrders).flat().reduce((sum, item) => sum + item.quantity, 0);
+  });
+
+
   const updateQuantity = (itemType, itemId, change) => {
     if (itemType === 'my') {
       setMyItems(myItems.map(item =>
@@ -88,7 +78,6 @@ function CartPage() {
     }
   };
 
-  // Function to add items to cart
   const addToCart = (item) => {
     setMyItems(prevItems => {
       const existingItem = prevItems.find(i => i.id === item.id);
@@ -101,7 +90,7 @@ function CartPage() {
       }
       return [...prevItems, { ...item, quantity: 1 }];
     });
-    setCartCount(prev => prev + 1);
+    setCartCount(prev => prev + 1); // This will add to the existing count of dummy items
   };
 
 
@@ -709,8 +698,8 @@ function CartPage() {
         <button onClick={() => navigate('/categories')}>Categories</button>
         <button onClick={() => navigate('/')}>Home</button>
         <button id="cart-btn">
-          <img src="/api/placeholder/20/20" alt="Cart" />
-          Cart ({cartCount})
+          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+          Cart 
         </button>
       </div>
     </>

@@ -59,19 +59,27 @@ function HomePage() {
   const handleCategoryClick = (categoryId) => {
     navigate(`/category/${categoryId}`);
   };
-
+  
   const handleSharedOrderClick = () => {
     if (!isSharedOrder) {
       setShowModal(true);
     }
   };
-
+  
   const handleJoinSharedOrder = () => {
     setIsSharedOrder(true);
     setShowModal(false);
     setShowInitialPopup(false);
   };
-
+  
+ 
+  const handleCartClick = () => {
+    if (isSharedOrder) {
+      navigate('/shared-cart');
+    } else {
+      navigate('/cart');
+    }
+  };
   return (
     <>
     <style>
@@ -633,13 +641,13 @@ function HomePage() {
       </section>
 
       <div className="bottom-nav">
-        <button onClick={() => navigate('/')}>Categories</button>
-        <button onClick={() => navigate('/')}>Home</button>
-        <button id="cart-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
-          Cart ({cartCount})
-        </button>
-      </div>
+  <button onClick={() => navigate('/categories')}>Categories</button>
+  <button onClick={() => navigate('/')}>Home</button>
+  <button id="cart-btn" onClick={handleCartClick}>
+    <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+    Cart ({cartCount}) {isSharedOrder && '(Shared)'}
+  </button>
+</div>
     </>
   );
 }
