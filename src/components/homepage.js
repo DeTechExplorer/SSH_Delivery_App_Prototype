@@ -5,10 +5,32 @@ import { getAllCategories } from './productsData';
 import bannerImage from '../images/promotion banner.png';
 import Logo from '../images/logo.jpeg';
 
+// Dummy data for shared orders
+const DUMMY_SHARED_ORDERS = [
+  {
+    name: "Sarah Johnson",
+    room: "203",
+    items: [
+      { name: "Organic Bananas", quantity: 2, price: 1.99 },
+      { name: "Whole Milk", quantity: 1, price: 2.49 }
+    ]
+  },
+  {
+    name: "Mike Chen",
+    room: "205",
+    items: [
+      { name: "Bread", quantity: 1, price: 2.29 },
+      { name: "Eggs", quantity: 2, price: 3.99 }
+    ]
+  }
+];
+
 function HomePage() {
   const [cartCount, setCartCount] = useState(0);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [isSharedOrder, setIsSharedOrder] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +50,17 @@ function HomePage() {
 
   const handleCategoryClick = (categoryId) => {
     navigate(`/category/${categoryId}`);
+  };
+
+  const handleSharedOrderClick = () => {
+    if (!isSharedOrder) {
+      setShowModal(true);
+    }
+  };
+
+  const handleJoinSharedOrder = () => {
+    setIsSharedOrder(true);
+    setShowModal(false);
   };
 
   return (
@@ -234,25 +267,106 @@ function HomePage() {
             z-index: 100;
           }
 
-          .bottom-nav button, #cart-btn {
-            display: flex;
-            align-items: center;
+          .bottom-nav button {
             background-color: #3498db;
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s;
           }
 
           .bottom-nav button:hover {
             background-color: #2980b9;
           }
 
-          #cart-btn img {
-            max-height: 20px;
-            margin-right: 10px;
+          /* Modal styles */
+          .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+          }
+
+          .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+          }
+
+          .modal-header {
+            margin-bottom: 20px;
+          }
+
+          .modal-header h2 {
+            color: #3498db;
+            margin: 0 0 8px 0;
+          }
+
+          .modal-header p {
+            color: #666;
+            margin: 0;
+          }
+
+          .participant-item {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+          }
+
+          .participant-item h3 {
+            margin: 0 0 8px 0;
+            color: #2c3e50;
+          }
+
+          .participant-items p {
+            margin: 4px 0;
+            color: #666;
+          }
+
+          .modal-footer {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+          }
+
+          .modal-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+          }
+
+          .join-button {
+            background-color: #2ecc71;
+            color: white;
+          }
+
+          .join-button:hover {
+            background-color: #27ae60;
+          }
+
+          .cancel-button {
+            background-color: #e74c3c;
+            color: white;
+          }
+
+          .cancel-button:hover {
+            background-color: #c0392b;
           }
 
           @media (max-width: 768px) {
@@ -280,19 +394,46 @@ function HomePage() {
 
       <div className="location-bar">
         SSH Delivery
+        {isSharedOrder && (
+          <div style={{ 
+            backgroundColor: '#2ecc71', 
+            color: 'white',
+            padding: '4px 8px',
+            borderRadius: '4px',
+            marginTop: '4px',
+            fontSize: '14px'
+          }}>
+            Shared Order Active with 3 participants
+          </div>
+        )}
       </div>
 
       <header className="top-bar">
         <div className="top-buttons">
-          <button id="shared-orders">Shared Orders</button>
-          <button id="individual-orders">Individual Orders</button>
+          <button 
+            id="shared-orders" 
+            onClick={handleSharedOrderClick}
+            style={{ 
+              backgroundColor: isSharedOrder ? '#2ecc71' : '#3498db',
+            }}
+          >
+            {isSharedOrder ? '✓ Shared Order Active' : 'Join Shared Order'}
+          </button>
+          <button 
+            id="individual-orders"
+            style={{ 
+              opacity: isSharedOrder ? 0.5 : 1,
+              cursor: isSharedOrder ? 'not-allowed' : 'pointer'
+            }}
+            disabled={isSharedOrder}
+          >
+            Individual Orders
+          </button>
         </div>
         
         <div className="logo-search-location">
           <div id="logo">
-            <img 
-            src={Logo}
-            alt="Logo" id="logo-img" />
+            <img src={Logo} alt="Logo" id="logo-img" />
           </div>
           <div id="search-box">
             <input type="text" placeholder="Search products..." />
@@ -304,15 +445,58 @@ function HomePage() {
         </div>
       </header>
 
+      {/* Custom Modal */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>Join Shared Order</h2>
+              <p>Current shared order at SSH Home London</p>
+            </div>
+            <div className="modal-body">
+              {DUMMY_SHARED_ORDERS.map((participant, index) => (
+                <div key={index} className="participant-item">
+                  <h3>{participant.name} (Room {participant.room})</h3>
+                  <div className="participant-items">
+                    {participant.items.map((item, itemIndex) => (
+                      <p key={itemIndex}>
+                        • {item.name} x{item.quantity} - £{(item.price * item.quantity).toFixed(2)}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <p style={{ marginTop: '15px', color: '#3498db' }}>
+                Join now to share delivery costs with your housemates!
+              </p>
+            </div>
+            <div className="modal-footer">
+              <button 
+                className="modal-button join-button"
+                onClick={handleJoinSharedOrder}
+              >
+                Join Shared Order
+              </button>
+              <button 
+                className="modal-button cancel-button"
+                onClick={() => setShowModal(false)}
+              >
+                Maybe Later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <section 
-  className="promo-box" 
-  onClick={() => navigate('/promotions')}
-  style={{ cursor: 'pointer' }}
->
-  <img 
-  src={bannerImage}
-  alt="20% Off on Selected Items" />
-</section>
+        className="promo-box" 
+        onClick={() => navigate('/promotions')}
+      >
+        <img 
+          src={bannerImage}
+          alt="20% Off on Selected Items" 
+        />
+      </section>
 
       <section id="categories">
         <h2>Categories</h2>
@@ -334,11 +518,13 @@ function HomePage() {
         )}
       </section>
 
+     
+
       <div className="bottom-nav">
         <button onClick={() => navigate('/')}>Home</button>
-        <button id="cart-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
-          Cart ({cartCount})
+        <button id="cart-btn" onClick={() => navigate(isSharedOrder ? '/shared-cart' : '/cart')}>
+          <img src="/api/placeholder/20/20" alt="Cart" />
+          Cart ({cartCount}) {isSharedOrder && '(Shared)'}
         </button>
       </div>
     </>
