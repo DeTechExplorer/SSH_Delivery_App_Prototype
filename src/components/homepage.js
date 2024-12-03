@@ -659,7 +659,7 @@ function HomePage() {
       <div className="bottom-nav">
   <button onClick={() => navigate('/categories')}>Categories</button>
   <button onClick={() => navigate('/')}>Home</button>
-  <button id="cart-btn" onClick={handleCartClick}>
+  <button id="cart-btn" onClick={handleCartClick}> 
     <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
     Cart ({cartCount}) {isSharedOrder && '(Shared)'}
   </button>

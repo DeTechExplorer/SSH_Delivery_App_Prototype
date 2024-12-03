@@ -70,11 +70,20 @@ function CartPage() {
 
   const updateQuantity = (itemType, itemId, change) => {
     if (itemType === 'my') {
-      setMyItems(myItems.map(item =>
-        item.id === itemId
-          ? { ...item, quantity: Math.max(0, item.quantity + change) }
-          : item
-      ));
+      setMyItems(prevItems => {
+        const updatedItems = prevItems.map(item =>
+          item.id === itemId
+            ? { ...item, quantity: Math.max(0, item.quantity + change) }
+            : item
+        ).filter(item => item.quantity > 0);
+        
+        // Update cart count to include both dummy items and updated my items
+        const dummyItemsCount = Object.values(sharedOrders).flat().reduce((sum, item) => sum + item.quantity, 0);
+        const myItemsCount = updatedItems.reduce((sum, item) => sum + item.quantity, 0);
+        setCartCount(dummyItemsCount + myItemsCount);
+        
+        return updatedItems;
+      });
     }
   };
 
@@ -693,6 +702,7 @@ function CartPage() {
           </button>
         </div>
       </div>
+
 
       <div className="bottom-nav">
         <button onClick={() => navigate('/categories')}>Categories</button>
