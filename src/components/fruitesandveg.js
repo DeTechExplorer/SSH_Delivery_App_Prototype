@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProductsByCategory } from './productsData'; // Import the helper function to fetch products
 
-function FruitesAndVegPage() {
+function FruitsAndVegPage() {
   const [cartCount, setCartCount] = useState(0);
   const [quantities, setQuantities] = useState({});
   const [products, setProducts] = useState([]);
@@ -142,7 +142,7 @@ function FruitesAndVegPage() {
             margin: 0 auto;
           }
 
-          .fruit-item {
+          .fruits-item {
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -154,7 +154,7 @@ function FruitesAndVegPage() {
             align-items: center;
           }
 
-          .fruit-item:hover {
+          .fruits-item:hover {
             transform: scale(1.05);
           }
 
@@ -218,18 +218,18 @@ function FruitesAndVegPage() {
             text-align: center;
           }
 
-          .fruit-item p {
+          .fruits-item p {
             margin: 10px 0;
             color: #2c3e50;
             font-weight: bold;
           }
 
-          .fruit-item .price {
+          .fruits-item .price {
             color: #3498db;
             font-size: 18px;
           }
 
-          .fruit-item button {
+          .fruits-item button {
             background-color: #3498db;
             color: white;
             border: none;
@@ -241,7 +241,7 @@ function FruitesAndVegPage() {
             width: 120px;
           }
 
-          .fruit-item button:hover {
+          .fruits-item button:hover {
             background-color: #2980b9;
           }
 
@@ -266,11 +266,23 @@ function FruitesAndVegPage() {
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
+          }
+
+          .bottom-nav button:hover {
+            background-color: #2980b9;
           }
 
           #cart-btn img {
             max-height: 20px;
             margin-right: 10px;
+          }
+
+          .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2rem;
+            color: #3498db;
           }
 
           @media (max-width: 768px) {
@@ -290,6 +302,7 @@ function FruitesAndVegPage() {
       <div className="location-bar">
         SSH Delivery
       </div>
+
       <header className="top-bar">
         <div className="logo-search-location">
           <div id="logo">
@@ -345,8 +358,8 @@ function FruitesAndVegPage() {
       </section>
 
       <div className="bottom-nav">
-        <button>Categories</button>
-        <button>Home</button>
+        <button onClick={() => navigate('/')}>Categories</button>
+        <button onClick={() => navigate('/')}>Home</button>
         <button id="cart-btn">
           <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
           Cart ({cartCount})
@@ -356,4 +369,4 @@ function FruitesAndVegPage() {
   );
 }
 
-export default FruitesAndVegPage;
+export default FruitsAndVegPage;

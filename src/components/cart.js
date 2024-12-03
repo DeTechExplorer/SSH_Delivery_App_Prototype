@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Logo from '../images/logo.jpeg';
 
 function CartPage() {
   const [cartCount, setCartCount] = useState(0);

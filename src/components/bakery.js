@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProductsByCategory } from './productsData'; // Make sure to import the correct function
+import Logo from '../images/logo.jpeg';
 
 function BakeryPage() {
   const [cartCount, setCartCount] = useState(0);
@@ -357,3 +358,6 @@ function BakeryPage() {
 }
 
 export default BakeryPage;
+
+
+      

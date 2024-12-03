@@ -1,6 +1,9 @@
+// HomePage.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllCategories } from './productsData';
+import bannerImage from '../images/promotion banner.png';
+import Logo from '../images/logo.jpeg';
 
 function HomePage() {
   const [cartCount, setCartCount] = useState(0);
@@ -24,7 +27,7 @@ function HomePage() {
   }, []);
 
   const handleCategoryClick = (categoryId) => {
-    navigate(`/category/${categoryId}`); // Fixed here
+    navigate(`/category/${categoryId}`);
   };
 
   return (
@@ -59,6 +62,29 @@ function HomePage() {
             position: sticky;
             top: 40px;
             z-index: 100;
+          }
+
+          .top-buttons {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 20px;
+          }
+
+          .top-buttons button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+          }
+
+          .top-buttons button:hover {
+            background-color: #2980b9;
           }
 
           .logo-search-location {
@@ -104,6 +130,30 @@ function HomePage() {
 
           #location-btn:hover {
             background-color: #2980b9;
+          }
+
+          .promo-box {
+            background-color: #fff;
+            width: 100%;
+            height: 300px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
+
+          .promo-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          }
+
+          .promo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 0;
           }
 
           #categories {
@@ -209,7 +259,7 @@ function HomePage() {
             .category-container {
               grid-template-columns: repeat(2, 1fr);
             }
-
+            
             .top-bar {
               flex-direction: column;
               gap: 10px;
@@ -237,10 +287,12 @@ function HomePage() {
           <button id="shared-orders">Shared Orders</button>
           <button id="individual-orders">Individual Orders</button>
         </div>
-
+        
         <div className="logo-search-location">
           <div id="logo">
-            <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" />
+            <img 
+            src={Logo}
+            alt="Logo" id="logo-img" />
           </div>
           <div id="search-box">
             <input type="text" placeholder="Search products..." />
@@ -252,9 +304,15 @@ function HomePage() {
         </div>
       </header>
 
-      <section className="promo-box">
-        <img src="/api/placeholder/1200/300" alt="20% Off on Selected Items" />
-      </section>
+      <section 
+  className="promo-box" 
+  onClick={() => navigate('/promotions')}
+  style={{ cursor: 'pointer' }}
+>
+  <img 
+  src={bannerImage}
+  alt="20% Off on Selected Items" />
+</section>
 
       <section id="categories">
         <h2>Categories</h2>
@@ -288,4 +346,3 @@ function HomePage() {
 }
 
 export default HomePage;
-

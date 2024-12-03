@@ -1,8 +1,8 @@
-
 // BreakfastPage.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProductsByCategory } from './productsData';
+import Logo from '../images/logo.jpeg';
 
 function BreakfastPage() {
   const [cartCount, setCartCount] = useState(0);
