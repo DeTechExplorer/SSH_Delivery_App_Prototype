@@ -5,8 +5,15 @@ import { getAllCategories } from './productsData';
 import bannerImage from '../images/promotion banner.png';
 import Logo from '../images/logo.jpeg';
 
-// Dummy data for shared orders
 const DUMMY_SHARED_ORDERS = [
+  {
+    name: "John Smith",
+    room: "201",
+    items: [
+      { name: "Fresh Apples", quantity: 3, price: 2.99 },
+      { name: "Greek Yogurt", quantity: 2, price: 3.49 }
+    ]
+  },
   {
     name: "Sarah Johnson",
     room: "203",
@@ -31,6 +38,7 @@ function HomePage() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [isSharedOrder, setIsSharedOrder] = useState(false);
+  const [showInitialPopup, setShowInitialPopup] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,11 +69,12 @@ function HomePage() {
   const handleJoinSharedOrder = () => {
     setIsSharedOrder(true);
     setShowModal(false);
+    setShowInitialPopup(false);
   };
 
   return (
     <>
-      <style>
+    <style>
         {`
           body {
             font-family: Arial, sans-serif;
@@ -389,8 +398,106 @@ function HomePage() {
               grid-template-columns: repeat(2, 1fr);
             }
           }
-        `}
+     
+
+/* Adding new styles for initial popup */
+          .initial-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+          }
+
+          .initial-popup {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          }
+
+          .initial-popup h2 {
+            color: #3498db;
+            margin: 0 0 15px 0;
+            font-size: 1.5rem;
+          }
+
+          .initial-popup p {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+          }
+
+          .initial-popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+          }
+
+          .initial-popup-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+          }
+
+          .join-popup-button {
+            background-color: #3498db;
+            color: white;
+          }
+
+          .join-popup-button:hover {
+            background-color: #2980b9;
+          }
+
+          .cancel-popup-button {
+            background-color: #95a5a6;
+            color: white;
+          }
+
+          .cancel-popup-button:hover {
+            background-color: #7f8c8d;
+          }
+           `}
+     
       </style>
+
+
+      {showInitialPopup && (
+        <div className="initial-popup-overlay">
+          <div className="initial-popup">
+            <h2> Shared order initiated by John! 🛒</h2>
+            <p>Want to join and save 50% on grocery delivery? join now!</p>
+            <div className="initial-popup-buttons">
+              <button 
+                className="initial-popup-button join-popup-button"
+                onClick={() => {
+                  setShowInitialPopup(false);
+                  setShowModal(true);
+                }}
+              >
+                Join Now
+              </button>
+              <button 
+                className="initial-popup-button cancel-popup-button"
+                onClick={() => setShowInitialPopup(false)}
+              >
+                Maybe Later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="location-bar">
         SSH Delivery
@@ -445,7 +552,7 @@ function HomePage() {
         </div>
       </header>
 
-      {/* Custom Modal */}
+      {/* Shared Order Modal */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -517,8 +624,6 @@ function HomePage() {
           </div>
         )}
       </section>
-
-     
 
       <div className="bottom-nav">
         <button onClick={() => navigate('/')}>Home</button>
