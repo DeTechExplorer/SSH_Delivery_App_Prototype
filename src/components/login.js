@@ -23,15 +23,6 @@ const Login = () => {
         <p style={styles.description}>Please enter your SSH credentials</p>
         <form onSubmit={handleSubmit}>
           <input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            style={styles.input}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
             type="password"
             name="password"
             placeholder="Enter your password"
