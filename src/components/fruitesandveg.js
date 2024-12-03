@@ -1,41 +1,23 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getProductsByCategory } from './productsData';
-import Logo from '../images/logo.jpeg';
+import { getProductsByCategory } from './productsData'; // Import the helper function to fetch products
 
-function FruitsAndVegPage() {
-function FruitsAndVegPage() {
+function FruitesAndVegPage() {
   const [cartCount, setCartCount] = useState(0);
   const [quantities, setQuantities] = useState({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Fetch products for the fruits and vegetables category
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await getProductsByCategory('fruits-vegetables');
+        const data = await getProductsByCategory('fruits-vegetables'); // Fetch fruits and vegetables products
         setProducts(data.products);
       } catch (error) {
-        console.error('Error fetching fruits and vegetables:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getProductsByCategory('fruits-vegetables');
-        setProducts(data.products);
-      } catch (error) {
-        console.error('Error fetching fruits and vegetables:', error);
+        console.error('Error fetching fruits and vegetables products:', error);
       } finally {
         setLoading(false);
       }
@@ -62,20 +44,8 @@ function FruitsAndVegPage() {
     }
   };
 
-  const handleAddToCart = (productId) => {
-    const quantity = quantities[productId] || 0;
-    if (quantity > 0) {
-      setCartCount(prev => prev + quantity);
-      setQuantities(prev => ({
-        ...prev,
-        [productId]: 0
-      }));
-    }
-  };
-
   return (
     <>
-      <style>
       <style>
         {`
           body {
@@ -308,15 +278,6 @@ function FruitsAndVegPage() {
             .fruits-container {
               grid-template-columns: repeat(2, 1fr);
             }
-            
-            .top-bar {
-              flex-direction: column;
-              gap: 10px;
-            }
-
-            #search-box input {
-              width: 100%;
-            }
           }
 
           @media (max-width: 480px) {
@@ -330,16 +291,12 @@ function FruitsAndVegPage() {
       <div className="location-bar">
         SSH Delivery
       </div>
-
-
       <header className="top-bar">
         <div className="logo-search-location">
           <div id="logo">
             <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" />
-            <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" />
           </div>
           <div id="search-box">
-            <input type="text" placeholder="Search fruits and vegetables..." />
             <input type="text" placeholder="Search fruits and vegetables..." />
           </div>
         </div>
@@ -352,58 +309,13 @@ function FruitsAndVegPage() {
       <section id="fruits-section">
         <h2>Fruits & Vegetables</h2>
         {loading ? (
-          <div className="loading">Loading products...</div>
+          <div className="loading">Loading fruits and vegetables...</div>
         ) : (
           <div className="fruits-container">
             {products.map(product => (
               <div key={product.id} className="fruit-item">
                 <div className="image-container">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    onError={(e) => {
-                      e.target.src = "/api/placeholder/130/130";
-                    }}
-                  />
-                </div>
-                <p>{product.name}</p>
-                <p className="price">£{product.price.toFixed(2)} per {product.unit}</p>
-                <div className="quantity-counter">
-                  <button 
-                    className="quantity-btn" 
-                    onClick={() => updateQuantity(product.id, -1)}
-                  >
-                    -
-                  </button>
-                  <span className="quantity-display">
-                    {quantities[product.id] || 0}
-                  </span>
-                  <button 
-                    className="quantity-btn" 
-                    onClick={() => updateQuantity(product.id, 1)}
-                  >
-                    +
-                  </button>
-                </div>
-                <button onClick={() => handleAddToCart(product.id)}>
-                  Add to Cart
-                </button>
-              </div>
-            ))}
-        {loading ? (
-          <div className="loading">Loading products...</div>
-        ) : (
-          <div className="fruits-container">
-            {products.map(product => (
-              <div key={product.id} className="fruit-item">
-                <div className="image-container">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    onError={(e) => {
-                      e.target.src = "/api/placeholder/130/130";
-                    }}
-                  />
+                  <img src={product.image} alt={product.name} />
                 </div>
                 <p>{product.name}</p>
                 <p className="price">£{product.price.toFixed(2)} per {product.unit}</p>
@@ -432,18 +344,12 @@ function FruitsAndVegPage() {
           </div>
         )}
       </section>
-        )}
-      </section>
 
       <div className="bottom-nav">
-        <button onClick={() => navigate('/')}>Categories</button>
-        <button onClick={() => navigate('/')}>Home</button>
-      <div className="bottom-nav">
-        <button onClick={() => navigate('/')}>Categories</button>
-        <button onClick={() => navigate('/')}>Home</button>
+        <button>Categories</button>
+        <button>Home</button>
         <button id="cart-btn">
-          <img src="/api/placeholder/20/20" alt="Cart" />
-          <img src="/api/placeholder/20/20" alt="Cart" />
+          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
           Cart ({cartCount})
         </button>
       </div>
@@ -451,4 +357,4 @@ function FruitsAndVegPage() {
   );
 }
 
-export default FruitsAndVegPage;
+export default FruitesAndVegPage;
