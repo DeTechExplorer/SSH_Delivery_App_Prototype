@@ -700,6 +700,7 @@ function CartPage() {
             <span>£{totals.grandTotal.toFixed(2)}</span>
           </div>
           <button className="checkout-btn">
+            
             Continue to checkout →
           </button>
         </div>
