@@ -42,6 +42,18 @@ function HomePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (isSharedOrder) {
+      // Calculate total items from dummy orders
+      const dummyItemsCount = DUMMY_SHARED_ORDERS.reduce((total, person) => {
+        return total + person.items.reduce((sum, item) => sum + item.quantity, 0);
+      }, 0);
+      setCartCount(dummyItemsCount);
+    } else {
+      setCartCount(0);
+    }
+  }, [isSharedOrder]);
+
+  useEffect(() => {
     const fetchCategories = async () => {
       try {
         const data = await getAllCategories();
@@ -63,6 +75,10 @@ function HomePage() {
   const handleSharedOrderClick = () => {
     if (!isSharedOrder) {
       setShowModal(true);
+      const dummyItemsCount = DUMMY_SHARED_ORDERS.reduce((total, person) => {
+        return total + person.items.reduce((sum, item) => sum + item.quantity, 0);
+      }, 0);
+      setCartCount(dummyItemsCount);
     }
   };
   
