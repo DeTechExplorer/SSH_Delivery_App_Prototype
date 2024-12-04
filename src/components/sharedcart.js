@@ -5,7 +5,8 @@ import Logo from '../images/logo.jpeg';
 
 
 const DELIVERY_FEE = 7.99;
-const SHARED_DISCOUNT = 0.5; // 50% discount on delivery for shared orders
+const SHARED_DISCOUNT = 0.75; // 75% discount for 4 people
+
 
 function CartPage() {
   const navigate = useNavigate();
