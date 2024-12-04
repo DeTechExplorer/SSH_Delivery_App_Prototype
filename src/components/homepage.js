@@ -44,41 +44,35 @@ function HomePage() {
   
 
 
-// Initialize cart state on component mount
+// Updated initialization useEffect
 useEffect(() => {
-  // Check if this is a fresh page load
   const isPageRefresh = !sessionStorage.getItem('app_initialized');
   
   if (isPageRefresh) {
-    // Clear localStorage on fresh page load/reload
+    // Clear localStorage only on fresh page load/reload
     localStorage.removeItem('sharedCartItems');
     localStorage.removeItem('individualCartItems');
     localStorage.removeItem('isSharedOrder');
-    localStorage.removeItem('hasSeenPopup'); // Also clear the popup flag on fresh reload
-    // Set flag to indicate app has been initialized
+    localStorage.removeItem('hasSeenPopup');
     sessionStorage.setItem('app_initialized', 'true');
     setCartCount(0);
     setIsSharedOrder(false);
-    // Show popup on fresh page load
     setShowInitialPopup(true);
   } else {
-    // If navigating using buttons, restore previous state
+    // On normal navigation, check both location state and localStorage
     const savedIsShared = localStorage.getItem('isSharedOrder') === 'true';
-    setIsSharedOrder(savedIsShared);
-
-    // If coming from shared cart, ensure shared order state is maintained
-    if (location.state?.isSharedOrder) {
+    const isSharedFromLocation = location.state?.isSharedOrder;
+    
+    if (savedIsShared || isSharedFromLocation) {
       setIsSharedOrder(true);
       localStorage.setItem('isSharedOrder', 'true');
-    }
-    
-    if (savedIsShared) {
-      // Calculate total items from dummy orders
+      
+      // Calculate total items including dummy orders
       const dummyItemsCount = DUMMY_SHARED_ORDERS.reduce((total, person) => {
         return total + person.items.reduce((sum, item) => sum + item.quantity, 0);
       }, 0);
       
-      // Add any user items from shared cart
+      // Add user items from shared cart
       const userItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
       const userItemsCount = userItems.reduce((sum, item) => sum + item.quantity, 0);
       
@@ -88,16 +82,14 @@ useEffect(() => {
       setCartCount(individualItems.reduce((sum, item) => sum + item.quantity, 0));
     }
   }
-}, []);
+}, [location.state]);
 
 
 useEffect(() => {
   localStorage.setItem('isSharedOrder', isSharedOrder);
 }, [isSharedOrder]);
 
-
-
-  useEffect(() => {
+ useEffect(() => {
     if (isSharedOrder) {
       // Calculate total items from dummy orders
       const dummyItemsCount = DUMMY_SHARED_ORDERS.reduce((total, person) => {
@@ -108,6 +100,7 @@ useEffect(() => {
       setCartCount(0);
     }
   }, [isSharedOrder]);
+
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -124,9 +117,12 @@ useEffect(() => {
     fetchCategories();
   }, []);
 
+
+
   const handleCategoryClick = (categoryId) => {
+    const isShared = localStorage.getItem('isSharedOrder') === 'true';
     navigate(`/category/${categoryId}`, { 
-      state: { isSharedOrder } 
+      state: { isSharedOrder: isShared }
     });
   };
   
@@ -142,18 +138,41 @@ useEffect(() => {
   
   const handleJoinSharedOrder = () => {
     setIsSharedOrder(true);
+    localStorage.setItem('isSharedOrder', 'true');
     setShowModal(false);
     setShowInitialPopup(false);
+    
+    // Calculate initial cart count
+    const dummyItemsCount = DUMMY_SHARED_ORDERS.reduce((total, person) => {
+      return total + person.items.reduce((sum, item) => sum + item.quantity, 0);
+    }, 0);
+    setCartCount(dummyItemsCount);
   };
-  
  
   const handleCartClick = () => {
-    if (isSharedOrder) {
-      navigate('/sharedcart');
+    // Always check current shared order state
+    const isShared = localStorage.getItem('isSharedOrder') === 'true';
+    if (isShared) {
+      navigate('/sharedcart', {
+        state: { isSharedOrder: true }
+      });
     } else {
       navigate('/individualCart');
     }
   };
+
+  const handleNavigate = (path) => {
+    // Always check current shared order state
+    const isShared = localStorage.getItem('isSharedOrder') === 'true';
+    if (isShared) {
+      navigate(path, {
+        state: { isSharedOrder: true }
+      });
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
     <>
     <style>
@@ -715,13 +734,13 @@ useEffect(() => {
       </section>
 
       <div className="bottom-nav">
-  <button onClick={() => navigate('/categories')}>Categories</button>
-  <button onClick={() => navigate('/')}>Home</button>
-  <button id="cart-btn" onClick={handleCartClick}> 
-    <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
-    Cart ({cartCount}) {isSharedOrder && '(Shared)'}
-  </button>
-</div>
+        <button onClick={() => handleNavigate('/categories')}>Categories</button>
+        <button onClick={() => handleNavigate('/')}>Home</button>
+        <button id="cart-btn" onClick={handleCartClick}> 
+          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+          Cart ({cartCount}) {isSharedOrder && '(Shared)'}
+        </button>
+      </div>
     </>
   );
 }

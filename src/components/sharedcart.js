@@ -14,11 +14,41 @@ function CartPage() {
   const [isSharedOrder, setIsSharedOrder] = useState(true);
   const [myItems, setMyItems] = useState([]); 
 
-
+  // Updated useEffect to always maintain shared order state
   useEffect(() => {
-    const savedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
-    setMyItems(savedItems);
-  }, []);
+    // Set shared order state in localStorage as soon as CartPage mounts
+    localStorage.setItem('isSharedOrder', 'true');
+    setIsSharedOrder(true);
+
+     // Load saved items
+     const savedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
+     setMyItems(savedItems);
+   }, []); // Empty dependency array means this runs once when component mounts
+ 
+
+   useEffect(() => {
+    localStorage.setItem('sharedCartItems', JSON.stringify(myItems));
+  }, [myItems]);
+
+
+  const handleNavigate = (path) => {
+    // Always pass isSharedOrder as true since we're in shared cart
+    localStorage.setItem('isSharedOrder', 'true');
+    navigate(path, {
+      state: { isSharedOrder: true }
+    });
+  };
+
+  const handleStartShopping = () => {
+    // Ensure shared order state is preserved when navigating to categories
+    localStorage.setItem('isSharedOrder', 'true');
+    navigate('/categories', {
+      state: { isSharedOrder: true }
+    });
+  };
+
+
+
 
   // Group shared items by user
   const [sharedOrders] = useState({
@@ -92,6 +122,9 @@ function CartPage() {
         const myItemsCount = updatedItems.reduce((sum, item) => sum + item.quantity, 0);
         setCartCount(dummyItemsCount + myItemsCount);
         
+        // Save to localStorage
+        localStorage.setItem('sharedCartItems', JSON.stringify(updatedItems));
+        
         return updatedItems;
       });
     }
@@ -136,6 +169,8 @@ function CartPage() {
   };
 
   const totals = calculateTotals();
+
+  
 
   return (
     <>
@@ -732,13 +767,13 @@ function CartPage() {
 
 
       <div className="bottom-nav">
-        <button onClick={() => navigate('/categories')}>Categories</button>
-        <button onClick={() => navigate('/')}>Home</button>
-        <button id="cart-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
-          Cart 
-        </button>
-      </div>
+  <button onClick={() => handleNavigate('/categories')}>Categories</button>
+  <button onClick={() => handleNavigate('/')}>Home</button>
+  <button id="cart-btn">
+    <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+    Cart 
+  </button>
+</div>
     </>
   );
 }
