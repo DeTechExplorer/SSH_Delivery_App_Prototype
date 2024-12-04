@@ -11,18 +11,18 @@ function App() {
         <nav>
           <ul>
             <li>
-              <Link to="/invoice">View Invoice Form</Link>  {/* Link to InvoiceForm */}
+              <Link to="/invoice">View Invoice Form</Link>  
             </li>
             <li>
-              <Link to="/feedback">Give Feedback</Link>  {/* Link to FeedbackForm */}
+              <Link to="/feedback">Give Feedback</Link>  
             </li>
           </ul>
         </nav>
 
         <Routes>
-          <Route path="/" element={<InvoiceForm />} />  {/* Default route */}
-          <Route path="/invoice" element={<InvoiceForm />} />  {/* Route for InvoiceForm */}
-          <Route path="/feedback" element={<FeedbackForm />} />  {/* Route for FeedbackForm */}
+          <Route path="/" element={<InvoiceForm />} />  
+          <Route path="/invoice" element={<InvoiceForm />} />  
+          <Route path="/feedback" element={<FeedbackForm />} />  
         </Routes>
       </div>
     </Router>
