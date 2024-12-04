@@ -14,6 +14,21 @@ function CartPage() {
   const [isSharedOrder, setIsSharedOrder] = useState(true);
   const [myItems, setMyItems] = useState([]); 
 
+  useEffect(() => {
+    const isPageRefresh = !sessionStorage.getItem('app_initialized');
+    
+    if (isPageRefresh) {
+      // Clear cart on page refresh
+      setMyItems([]);
+      localStorage.removeItem('sharedCartItems');
+      sessionStorage.setItem('app_initialized', 'true');
+    } else {
+      // Load saved items if navigating normally
+      const savedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
+      setMyItems(savedItems);
+    }
+  }, []);
+
 
   useEffect(() => {
     const savedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
@@ -685,32 +700,49 @@ function CartPage() {
         </div>
 
         <div className="summary-section">
-          <h2>Order Summary</h2>
-          <div className="summary-row">
-            <span>My Items Total</span>
-            <span>£{totals.myTotal.toFixed(2)}</span>
-          </div>
-          <div className="summary-row">
-            <span>Shared Items Total</span>
-            <span>£{totals.totalShared.toFixed(2)}</span>
-          </div>
-          <div className="summary-row">
-            <span>Delivery Fee</span>
-            <span>£{totals.deliveryFee.toFixed(2)}</span>
-          </div>
-          <div className="delivery-savings">
-            <span>75% Off Delivery Fee Savings</span>
-            <span>-£{(totals.deliveryFee - totals.discountedDelivery).toFixed(4)}</span>
-          </div>
-          <div className="summary-divider"></div>
-          <div className="summary-row total-row">
-            <span>Total</span>
-            <span>£{totals.grandTotal.toFixed(2)}</span>
-          </div>
-          <button className="checkout-btn">
-            Continue to checkout →
-          </button>
-        </div>
+  <h2>Order Summary</h2>
+  <div className="summary-row">
+    <span>My Items Total</span>
+    <span>£{totals.myTotal.toFixed(2)}</span>
+  </div>
+  <div className="summary-row">
+    <span>Delivery Fee</span>
+    <span style={{ textDecoration: 'line-through' }}>£{totals.deliveryFee.toFixed(2)}</span>
+  </div>
+  <div className="delivery-savings">
+    <span>My Share of Delivery Fee (75% off)</span>
+    <span>£{(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4).toFixed(2)}</span>
+  </div>
+  <div className="summary-divider"></div>
+  <div className="summary-row total-row">
+    <span>My Total to Pay</span>
+    <span>£{(totals.myTotal + (totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4)).toFixed(2)}</span>
+  </div>
+
+  <div style={{ marginTop: '20px', color: '#666' }}>
+    <div className="summary-row" style={{ fontSize: '14px' }}>
+      <span>Other Participants</span>
+    </div>
+    <div className="summary-row">
+      <span>Shared Items Total</span>
+      <span>£{totals.totalShared.toFixed(2)}</span>
+    </div>
+    <div className="summary-row">
+      <span>Their Delivery Fee (3 people)</span>
+      <span>£{((totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4) * 3).toFixed(2)}</span>
+    </div>
+    <div className="summary-row">
+      <span>Total Order Value</span>
+      <span>£{(totals.myTotal + totals.totalShared + totals.deliveryFee * (1 - SHARED_DISCOUNT)).toFixed(2)}</span>
+    </div>
+  </div>
+
+  
+
+  <button className="checkout-btn">
+    Continue to checkout (£{(totals.myTotal + (totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4)).toFixed(2)}) →
+  </button>
+</div>
       </div>
 
 

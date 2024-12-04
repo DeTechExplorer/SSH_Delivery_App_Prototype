@@ -9,6 +9,22 @@ function IndividualCartPage() {
   const navigate = useNavigate();
   const [myItems, setMyItems] = useState([]); 
 
+  useEffect(() => {
+    const isPageRefresh = !sessionStorage.getItem('app_initialized');
+    
+    if (isPageRefresh) {
+      // Clear cart on page refresh
+      setMyItems([]);
+      localStorage.removeItem('individualCartItems');
+      sessionStorage.setItem('app_initialized', 'true');
+    } else {
+      // Load saved items if navigating normally
+      const savedItems = JSON.parse(localStorage.getItem('individualCartItems') || '[]');
+      setMyItems(savedItems);
+    }
+  }, []);
+
+
 
   // IndividualCartPage.js
 
