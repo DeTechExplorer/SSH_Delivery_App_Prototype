@@ -85,7 +85,7 @@ function SnackPage() {
             }
     
             #logo-img {
-                max-height: 80px;
+                max-height: 130px;
             }
     
             #search-box input {
