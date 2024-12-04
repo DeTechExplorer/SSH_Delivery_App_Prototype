@@ -42,57 +42,51 @@ function HomePage() {
   const navigate = useNavigate();
 
 
-
-  // Initialize cart state on component mount
-  useEffect(() => {
-    // Check if this is a fresh page load
-    const isPageRefresh = !sessionStorage.getItem('app_initialized');
+// Initialize cart state on component mount
+useEffect(() => {
+  // Check if this is a fresh page load
+  const isPageRefresh = !sessionStorage.getItem('app_initialized');
+  
+  if (isPageRefresh) {
+    // Clear localStorage on fresh page load/reload
+    localStorage.removeItem('sharedCartItems');
+    localStorage.removeItem('individualCartItems');
+    localStorage.removeItem('isSharedOrder');
+    localStorage.removeItem('hasSeenPopup'); // Also clear the popup flag on fresh reload
+    // Set flag to indicate app has been initialized
+    sessionStorage.setItem('app_initialized', 'true');
+    setCartCount(0);
+    setIsSharedOrder(false);
+    // Show popup on fresh page load
+    setShowInitialPopup(true);
+  } else {
+    // If navigating using buttons, restore previous state
+    const savedIsShared = localStorage.getItem('isSharedOrder') === 'true';
+    setIsSharedOrder(savedIsShared);
     
-    if (isPageRefresh) {
-      // Clear localStorage on fresh page load/reload
-      localStorage.removeItem('sharedCartItems');
-      localStorage.removeItem('individualCartItems');
-      localStorage.removeItem('isSharedOrder');
-      // Set flag to indicate app has been initialized
-      sessionStorage.setItem('app_initialized', 'true');
-      setCartCount(0);
-      setIsSharedOrder(false);
-    } else {
-      // If navigating using buttons, restore previous state
-      const savedIsShared = localStorage.getItem('isSharedOrder') === 'true';
-      setIsSharedOrder(savedIsShared);
+    if (savedIsShared) {
+      // Calculate total items from dummy orders
+      const dummyItemsCount = DUMMY_SHARED_ORDERS.reduce((total, person) => {
+        return total + person.items.reduce((sum, item) => sum + item.quantity, 0);
+      }, 0);
       
-      if (savedIsShared) {
-        // Calculate total items from dummy orders
-        const dummyItemsCount = DUMMY_SHARED_ORDERS.reduce((total, person) => {
-          return total + person.items.reduce((sum, item) => sum + item.quantity, 0);
-        }, 0);
-        
-        // Add any user items from shared cart
-        const userItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
-        const userItemsCount = userItems.reduce((sum, item) => sum + item.quantity, 0);
-        
-        setCartCount(dummyItemsCount + userItemsCount);
-      } else {
-        const individualItems = JSON.parse(localStorage.getItem('individualCartItems') || '[]');
-        setCartCount(individualItems.reduce((sum, item) => sum + item.quantity, 0));
-      }
+      // Add any user items from shared cart
+      const userItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
+      const userItemsCount = userItems.reduce((sum, item) => sum + item.quantity, 0);
+      
+      setCartCount(dummyItemsCount + userItemsCount);
+    } else {
+      const individualItems = JSON.parse(localStorage.getItem('individualCartItems') || '[]');
+      setCartCount(individualItems.reduce((sum, item) => sum + item.quantity, 0));
     }
-  }, []);
+  }
+}, []);
 
-  // Update localStorage when shared order status changes
-  useEffect(() => {
-    localStorage.setItem('isSharedOrder', isSharedOrder);
-  }, [isSharedOrder]);
 
-  // Initialize popup state on component mount
-  useEffect(() => {
-    const hasSeenPopup = localStorage.getItem('hasSeenPopup');
-    if (!hasSeenPopup) {
-      setShowInitialPopup(true);
-      localStorage.setItem('hasSeenPopup', 'true');
-    }
-  }, []);
+useEffect(() => {
+  localStorage.setItem('isSharedOrder', isSharedOrder);
+}, [isSharedOrder]);
+
 
 
   useEffect(() => {
