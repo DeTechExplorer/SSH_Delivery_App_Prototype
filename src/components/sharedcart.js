@@ -66,14 +66,14 @@ function CartPage() {
         name: 'Sourdough Bread',
         price: 4.50,
         quantity: 2,
-        image: '/api/placeholder/130/130'
+        image: 'https://i0.wp.com/daddioskitchen.com/wp-content/uploads/2022/12/IMG-4832.jpg?fit=3024%2C3024&ssl=1'
       },
       {
-        id: 'organic-eggs',
-        name: 'Organic Eggs',
+        id: 'fresh-eggs',
+        name: 'Fresh Eggs',
         price: 3.99,
         quantity: 1,
-        image: '/api/placeholder/130/130'
+        image: 'https://www.fruitsbox.ae/cdn/shop/products/BrownEggs30_528x.jpg?v=1613217638'
       }
     ],
     'Sarah': [
@@ -82,14 +82,14 @@ function CartPage() {
         name: 'Vanilla Cupcakes',
         price: 2.50,
         quantity: 6,
-        image: '/api/placeholder/130/130'
+        image: 'https://www.curlyscooking.co.uk/wp-content/uploads/2014/03/Vanilla-Cupcakes-G-scaled.jpg'
       },
       {
         id: 'fresh-berries',
-        name: 'Fresh Berries',
-        price: 4.99,
+        name: 'Strawberry',
+        price: 2.50,
         quantity: 2,
-        image: '/api/placeholder/130/130'
+        image: 'https://pngimg.com/d/strawberry_PNG2598.png'
       }
     ],
     'Mike': [
@@ -98,14 +98,14 @@ function CartPage() {
         name: 'Fresh Bagels',
         price: 2.20,
         quantity: 4,
-        image: '/api/placeholder/130/130'
+        image: 'https://pngimg.com/d/bagel_PNG72.png'
       },
       {
         id: 'cream-cheese',
         name: 'Cream Cheese',
         price: 3.49,
         quantity: 1,
-        image: '/api/placeholder/130/130'
+        image: 'https://cdn.puckarabia.com/494b1e/globalassets/new-products-pictures/packshots/resized/11-puck-cream-500g-en.png?width=500&height=500&mode=crop&format=webp'
       }
     ]
   });
