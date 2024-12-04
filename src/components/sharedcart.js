@@ -577,7 +577,7 @@ function CartPage() {
       <div className="location-bar">
         SSH Delivery
         <div className="shared-order-badge">
-          Shared Order Active with 4 participants
+          Shared Order Active with 3 participants
         </div>
       </div>
 
@@ -689,8 +689,8 @@ function CartPage() {
             <span>£{totals.deliveryFee.toFixed(2)}</span>
           </div>
           <div className="delivery-savings">
-            <span>50% Off Delivery Fee Savings</span>
-            <span>-£{(totals.deliveryFee - totals.discountedDelivery).toFixed(2)}</span>
+            <span>75% Off Delivery Fee Savings</span>
+            <span>-£{(totals.deliveryFee - totals.discountedDelivery).toFixed(4)}</span>
           </div>
           <div className="summary-divider"></div>
           <div className="summary-row total-row">

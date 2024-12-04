@@ -1,6 +1,6 @@
 // BreakfastPage.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getProductsByCategory } from './productsData';
 import Logo from '../images/logo.jpeg';
 
@@ -10,6 +10,11 @@ function BreakfastPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get isSharedOrder from location state passed from HomePage
+  const isSharedOrder = location.state?.isSharedOrder || false;
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -42,6 +47,15 @@ function BreakfastPage() {
         ...prev,
         [productId]: 0
       }));
+    }
+  };
+
+  const handleCartClick = () => {
+    // Use the same logic as HomePage
+    if (isSharedOrder) {
+      navigate('/sharedcart');
+    } else {
+      navigate('/individualCart');
     }
   };
 
@@ -369,11 +383,11 @@ function BreakfastPage() {
       </section>
 
       <div className="bottom-nav">
-        <button onClick={() => navigate('/')}>Categories</button>
-        <button onClick={() => navigate('/')}>Home</button>
-        <button id="cart-btn">
+        <button onClick={() => navigate('/categories')}>Categories</button>
+        <button onClick={() => navigate('/', { state: { isSharedOrder } })}>Home</button>
+        <button id="cart-btn" onClick={handleCartClick}>
           <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
-          Cart ({cartCount})
+          Cart ({cartCount}) {isSharedOrder && '(Shared)'}
         </button>
       </div>
     </>
