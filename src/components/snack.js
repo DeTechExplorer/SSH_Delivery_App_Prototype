@@ -352,7 +352,7 @@ function SnackPage() {
         )}
       </section>
       <div className="bottom-nav">
-        <button onClick={() => navigate('/')}>Category</button>
+        <button onClick={() => navigate('/')}>Categories</button>
         <button onClick={() => navigate('/')}>Home</button>
         <button id="cart-btn">
           <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
