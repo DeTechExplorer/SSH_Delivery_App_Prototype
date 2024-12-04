@@ -14,21 +14,6 @@ function CartPage() {
   const [isSharedOrder, setIsSharedOrder] = useState(true);
   const [myItems, setMyItems] = useState([]); 
 
-  useEffect(() => {
-    const isPageRefresh = !sessionStorage.getItem('app_initialized');
-    
-    if (isPageRefresh) {
-      // Clear cart on page refresh
-      setMyItems([]);
-      localStorage.removeItem('sharedCartItems');
-      sessionStorage.setItem('app_initialized', 'true');
-    } else {
-      // Load saved items if navigating normally
-      const savedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
-      setMyItems(savedItems);
-    }
-  }, []);
-
 
   useEffect(() => {
     const savedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');

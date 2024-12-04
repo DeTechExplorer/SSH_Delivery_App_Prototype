@@ -1,6 +1,6 @@
 // HomePage.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllCategories } from './productsData';
 import bannerImage from '../images/promotion banner.png';
 import Logo from '../images/logo.jpeg';
@@ -40,6 +40,8 @@ function HomePage() {
   const [isSharedOrder, setIsSharedOrder] = useState(false);
   const [showInitialPopup, setShowInitialPopup] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  
 
 
 // Initialize cart state on component mount
@@ -63,6 +65,12 @@ useEffect(() => {
     // If navigating using buttons, restore previous state
     const savedIsShared = localStorage.getItem('isSharedOrder') === 'true';
     setIsSharedOrder(savedIsShared);
+
+    // If coming from shared cart, ensure shared order state is maintained
+    if (location.state?.isSharedOrder) {
+      setIsSharedOrder(true);
+      localStorage.setItem('isSharedOrder', 'true');
+    }
     
     if (savedIsShared) {
       // Calculate total items from dummy orders
