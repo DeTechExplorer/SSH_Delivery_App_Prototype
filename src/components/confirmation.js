@@ -65,13 +65,13 @@ const styles = {
   },
   logoContainer: {
     display: "flex",
-    justifyContent: "flex-start",
-    padding: "20px",
-    paddingLeft: "30px",
+    justifyContent: "center", // Centers the logo horizontally
+    padding: "20px",           // Padding to give some space around the logo
   },
+  
   logoImg: {
-    height: "80px",
-    width: "80px",
+    height: "110px",
+    width: "110px",
     objectFit: "contain",
   },
   confirmationContainer: {
@@ -81,6 +81,7 @@ const styles = {
     justifyContent: "center",
     padding: "40px 20px",
     minHeight: "calc(100vh - 200px)",
+    marginTop: "-50px",
   },
   confirmationBox: {
     backgroundColor: "#bde0fe",
