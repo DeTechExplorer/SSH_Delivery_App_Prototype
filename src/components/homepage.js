@@ -69,7 +69,9 @@ function HomePage() {
   }, []);
 
   const handleCategoryClick = (categoryId) => {
-    navigate(`/category/${categoryId}`);
+    navigate(`/category/${categoryId}`, { 
+      state: { isSharedOrder } 
+    });
   };
   
   const handleSharedOrderClick = () => {
