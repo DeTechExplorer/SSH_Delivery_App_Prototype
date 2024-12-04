@@ -10,22 +10,12 @@ function IndividualCartPage() {
   const [myItems, setMyItems] = useState([]); 
 
 
-  // Handle new items being added
-  useEffect(() => {
-    if (location.state?.newItem) {
-      setMyItems(prevItems => {
-        const existingItem = prevItems.find(item => item.id === location.state.newItem.id);
-        if (existingItem) {
-          return prevItems.map(item =>
-            item.id === location.state.newItem.id
-              ? { ...item, quantity: item.quantity + location.state.newItem.quantity }
-              : item
-          );
-        }
-        return [...prevItems, location.state.newItem];
-      });
-    }
-  }, [location.state]);
+  // IndividualCartPage.js
+
+useEffect(() => {
+  const savedItems = JSON.parse(localStorage.getItem('individualCartItems') || '[]');
+  setMyItems(savedItems);
+}, []);
 
 
   const updateQuantity = (itemId, change) => {
