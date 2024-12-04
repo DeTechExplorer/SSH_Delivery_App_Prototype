@@ -1,14 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Logo from '../images/logo.jpeg';
+
 
 const DELIVERY_FEE = 7.99;
 const SHARED_DISCOUNT = 0.5; // 50% discount on delivery for shared orders
 
 function CartPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isSharedOrder, setIsSharedOrder] = useState(true);
   const [myItems, setMyItems] = useState([]); 
+
+
+  // Handle new items being added
+  useEffect(() => {
+    if (location.state?.newItem) {
+      setMyItems(prevItems => {
+        const existingItem = prevItems.find(item => item.id === location.state.newItem.id);
+        if (existingItem) {
+          return prevItems.map(item =>
+            item.id === location.state.newItem.id
+              ? { ...item, quantity: item.quantity + location.state.newItem.quantity }
+              : item
+          );
+        }
+        return [...prevItems, location.state.newItem];
+      });
+    }
+  }, [location.state]);
+
 
   // Group shared items by user
   const [sharedOrders] = useState({
