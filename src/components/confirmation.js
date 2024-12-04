@@ -1,4 +1,5 @@
 import React from "react";
+import logo from '../images/logo.jpeg';
 
 const OrderConfirmation = () => {
   const generateOrderNumber = () => {
@@ -11,14 +12,10 @@ const OrderConfirmation = () => {
 
   return (
     <div style={styles.body}>
-      <header className="top-bar" style={styles.topBar}>
-        <div className="logo-search-location" style={styles.logoSearchLocation}>
-          <div id="logo" style={styles.logo}>
-            <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" style={styles.logoImg} />
-          </div>
-        </div>
-        <div style={styles.locationBar}>SSH Home Grocers</div>
-      </header>
+      <div style={styles.locationBar}>SSH Home Grocers</div>
+      <div style={styles.logoContainer}>
+        <img src={logo} alt="Logo" style={styles.logoImg} />
+      </div>
       <div style={styles.confirmationContainer}>
         <div style={styles.confirmationBox}>
           <div style={styles.confirmationIcon}>✓</div>
@@ -57,33 +54,25 @@ const styles = {
     margin: 0,
     padding: 0,
     minHeight: "100vh",
-    backgroundColor: "#f0f4f8",
+    backgroundColor: "#ffffff",
     color: "#2c3e50",
   },
-  topBar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "10px 20px",
+  locationBar: {
     backgroundColor: "#3498db",
+    color: "white",
+    padding: "10px",
+    textAlign: "center",
   },
-  logoSearchLocation: {
+  logoContainer: {
     display: "flex",
-    alignItems: "center",
-  },
-  logo: {
-    marginRight: "20px",
+    justifyContent: "flex-start",
+    padding: "20px",
+    paddingLeft: "30px",
   },
   logoImg: {
-    height: "50px",
-    width: "50px",
+    height: "80px",
+    width: "80px",
     objectFit: "contain",
-  },
-  locationBar: {
-    color: "white",
-    fontSize: "18px",
-    fontWeight: "bold",
-    textAlign: "center",
   },
   confirmationContainer: {
     display: "flex",
@@ -91,10 +80,10 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     padding: "40px 20px",
-    minHeight: "calc(100vh - 150px)",
+    minHeight: "calc(100vh - 200px)",
   },
   confirmationBox: {
-    backgroundColor: "white",
+    backgroundColor: "#bde0fe",
     borderRadius: "10px",
     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     padding: "40px",
