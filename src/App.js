@@ -1,20 +1,29 @@
 import React from 'react';
 import './App.css';
-import InvoiceForm from './components/cardpayment';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import DairyPage from './components/dairy'; 
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import InvoiceForm from './components/cardpayment';  // Import InvoiceForm
+import FeedbackForm from './components/feedback';  // Import FeedbackForm
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <header className="App-header">
-          {/* Define routes for different pages */}
-          <Routes>
-            <Route path="/" element={<InvoiceForm />} /> {/* Default route */}
-            <Route path="/dairy" element={<DairyPage />} /> {/* DairyPage route */}
-          </Routes>
-        </header>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/invoice">View Invoice Form</Link>  {/* Link to InvoiceForm */}
+            </li>
+            <li>
+              <Link to="/feedback">Give Feedback</Link>  {/* Link to FeedbackForm */}
+            </li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<InvoiceForm />} />  {/* Default route */}
+          <Route path="/invoice" element={<InvoiceForm />} />  {/* Route for InvoiceForm */}
+          <Route path="/feedback" element={<FeedbackForm />} />  {/* Route for FeedbackForm */}
+        </Routes>
       </div>
     </Router>
   );
