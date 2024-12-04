@@ -295,4 +295,7 @@ function SnackPage() {
             }
             `}
           </style>
-    
+          
+          <div className="location-bar">
+        SSH Delivery
+      </div>
