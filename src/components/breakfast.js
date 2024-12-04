@@ -41,14 +41,40 @@ function BreakfastPage() {
   const handleAddToCart = (productId) => {
     const quantity = quantities[productId] || 0;
     if (quantity > 0) {
-      setCartCount(prev => prev + quantity);
-      // Reset quantity after adding to cart
-      setQuantities(prev => ({
-        ...prev,
-        [productId]: 0
-      }));
+       // Create the item object
+    const newItem = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: quantity
+    };
+
+    // Pass the item to the appropriate cart page via navigation state
+    if (isSharedOrder) {
+      navigate('/sharedcart', {
+        state: {
+          newItem,
+          isSharedOrder: true
+        }
+      });
+    } else {
+      navigate('/individualCart', {
+        state: {
+          newItem,
+          isSharedOrder: false
+        }
+      });
     }
-  };
+
+    setCartCount(prev => prev + quantity);
+    // Reset quantity after adding to cart
+    setQuantities(prev => ({
+      ...prev,
+      [product.id]: 0
+    }));
+  }
+};
 
   const handleCartClick = () => {
     // Use the same logic as HomePage
