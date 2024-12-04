@@ -14,22 +14,30 @@ function CartPage() {
   const [isSharedOrder, setIsSharedOrder] = useState(true);
   const [myItems, setMyItems] = useState([]); 
 
-  // Updated useEffect to always maintain shared order state
-  useEffect(() => {
-    // Set shared order state in localStorage as soon as CartPage mounts
-    localStorage.setItem('isSharedOrder', 'true');
-    setIsSharedOrder(true);
-
-     // Load saved items
-     const savedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
-     setMyItems(savedItems);
-   }, []); // Empty dependency array means this runs once when component mounts
- 
-
+   // Initial loading of cart items and shared order state
    useEffect(() => {
-    localStorage.setItem('sharedCartItems', JSON.stringify(myItems));
-  }, [myItems]);
+    try {
+      // Set shared order state
+      localStorage.setItem('isSharedOrder', 'true');
+      setIsSharedOrder(true);
 
+      // Load saved cart items
+      const savedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
+      console.log('Loading saved items:', savedItems); // Debug log
+      setMyItems(savedItems);
+    } catch (error) {
+      console.error('Error loading cart items:', error);
+      setMyItems([]);
+    }
+  }, []); 
+
+  // Save cart items whenever they change
+  useEffect(() => {
+    if (myItems && myItems.length > 0) {
+      localStorage.setItem('sharedCartItems', JSON.stringify(myItems));
+      console.log('Saving items:', myItems); // Debug log
+    }
+  }, [myItems]);
 
   const handleNavigate = (path) => {
     // Always pass isSharedOrder as true since we're in shared cart
@@ -102,9 +110,12 @@ function CartPage() {
     ]
   });
 
-  // Calculate initial cart count from shared orders
+  // Calculate total cart count including both user items and shared orders
   const [cartCount, setCartCount] = useState(() => {
-    return Object.values(sharedOrders).flat().reduce((sum, item) => sum + item.quantity, 0);
+    const dummyCount = Object.values(sharedOrders).flat().reduce((sum, item) => sum + item.quantity, 0);
+    const savedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
+    const myItemsCount = savedItems.reduce((sum, item) => sum + item.quantity, 0);
+    return dummyCount + myItemsCount;
   });
 
 
@@ -117,13 +128,10 @@ function CartPage() {
             : item
         ).filter(item => item.quantity > 0);
         
-        // Update cart count to include both dummy items and updated my items
+        // Update cart count
         const dummyItemsCount = Object.values(sharedOrders).flat().reduce((sum, item) => sum + item.quantity, 0);
         const myItemsCount = updatedItems.reduce((sum, item) => sum + item.quantity, 0);
         setCartCount(dummyItemsCount + myItemsCount);
-        
-        // Save to localStorage
-        localStorage.setItem('sharedCartItems', JSON.stringify(updatedItems));
         
         return updatedItems;
       });
@@ -133,18 +141,22 @@ function CartPage() {
   const addToCart = (item) => {
     setMyItems(prevItems => {
       const existingItem = prevItems.find(i => i.id === item.id);
-      if (existingItem) {
-        return prevItems.map(i => 
-          i.id === item.id 
-            ? { ...i, quantity: i.quantity + 1 }
-            : i
-        );
-      }
-      return [...prevItems, { ...item, quantity: 1 }];
-    });
-    setCartCount(prev => prev + 1); // This will add to the existing count of dummy items
-  };
+      const updatedItems = existingItem
+        ? prevItems.map(i => 
+            i.id === item.id 
+              ? { ...i, quantity: i.quantity + 1 }
+              : i
+          )
+        : [...prevItems, { ...item, quantity: 1 }];
 
+      // Update cart count
+      const dummyItemsCount = Object.values(sharedOrders).flat().reduce((sum, item) => sum + item.quantity, 0);
+      const myItemsCount = updatedItems.reduce((sum, item) => sum + item.quantity, 0);
+      setCartCount(dummyItemsCount + myItemsCount);
+
+      return updatedItems;
+    });
+  };
 
   const calculateTotals = () => {
     const myTotal = myItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
