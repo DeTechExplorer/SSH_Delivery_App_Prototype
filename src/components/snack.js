@@ -359,6 +359,12 @@ function SnackPage() {
           Cart ({cartCount})
         </button>
       </div>
+      </>
+  );
+}
+
+export default SnackPage;
+
 
 
   
