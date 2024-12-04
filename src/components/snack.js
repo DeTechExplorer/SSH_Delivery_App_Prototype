@@ -25,3 +25,21 @@ function SnackPage() {
         fetchProducts();
       }, []);
     
+      const updateQuantity = (itemId, change) => {
+        setQuantities(prev => ({
+          ...prev,
+          [itemId]: Math.max(0, (prev[itemId] || 0) + change),
+        }));
+      };
+    
+      const handleAddToCart = (productId) => {
+        const quantity = quantities[productId] || 0;
+        if (quantity > 0) {
+          setCartCount(prev => prev + quantity);
+          setQuantities(prev => ({
+            ...prev,
+            [productId]: 0,
+          }));
+        }
+      };
+    
