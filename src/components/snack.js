@@ -295,7 +295,23 @@ function SnackPage() {
             }
             `}
           </style>
-          
+
           <div className="location-bar">
         SSH Delivery
       </div>
+      <header className="top-bar">
+        <div className="logo-search-location">
+          <div id="logo">
+            <img src={logo} alt="Logo" id="logo-img" />
+          </div>
+          <div id="search-box">
+            <input type="text" placeholder="Search items..." />
+          </div>
+        </div>
+        <div id="location-btn-container">
+          <span id="location-text">Deliver to:</span>
+          <button id="location-btn">SSH Home London, UK</button>
+        </div>
+      </header>
+
+
