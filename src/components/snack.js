@@ -313,5 +313,9 @@ function SnackPage() {
           <button id="location-btn">SSH Home London, UK</button>
         </div>
       </header>
+      <section id="snacks-section">
+        <h2>Snack Products</h2>
+        {loading ? (
+          <div className="loading">Loading snack products...</div>
 
 
