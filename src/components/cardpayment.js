@@ -67,7 +67,7 @@ function InvoiceForm() {
                </div>
                <form onSubmit={handleSubmit}>
                    <div style={styles.formGroup}>
-                   <label style={{ color: 'black', fontSize: '14px' }}>Card number</label>
+                   <label style={{ color: 'black', fontSize: '15px' }}>Card number</label>
                        <input
                            type="text"
                            name="cardNumber"
@@ -81,7 +81,7 @@ function InvoiceForm() {
                        />
                    </div>
                    <div style={styles.formGroup}>
-                   <label style={{ color: 'black', fontSize: '14px' }}>Name on card</label>
+                   <label style={{ color: 'black', fontSize: '15px' }}>Name on card</label>
                        <input
                            type="text"
                            name="nameOnCard"
@@ -93,7 +93,7 @@ function InvoiceForm() {
                        />
                    </div>
                    <div style={styles.formGroup}>
-                   <label style={{ color: 'black', fontSize: '14px' }}>Expiry Month</label>
+                   <label style={{ color: 'black', fontSize: '15px' }}>Expiry Month</label>
                        <input
                            type="text"
                            name="expiryMonth"
@@ -106,7 +106,7 @@ function InvoiceForm() {
                        />
                    </div>
                    <div style={styles.formGroup}>
-                   <label style={{ color: 'black', fontSize: '14px' }}>Expiry Year</label>
+                   <label style={{ color: 'black', fontSize: '15px' }}>Expiry Year</label>
                        <input
                            type="text"
                            name="expiryYear"
@@ -119,7 +119,7 @@ function InvoiceForm() {
                        />
                    </div>
                    <div style={styles.formGroup}>
-                   <label style={{ color: 'black', fontSize: '14px' }}>Security code (CVV)</label>
+                   <label style={{ color: 'black', fontSize: '15px' }}>Security code (CVV)</label>
                        <input
                            type="text"
                            name="securityCode"
