@@ -305,7 +305,7 @@ function SnackPage() {
             <img src={logo} alt="Logo" id="logo-img" />
           </div>
           <div id="search-box">
-            <input type="text" placeholder="Search items..." />
+            <input type="text" placeholder="Search snack items..." />
           </div>
         </div>
         <div id="location-btn-container">
