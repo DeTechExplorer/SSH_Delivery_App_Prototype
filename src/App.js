@@ -17,7 +17,6 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/" element={<DairyPage />} />
           <Route path="/category/snack" element={<SnackPage />} />
         </Routes>
       </div>
