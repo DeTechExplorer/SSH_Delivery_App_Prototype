@@ -77,4 +77,73 @@ const FeedbackForm = () => {
   );
 };
 
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
+    backgroundColor: '#e6f3ff',
+  },
+  feedbackContainer: {
+    backgroundColor: 'white',
+    borderRadius: '15px',
+    boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
+    padding: '40px',
+    textAlign: 'center',
+    width: '500px',
+    border: '3px solid #3498db',
+  },
+  heading: {
+    color: '#3498db',
+    marginBottom: '10px',
+    fontSize: '24px',
+  },
+  description: {
+    color: '#3498db',
+    marginTop: '10px',
+    fontSize: '16px',
+  },
+  question: {
+    marginBottom: '20px',
+  },
+  label: {
+    color: '#3498db',
+    fontWeight: 'bold',
+    display: 'block',
+    marginBottom: '10px',
+  },
+  starRating: {
+    display: 'flex',
+    justifyContent: 'center',
+    fontSize: '40px',
+  },
+  star: {
+    cursor: 'pointer',
+    userSelect: 'none',
+    transition: 'color 0.2s',
+    margin: '0 5px',
+  },
+  textarea: {
+    width: '100%',
+    padding: '10px',
+    border: '2px solid #3498db',
+    borderRadius: '5px',
+    resize: 'vertical',
+    marginTop: '10px',
+  },
+  submitSection: {
+    marginTop: '20px',
+  },
+  submitButton: {
+    backgroundColor: '#3498db',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+  },
+};
+
 export default FeedbackForm;
