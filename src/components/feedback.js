@@ -62,12 +62,19 @@ const FeedbackForm = () => {
             />
           </div>
           
-        
+          <div style={styles.submitSection}>
+            <button 
+              type="submit" 
+              style={styles.submitButton}
+              disabled={rating === 0}
+            >
+              Submit Feedback
+            </button>
+          </div>
         </form>
       </div>
     </div>
   );
 };
-
 
 export default FeedbackForm;
