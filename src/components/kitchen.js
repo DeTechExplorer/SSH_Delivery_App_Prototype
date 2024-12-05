@@ -333,3 +333,16 @@ function KitchenPage() {
                 </div>
                 <button>Add to Cart</button>
             </div>
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://www.b-kosher.co.uk/wp-content/uploads/2022/08/Caster-Sugar-1kg-900x1200px.jpg" alt="Sugar (1kg)">
+                </div>
+                <p>Sugar (1kg)</p>
+                <p class="price">£1.75</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
