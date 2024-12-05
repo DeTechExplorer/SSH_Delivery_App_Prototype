@@ -372,3 +372,16 @@ function KitchenPage() {
                 </div>
                 <button>Add to Cart</button>
             </div>
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://british-grocery.com/cdn/shop/files/5000232828774_3702_oloE98JbLnRMxk51MsLQ7A_2ac16658-3ef8-4137-9545-7129afeeb19a.png?v=1693936613&width=332" alt="Cooking Oil">
+                </div>
+                <p>Cooking Oil(1L)</p>
+                <p class="price">£4.50</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
