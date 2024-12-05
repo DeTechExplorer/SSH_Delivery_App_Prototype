@@ -464,3 +464,12 @@ function KitchenPage() {
             <button>Add to Cart</button>
         </div>
     </section>
+    <!-- Bottom Navigation -->
+     <div class="bottom-nav">
+        <button>Categories</button>
+        <button>Home</button>
+        <button id="cart-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart">
+            Cart (0)
+        </button>
+    </div>
