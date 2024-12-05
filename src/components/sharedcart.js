@@ -633,9 +633,18 @@ function CartPage() {
 
       <div className="location-bar">
         SSH Delivery
-        <div className="shared-order-badge">
-          Shared Order Active with 3 participants
-        </div>
+        {isSharedOrder && (
+          <div style={{ 
+            backgroundColor: '#2ecc71', 
+            color: 'white',
+            padding: '4px 8px',
+            borderRadius: '4px',
+            marginTop: '4px',
+            fontSize: '14px'
+          }}>
+            Shared Order Active with 3 participants
+          </div>
+        )}
       </div>
 
 
