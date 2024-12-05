@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import SnackPage from './components/snack';
 import Login from './components/login'; // Import the Login component
 import OrderConfirmation from './components/confirmation'; // Import the Order Confirmation component
-
+import KitchenPage from './components/kitchen';
 
 function App() {
   return (
@@ -21,6 +21,9 @@ function App() {
             <li>
               <Link to="/order-confirmation">Order Confirmation</Link>
             </li>
+            <li>
+              <Link to="/category/kitchen-staples">View Kitchen Staples</Link>
+            </li>
           </ul>
         </nav>
 
@@ -30,6 +33,7 @@ function App() {
 
           <Route path="/order-confirmation" element={<OrderConfirmation />} />  
           <Route path="/category/snack" element={<SnackPage />} />
+          <Route path="/category/kitchen" element={<OrderConfirmation />} />  
         </Routes>
       </div>
     </Router>
