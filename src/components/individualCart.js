@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import Logo from '../images/logo.jpeg';
 
 const DELIVERY_FEE = 7.99;
 
@@ -392,7 +393,7 @@ useEffect(() => {
       <header className="top-bar">
         <div className="logo-search-location">
           <div id="logo">
-            <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" />
+            <img src={Logo} alt="Logo" id="logo-img" />
           </div>
           <div id="search-box">
             <input type="text" placeholder="Search items..." />
