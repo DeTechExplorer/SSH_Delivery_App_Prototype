@@ -202,5 +202,41 @@ function KitchenPage() {
         .kitchen-item button:hover {
             background-color: #2980b9;
         }
+            .quantity-counter {
+            display: flex;
+            align-items: center;
+            gap: 8px;  /* Reduced gap */
+            margin: 10px 0;
+        }
+
+        .quantity-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            width: 18px;  /* Made smaller and equal to height */
+            height: 18px;  /* Made smaller and equal to width */
+            border-radius: 4px;  /* Changed from 50% to 4px for squared look */
+            cursor: pointer;
+            font-size: 12px;  /* Reduced font size */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+            padding: 0;  /* Remove padding */
+            line-height: 1;  /* Ensure proper vertical centering */
+        }
+
+        .quantity-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .quantity-display {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c3e50;
+            min-width: 20px;  /* Slightly reduced */
+            text-align: center;
+        }
+
         `}
           </style>
