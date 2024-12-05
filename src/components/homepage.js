@@ -10,24 +10,24 @@ const DUMMY_SHARED_ORDERS = [
     name: "John Smith",
     room: "201",
     items: [
-      { name: "Fresh Apples", quantity: 3, price: 2.99 },
-      { name: "Greek Yogurt", quantity: 2, price: 3.49 }
+      { name: "Sourdough Bread", quantity: 2, price: 4.50 },
+      { name: "Fresh Eggs", quantity: 1, price: 3.99}
     ]
   },
   {
     name: "Sarah Johnson",
     room: "203",
     items: [
-      { name: "Organic Bananas", quantity: 2, price: 1.99 },
-      { name: "Whole Milk", quantity: 1, price: 2.49 }
+      { name: "Vanilla Cupcakes", quantity: 6, price: 2.50 },
+      { name: "Strawberry", quantity: 2, price: 2.50 }
     ]
   },
   {
     name: "Mike Chen",
     room: "205",
     items: [
-      { name: "Bread", quantity: 1, price: 2.29 },
-      { name: "Eggs", quantity: 2, price: 3.99 }
+      { name: "Fresh Bagels", quantity: 4, price: 2.20},
+      { name: "Cream Cheese", quantity: 1, price: 3.49}
     ]
   }
 ];
