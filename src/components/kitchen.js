@@ -304,3 +304,19 @@ function KitchenPage() {
           <button id="location-btn">SSH Home London, UK</button>
         </div>
       </header>
+      <section id="kitchen-section">
+        <h2>Kitchen Staples</h2>
+        <div class="kitchen-container">
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://digitalcontent.api.tesco.com/v2/media/ghs/5327232e-3cc0-465d-8796-c3a29b0fbd54/013d5947-1aec-4685-9eb4-2e6026811dab_1338076631.jpeg?h=960&w=960" alt="Rice">
+                </div>
+                <p>Rice(1kg)</p>
+                <p class="price">£5.00</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
