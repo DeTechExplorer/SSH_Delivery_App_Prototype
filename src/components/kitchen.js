@@ -411,3 +411,42 @@ function KitchenPage() {
                 </div>
                 <button>Add to Cart</button>
             </div>
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://digitalcontent.api.tesco.com/v2/media/ghs/22fb224a-1658-4e34-8ea4-59eaa1812ce1/9ae31267-0e37-4d3b-a720-96184d2cd3de_1296891052.jpeg?h=960&w=960" alt="Ground Black Pepper">
+                </div>
+                <p>Ground Black Pepper (50g)</p>
+                <p class="price">£1.30</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://m.media-amazon.com/images/I/41rhraxOdWL.jpg" alt="Olive Oil">
+                </div>
+                <p>Olive Oil (500ml)</p>
+                <p class="price">£3.99</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNCpmyaiwd4n6sMuPPjjzGlQOEWi8Ap42aEQ&s" alt="Spaghetti">
+                </div>
+                <p>Spaghetti (500g)</p>
+                <p class="price">£1.80</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+        </div>
