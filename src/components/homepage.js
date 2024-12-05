@@ -1,9 +1,10 @@
-// HomePage.js
+//HomePage.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllCategories } from './productsData';
 import bannerImage from '../images/promotion banner.png';
 import Logo from '../images/logo.jpeg';
+
 
 const DUMMY_SHARED_ORDERS = [
   {
@@ -39,8 +40,32 @@ function HomePage() {
   const [showModal, setShowModal] = useState(false);
   const [isSharedOrder, setIsSharedOrder] = useState(false);
   const [showInitialPopup, setShowInitialPopup] = useState(false);
+  const [showSwitchModal, setShowSwitchModal] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+
+  const handleSwitchToIndividual = () => {
+    if (isSharedOrder) {
+      setShowSwitchModal(true);
+    }
+  };
+  
+  const confirmSwitchToIndividual = () => {
+    // Save current shared cart items before switching
+    const currentSharedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
+    localStorage.setItem('savedSharedCartItems', JSON.stringify(currentSharedItems));
+    
+    // Switch to individual order
+    setIsSharedOrder(false);
+    localStorage.setItem('isSharedOrder', 'false');
+    
+    // Load individual cart items if they exist
+    const individualItems = JSON.parse(localStorage.getItem('individualCartItems') || '[]');
+    setCartCount(individualItems.reduce((sum, item) => sum + item.quantity, 0));
+    
+    setShowSwitchModal(false);
+  };
   
 
 
@@ -117,6 +142,18 @@ useEffect(() => {
     fetchCategories();
   }, []);
 
+  const handleSharedOrderClick = () => {
+    if (!isSharedOrder) {
+      setShowModal(true);
+      const dummyItemsCount = DUMMY_SHARED_ORDERS.reduce((total, person) => {
+        return total + person.items.reduce((sum, item) => sum + item.quantity, 0);
+      }, 0);
+      setCartCount(dummyItemsCount);
+    } else {
+      handleSwitchToIndividual();
+    }
+  };
+
 
 
   const handleCategoryClick = (categoryId) => {
@@ -126,15 +163,7 @@ useEffect(() => {
     });
   };
   
-  const handleSharedOrderClick = () => {
-    if (!isSharedOrder) {
-      setShowModal(true);
-      const dummyItemsCount = DUMMY_SHARED_ORDERS.reduce((total, person) => {
-        return total + person.items.reduce((sum, item) => sum + item.quantity, 0);
-      }, 0);
-      setCartCount(dummyItemsCount);
-    }
-  };
+  
   
   const handleJoinSharedOrder = () => {
     setIsSharedOrder(true);
@@ -172,6 +201,8 @@ useEffect(() => {
       navigate(path);
     }
   };
+
+  
 
   return (
     <>
@@ -624,27 +655,27 @@ useEffect(() => {
       </div>
 
       <header className="top-bar">
-        <div className="top-buttons">
-          <button 
-            id="shared-orders" 
-            onClick={handleSharedOrderClick}
-            style={{ 
-              backgroundColor: isSharedOrder ? '#2ecc71' : '#3498db',
-            }}
-          >
-            {isSharedOrder ? '✓ Shared Order Active' : 'Join Shared Order'}
-          </button>
-          <button 
-            id="individual-orders"
-            style={{ 
-              opacity: isSharedOrder ? 0.5 : 1,
-              cursor: isSharedOrder ? 'not-allowed' : 'pointer'
-            }}
-            disabled={isSharedOrder}
-          >
-            Individual Orders
-          </button>
-        </div>
+      <div className="top-buttons">
+  <button 
+    id="shared-orders" 
+    onClick={handleSharedOrderClick}
+    style={{ 
+      backgroundColor: isSharedOrder ? '#2ecc71' : '#3498db',
+    }}
+  >
+    {isSharedOrder ? '✓ Shared Order Active' : 'Join Shared Order'}
+  </button>
+  <button 
+    id="individual-orders"
+    onClick={() => isSharedOrder ? handleSwitchToIndividual() : null}
+    style={{ 
+      backgroundColor: !isSharedOrder ? '#2ecc71' : '#3498db',
+      cursor: 'pointer'
+    }}
+  >
+    {!isSharedOrder ? '✓ Individual Order Active' : 'Switch to Individual'}
+  </button>
+</div>
         
         <div className="logo-search-location">
           <div id="logo">
@@ -702,6 +733,35 @@ useEffect(() => {
           </div>
         </div>
       )}
+
+{showSwitchModal && (
+  <div className="modal-overlay">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h2>Switch to Individual Order?</h2>
+        <p>Your shared cart items will be saved for later</p>
+      </div>
+      <div className="modal-body">
+        <p>You can always rejoin the shared order later.</p>
+        <p>Your individual cart items will be restored.</p>
+      </div>
+      <div className="modal-footer">
+        <button 
+          className="modal-button join-button"
+          onClick={confirmSwitchToIndividual}
+        >
+          Switch to Individual
+        </button>
+        <button 
+          className="modal-button cancel-button"
+          onClick={() => setShowSwitchModal(false)}
+        >
+          Stay in Shared Order
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
 <section 
   className="promo-box" 
