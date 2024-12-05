@@ -237,6 +237,53 @@ function KitchenPage() {
             min-width: 20px;  /* Slightly reduced */
             text-align: center;
         }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
 
+        .bottom-nav button, #cart-btn {
+            display: flex;
+            align-items: center;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #cart-btn img {
+            max-height: 20px;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .kitchen-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .top-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            #search-box input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .kitchen-container {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
         `}
           </style>
