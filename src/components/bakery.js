@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getProductsByCategory } from './productsData'; // Make sure to import the correct function
 import Logo from '../images/logo.jpeg';
 
@@ -9,11 +9,21 @@ function BakeryPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Add new state for tracking both cart counts
+const [individualCartCount, setIndividualCartCount] = useState(0);
+const [sharedCartCount, setSharedCartCount] = useState(0);
+
+
+  // Get isSharedOrder from location state passed from HomePage
+  const isSharedOrder = location.state?.isSharedOrder || false;
+
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await getProductsByCategory('bakery'); // Fetch bakery products
+        const data = await getProductsByCategory('bakery');
         setProducts(data.products);
       } catch (error) {
         console.error('Error fetching bakery products:', error);
@@ -32,14 +42,75 @@ function BakeryPage() {
     }));
   };
 
-  const handleAddToCart = (productId) => {
-    const quantity = quantities[productId] || 0;
-    if (quantity > 0) {
-      setCartCount(prev => prev + quantity);
-      setQuantities(prev => ({
-        ...prev,
-        [productId]: 0
-      }));
+  // Modify handleAddToCart
+const handleAddToCart = (productId) => {
+  const quantity = quantities[productId] || 0;
+  if (quantity > 0) {
+    const product = products.find(p => p.id === productId);
+    
+    const newItem = {
+      id: productId,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: quantity
+    };
+
+    // Update the appropriate cart count based on order type
+    if (isSharedOrder) {
+      setSharedCartCount(prev => prev + quantity);
+      // Save shared cart items in localStorage
+      const currentSharedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
+      const updatedSharedItems = addOrUpdateItem(currentSharedItems, newItem);
+      localStorage.setItem('sharedCartItems', JSON.stringify(updatedSharedItems));
+    } else {
+      setIndividualCartCount(prev => prev + quantity);
+      // Save individual cart items in localStorage
+      const currentIndividualItems = JSON.parse(localStorage.getItem('individualCartItems') || '[]');
+      const updatedIndividualItems = addOrUpdateItem(currentIndividualItems, newItem);
+      localStorage.setItem('individualCartItems', JSON.stringify(updatedIndividualItems));
+    }
+    
+    // Reset quantity after adding to cart
+    setQuantities(prev => ({
+      ...prev,
+      [productId]: 0
+    }));
+  }
+};
+
+// Helper function to add or update item in cart
+const addOrUpdateItem = (currentItems, newItem) => {
+  const existingItemIndex = currentItems.findIndex(item => item.id === newItem.id);
+  
+  if (existingItemIndex !== -1) {
+    // Update quantity if item exists
+    const updatedItems = [...currentItems];
+    updatedItems[existingItemIndex].quantity += newItem.quantity;
+    return updatedItems;
+  } else {
+    // Add new item if it doesn't exist
+    return [...currentItems, newItem];
+  }
+};
+
+// Load initial cart counts on component mount
+useEffect(() => {
+  const sharedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
+  const individualItems = JSON.parse(localStorage.getItem('individualCartItems') || '[]');
+  
+  setSharedCartCount(sharedItems.reduce((total, item) => total + item.quantity, 0));
+  setIndividualCartCount(individualItems.reduce((total, item) => total + item.quantity, 0));
+}, []);
+
+
+
+  const handleCartClick = () => {
+    // Use the same logic as HomePage
+    if (isSharedOrder) {
+      navigate('/sharedcart');
+    } else {
+      navigate('/individualCart');
     }
   };
 
@@ -346,11 +417,12 @@ function BakeryPage() {
       </section>
 
       <div className="bottom-nav">
-        <button onClick={() => navigate('/')}>Categories</button>
-        <button onClick={() => navigate('/')}>Home</button>
-        <button id="cart-btn">
+        <button onClick={() => navigate('/categories')}>Categories</button>
+        <button onClick={() => navigate('/', { state: { isSharedOrder } })}>Home</button>
+        <button id="cart-btn" onClick={handleCartClick}>
           <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
-          Cart ({cartCount})
+          Cart ({isSharedOrder ? sharedCartCount : individualCartCount}) 
+          {isSharedOrder && '(Shared)'}
         </button>
       </div>
     </>
