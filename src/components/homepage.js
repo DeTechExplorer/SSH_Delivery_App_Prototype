@@ -703,10 +703,10 @@ useEffect(() => {
         </div>
       )}
 
-      <section 
-        className="promo-box" 
-        onClick={() => navigate('/promotions')}
-      >
+<section 
+  className="promo-box" 
+  onClick={() => handleNavigate('/promotions')}  
+>
         <img 
           src={bannerImage}
           alt="20% Off on Selected Items" 
