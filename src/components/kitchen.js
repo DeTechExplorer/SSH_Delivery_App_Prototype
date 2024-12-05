@@ -118,7 +118,41 @@ function KitchenPage() {
         #location-btn:hover {
             background-color: #2980b9;
         }
+        #kitchen-section {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 80px;
+        }
 
+        #kitchen-section h2 {
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        .kitchen-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            justify-content: center;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .kitchen-item {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .kitchen-item:hover {
+            transform: scale(1.05);
+        }
         
         `}
           </style>
