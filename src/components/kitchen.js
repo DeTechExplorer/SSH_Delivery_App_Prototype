@@ -305,174 +305,51 @@ function KitchenPage() {
         </div>
       </header>
       <section id="kitchen-section">
-        <h2>Kitchen Staples</h2>
-        <div class="kitchen-container">
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://digitalcontent.api.tesco.com/v2/media/ghs/5327232e-3cc0-465d-8796-c3a29b0fbd54/013d5947-1aec-4685-9eb4-2e6026811dab_1338076631.jpeg?h=960&w=960" alt="Rice">
+        <h2>Kitchen Products</h2>
+        {loading ? (
+          <div className="loading">Loading kitchen products...</div>
+        ) : (
+            <div className="kitchen-container">
+              {products.map(product => (
+                <div key={product.id} className="kitchen-item">
+                  <div className="image-container">
+                    <img src={product.image} alt={product.name} />
+                  </div>
+                  <p>{product.name}</p>
+                <p className="price">£{product.price.toFixed(2)} per {product.unit}</p>
+                <div className="quantity-counter">
+                  <button 
+                    className="quantity-btn" 
+                    onClick={() => updateQuantity(product.id, -1)}
+                  >
+                    -
+                  </button>
+                  <span className="quantity-display">
+                    {quantities[product.id] || 0}
+                  </span>
+                  <button 
+                    className="quantity-btn" 
+                    onClick={() => updateQuantity(product.id, 1)}
+                  >
+                    +
+                  </button>
                 </div>
-                <p>Rice(1kg)</p>
-                <p class="price">£5.00</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-            </div>
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1N3_D5W8NBdYPWPWy9yZHJrIDN439ZvtugQ&s" alt="Wheat Flour">
-                </div>
-                <p>Wheat Flour(1kg)</p>
-                <p class="price">£4.50</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-            </div>
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://www.b-kosher.co.uk/wp-content/uploads/2022/08/Caster-Sugar-1kg-900x1200px.jpg" alt="Sugar (1kg)">
-                </div>
-                <p>Sugar (1kg)</p>
-                <p class="price">£1.75</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-            </div>
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://digitalcontent.api.tesco.com/v2/media/ghs/85729c2c-97c3-4222-8c8d-7066855ca1f1/07ccf92a-ea1b-42b4-8bbd-0761f694a2f1_1990808342.jpeg?h=960&w=960" alt="Salt (350g)">
-                </div>
-                <p>Salt (350g)</p>
-                <p class="price">£1.00</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-            </div>
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://assets.sainsburys-groceries.co.uk/gol/1399240/1/640x640.jpg" alt="Coffee Powder">
-                </div>
-                <p>Coffee Powder (200g)</p>
-                <p class="price">£3.75</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-            </div>
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://british-grocery.com/cdn/shop/files/5000232828774_3702_oloE98JbLnRMxk51MsLQ7A_2ac16658-3ef8-4137-9545-7129afeeb19a.png?v=1693936613&width=332" alt="Cooking Oil">
-                </div>
-                <p>Cooking Oil(1L)</p>
-                <p class="price">£4.50</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-            </div>
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://m.media-amazon.com/images/I/713C+S18uSL._AC_UF894,1000_QL80_.jpg" alt="Teabags">
-                </div>
-                <p>Teabags (80 pack)</p>
-                <p class="price">£2.50</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-            </div>
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://us.britishessentials.com/cdn/shop/products/June1641_x700.jpg?v=1623830695" alt="Mixed Herbs">
-                </div>
-                <p>Mixed Herbs (30g)</p>
-                <p class="price">£1.50</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-            </div>
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://digitalcontent.api.tesco.com/v2/media/ghs/22fb224a-1658-4e34-8ea4-59eaa1812ce1/9ae31267-0e37-4d3b-a720-96184d2cd3de_1296891052.jpeg?h=960&w=960" alt="Ground Black Pepper">
-                </div>
-                <p>Ground Black Pepper (50g)</p>
-                <p class="price">£1.30</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-            </div>
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://m.media-amazon.com/images/I/41rhraxOdWL.jpg" alt="Olive Oil">
-                </div>
-                <p>Olive Oil (500ml)</p>
-                <p class="price">£3.99</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-            </div>
-            <div class="kitchen-item">
-                <div class="image-container">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNCpmyaiwd4n6sMuPPjjzGlQOEWi8Ap42aEQ&s" alt="Spaghetti">
-                </div>
-                <p>Spaghetti (500g)</p>
-                <p class="price">£1.80</p>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                    <span class="quantity-display">0</span>
-                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-                </div>
-                <button>Add to Cart</button>
-        </div>
-        <div class="kitchen-item">
-            <div class="image-container">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQRuFoanbUDFzP_rEJTex9Ji5CiV4o2bHtA&s" alt="Butter">
-            </div>
-            <p>Butter (250g)</p>
-            <p class="price">£1.70</p>
-            <div class="quantity-counter">
-                <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
-                <span class="quantity-display">0</span>
-                <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
-            </div>
-            <button>Add to Cart</button>
-        </div>
-    </section>
-    <!-- Bottom Navigation -->
-     <div class="bottom-nav">
-        <button>Categories</button>
-        <button>Home</button>
+                <button onClick={() => handleAddToCart(product.id)}>
+                  Add to Cart
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+      <div className="bottom-nav">
+        <button onClick={() => navigate('/')}>Categories</button>
+        <button onClick={() => navigate('/')}>Home</button>
         <button id="cart-btn">
-            <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart">
-            Cart (0)
+          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+          Cart ({cartCount})
         </button>
-    </div>
+      </div>
     </>
   );
 }

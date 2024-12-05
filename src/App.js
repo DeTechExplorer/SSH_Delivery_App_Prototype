@@ -22,7 +22,7 @@ function App() {
               <Link to="/order-confirmation">Order Confirmation</Link>
             </li>
             <li>
-              <Link to="/category/kitchen-staples">View Kitchen Staples</Link>
+              <Link to="/category/kitchen">View Kitchen Staples</Link>
             </li>
           </ul>
         </nav>
@@ -33,7 +33,7 @@ function App() {
 
           <Route path="/order-confirmation" element={<OrderConfirmation />} />  
           <Route path="/category/snack" element={<SnackPage />} />
-          <Route path="/category/kitchen" element={<OrderConfirmation />} />  
+          <Route path="/category/kitchen" element={<KitchenPage />} />  
         </Routes>
       </div>
     </Router>
