@@ -176,6 +176,31 @@ function KitchenPage() {
             left: 50%;
             transform: translate(-50%, -50%);
         }
+         .kitchen-item p {
+            margin: 10px 0;
+            color: #2c3e50;
+            font-weight: bold;
+        }
 
+        .kitchen-item .price {
+            color: #3498db;
+            font-size: 18px;
+        }
+
+        .kitchen-item button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            width: 120px;
+        }
+
+        .kitchen-item button:hover {
+            background-color: #2980b9;
+        }
         `}
           </style>
