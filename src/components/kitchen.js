@@ -12,10 +12,10 @@ function KitchenPage() {
     useEffect(() => {
         const fetchProducts = async () => {
           try {
-            const data = await getProductsByCategory('snacks'); // Fetch snack products
+            const data = await getProductsByCategory('kitchen-staples'); // Fetch snack products
             setProducts(data.products);
           } catch (error) {
-            console.error('Error fetching snack products:', error);
+            console.error('Error fetching kitchen staples:', error);
           } finally {
             setLoading(false);
           }
