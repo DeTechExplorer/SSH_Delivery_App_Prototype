@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation  } from 'react-router-dom';
 import { getProductsByCategory } from './productsData';
+import Logo from '../images/logo.jpeg';
 
 function FruitsAndVegPage() {
   const [cartCount, setCartCount] = useState(0);
@@ -385,7 +386,7 @@ useEffect(() => {
       <header className="top-bar">
         <div className="logo-search-location">
           <div id="logo">
-            <img src="/api/placeholder/130/130" alt="Logo" id="logo-img" />
+            <img src={Logo} alt="Logo" id="logo-img" />
           </div>
           <div id="search-box">
             <input type="text" placeholder="Search fruits and vegetables..." />
