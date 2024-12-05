@@ -473,3 +473,8 @@ function KitchenPage() {
             Cart (0)
         </button>
     </div>
+    </>
+  );
+}
+
+export default KitchenPage;
