@@ -385,3 +385,16 @@ function KitchenPage() {
                 </div>
                 <button>Add to Cart</button>
             </div>
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://m.media-amazon.com/images/I/713C+S18uSL._AC_UF894,1000_QL80_.jpg" alt="Teabags">
+                </div>
+                <p>Teabags (80 pack)</p>
+                <p class="price">£2.50</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
