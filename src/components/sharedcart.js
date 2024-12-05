@@ -5,7 +5,7 @@ import Logo from '../images/logo.jpeg';
 
 
 const DELIVERY_FEE = 7.99;
-const SHARED_DISCOUNT = 1.97; // 75% discount for 4 people
+const SHARED_DISCOUNT = 1.99; // 75% discount for 4 people
 
 
 function CartPage() {
@@ -182,7 +182,6 @@ function CartPage() {
 
   const totals = calculateTotals();
 
-  
 
   return (
     <>
@@ -751,13 +750,13 @@ function CartPage() {
     <span style={{ textDecoration: 'line-through' }}>£{totals.deliveryFee.toFixed(2)}</span>
   </div>
   <div className="delivery-savings">
-    <span>My Share of Delivery Fee (75% off)</span>
-    <span>£{(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4).toFixed(2)}</span>
+    <span>Discounted delivery fee (75% off)</span>
+    <span>£{Math.abs(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4).toFixed(2)}</span>
   </div>
   <div className="summary-divider"></div>
   <div className="summary-row total-row">
     <span>My Total to Pay</span>
-    <span>£{(totals.myTotal + (totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4)).toFixed(2)}</span>
+    <span>£{(totals.myTotal + Math.abs(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4)).toFixed(2)}</span>
   </div>
 
   <div style={{ marginTop: '20px', color: '#666' }}>
@@ -766,22 +765,25 @@ function CartPage() {
     </div>
     <div className="summary-row">
       <span>Shared Items Total</span>
-      <span>£{totals.totalShared.toFixed(2)}</span>
+      <span>£{(totals.totalShared).toFixed(2)}</span>
     </div>
     <div className="summary-row">
       <span>Their Delivery Fee (3 people)</span>
-      <span>£{((totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4) * 3).toFixed(2)}</span>
+      <span>£{Math.abs((totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4) * 3).toFixed(2)}</span>
     </div>
     <div className="summary-row">
       <span>Total Order Value</span>
-      <span>£{(totals.myTotal + totals.totalShared + totals.deliveryFee * (1 - SHARED_DISCOUNT)).toFixed(2)}</span>
+      <span>£{(
+        totals.myTotal + 
+        Math.abs(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4) + 
+        totals.totalShared + 
+        Math.abs((totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4) * 3)
+      ).toFixed(2)}</span>
     </div>
   </div>
 
-  
-
   <button className="checkout-btn">
-    Continue to checkout (£{(totals.myTotal + (totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4)).toFixed(2)}) →
+    Continue to checkout (£{(totals.myTotal + Math.abs(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4)).toFixed(2)}) →
   </button>
 </div>
       </div>
