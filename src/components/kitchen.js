@@ -153,6 +153,29 @@ function KitchenPage() {
         .kitchen-item:hover {
             transform: scale(1.05);
         }
-        
+        .image-container {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #3498db;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            position: relative;
+        }
+
+        .image-container img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
         `}
           </style>
