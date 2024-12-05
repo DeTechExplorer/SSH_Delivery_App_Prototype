@@ -398,3 +398,16 @@ function KitchenPage() {
                 </div>
                 <button>Add to Cart</button>
             </div>
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://us.britishessentials.com/cdn/shop/products/June1641_x700.jpg?v=1623830695" alt="Mixed Herbs">
+                </div>
+                <p>Mixed Herbs (30g)</p>
+                <p class="price">£1.50</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
