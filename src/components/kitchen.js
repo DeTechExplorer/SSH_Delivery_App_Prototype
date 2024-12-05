@@ -359,3 +359,16 @@ function KitchenPage() {
                 </div>
                 <button>Add to Cart</button>
             </div>
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://assets.sainsburys-groceries.co.uk/gol/1399240/1/640x640.jpg" alt="Coffee Powder">
+                </div>
+                <p>Coffee Powder (200g)</p>
+                <p class="price">£3.75</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
