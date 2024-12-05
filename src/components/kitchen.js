@@ -320,3 +320,16 @@ function KitchenPage() {
                 </div>
                 <button>Add to Cart</button>
             </div>
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1N3_D5W8NBdYPWPWy9yZHJrIDN439ZvtugQ&s" alt="Wheat Flour">
+                </div>
+                <p>Wheat Flour(1kg)</p>
+                <p class="price">£4.50</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
