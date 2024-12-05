@@ -346,3 +346,16 @@ function KitchenPage() {
                 </div>
                 <button>Add to Cart</button>
             </div>
+            <div class="kitchen-item">
+                <div class="image-container">
+                    <img src="https://digitalcontent.api.tesco.com/v2/media/ghs/85729c2c-97c3-4222-8c8d-7066855ca1f1/07ccf92a-ea1b-42b4-8bbd-0761f694a2f1_1990808342.jpeg?h=960&w=960" alt="Salt (350g)">
+                </div>
+                <p>Salt (350g)</p>
+                <p class="price">£1.00</p>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                    <span class="quantity-display">0</span>
+                    <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button>Add to Cart</button>
+            </div>
