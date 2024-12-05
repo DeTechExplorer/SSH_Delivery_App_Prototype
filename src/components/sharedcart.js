@@ -5,7 +5,7 @@ import Logo from '../images/logo.jpeg';
 
 
 const DELIVERY_FEE = 7.99;
-const SHARED_DISCOUNT = 0.75; // 75% discount for 4 people
+const SHARED_DISCOUNT = 1.97; // 75% discount for 4 people
 
 
 function CartPage() {
