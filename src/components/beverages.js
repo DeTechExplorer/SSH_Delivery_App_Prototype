@@ -356,7 +356,10 @@ function BeveragesPage() {
            <input type="text" placeholder="Search beverages..." />
          </div>
        </div>
-
+       <div id="location-btn-container">
+         <span id="location-text">Deliver to:</span>
+         <button id="location-btn">SSH Home London, UK</button>
+       </div>
      </header>
 
 
