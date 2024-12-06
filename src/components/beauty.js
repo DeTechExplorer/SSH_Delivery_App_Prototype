@@ -363,7 +363,31 @@ return (
     </header>
 
 
-    
+    <section id="beauty-section">
+      <h2>Beauty Products</h2>
+      {loading ? (
+        <div className="loading">Loading products...</div>
+      ) : (
+        <div className="beauty-container">
+          {products.map(product => (
+            <div key={product.id} className="beauty-item">
+              <div className="image-container">
+                <img src={product.image} alt={product.name} />
+              </div>
+              <p>{product.name}</p>
+              <p className="price">£{product.price}</p>
+              <div className="quantity-counter">
+                <button className="quantity-btn" onClick={() => updateQuantity(product.id, -1)}>-</button>
+                <span className="quantity-display">{quantities[product.id] || 0}</span>
+                <button className="quantity-btn" onClick={() => updateQuantity(product.id, 1)}>+</button>
+              </div>
+              <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+
 
   
     
