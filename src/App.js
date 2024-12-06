@@ -1,53 +1,49 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import InvoiceForm from './components/cardpayment'; // Import InvoiceForm
-import FeedbackForm from './components/feedback'; // Import FeedbackForm
-import DairyPage from './components/dairy'; // Import DairyPage
+import InvoiceForm from './components/cardpayment';
+import FeedbackForm from './components/feedback'; 
+import DairyPage from './components/dairy'; 
 import BeautyPage from './components/beauty';
 import BeveragesPage from './components/beverages';
-
 
 function App() {
  return (
    <Router>
      <div>
-       {/* Navigation Bar */}
+       
        <nav>
          <ul>
            <li>
-             <Link to="/invoice">View Invoice Form</Link> {/* Navigation to Invoice Form */}
+             <Link to="/invoice">View Invoice Form</Link> 
            </li>
            <li>
-             <Link to="/feedback">Give Feedback</Link> {/* Navigation to Feedback Form */}
+             <Link to="/feedback">Give Feedback</Link> 
            </li>
            <li>
-             <Link to="/category/dairy">Dairy Products</Link> {/* Navigation to Dairy Products Page */}
+             <Link to="/category/dairy">Dairy Products</Link> 
            </li>
            <li>
-             <Link to="/category/beauty">Beauty Products</Link>  {/* Link to Beauty Page */}
+             <Link to="/category/beauty">Beauty Products</Link>  
            </li>
            <li>
-             <Link to="/category/beverages">Beverages</Link>  {/* Link to Beauty Page */}
+             <Link to="/category/beverages">Beverages</Link>  
            </li>
          </ul>
        </nav>
 
-
-       {/* Define Routes */}
        <Routes>
-         <Route path="/" element={<InvoiceForm />} /> {/* Default route to Invoice Form */}
-         <Route path="/invoice" element={<InvoiceForm />} /> {/* Route for Invoice Form */}
-         <Route path="/feedback" element={<FeedbackForm />} /> {/* Route for Feedback Form */}
-         <Route path="/category/dairy" element={<DairyPage />} /> {/* Route for Dairy Products */}
-         <Route path="/category/beauty" element={<BeautyPage />} />  {/* Route for Beauty Page */}
-         <Route path="/category/beverages" element={<BeveragesPage />} />  {/* Route for Beverages Page */}
+         <Route path="/" element={<InvoiceForm />} /> 
+         <Route path="/invoice" element={<InvoiceForm />} /> 
+         <Route path="/feedback" element={<FeedbackForm />} /> 
+         <Route path="/category/dairy" element={<DairyPage />} /> 
+         <Route path="/category/beauty" element={<BeautyPage />} />  
+         <Route path="/category/beverages" element={<BeveragesPage />} />  
        </Routes>
      </div>
    </Router>
  );
 }
-
 
 export default App;
 
