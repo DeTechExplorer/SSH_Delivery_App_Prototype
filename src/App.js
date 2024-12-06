@@ -11,6 +11,7 @@ import DairyPage from './components/dairy';
 import BeveragesPage from './components/beverages'; 
 import BeautyPage from './components/beauty';
 import KitchenPage from './components/kitchen';
+import SnackPage from './components/snacks';
 
 function App() {
   return (
@@ -43,6 +44,9 @@ function App() {
             <Link to="/category/kitchen">kitchen-staples</Link>
             </li>
             <li>
+            <Link to="/category/snacks">Snacks</Link> 
+            </li>
+            <li>
               <Link to="/individualCart">IndividualCartPage</Link>
             </li>
             <li>
@@ -70,6 +74,7 @@ function App() {
           <Route path="/sharedcart" element={<CartPage />} />
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/category/kitchen-staples" element={<KitchenPage />} />
+          <Route path="/category/snacks" element={<SnackPage />} />
 
           {/* Catch all route for 404 */}
           <Route path="*" element={<Navigate to="/homepage" replace />} />
