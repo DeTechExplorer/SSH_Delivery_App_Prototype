@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getProductsByCategory } from './productsData';
 import logo from './images/LOGO.jpeg';
 
@@ -10,43 +10,107 @@ function BeveragesPage() {
  const [products, setProducts] = useState([]);
  const [loading, setLoading] = useState(true);
  const navigate = useNavigate();
+ const location = useLocation();
 
 
+// Get isSharedOrder from location state
+const isSharedOrder = location.state?.isSharedOrder || false;
+
+useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      const data = await getProductsByCategory('beverages');
+      setProducts(data.products);
+    } catch (error) {
+      console.error('Error fetching beverages products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchProducts();
+}, []);
+
+ // Load initial cart counts on component mount
  useEffect(() => {
-   const fetchProducts = async () => {
-     try {
-       const data = await getProductsByCategory('beverages');
-       setProducts(data.products);
-     } catch (error) {
-       console.error('Error fetching beverages products:', error);
-     } finally {
-       setLoading(false);
-     }
-   };
+    const sharedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
+    const individualItems = JSON.parse(localStorage.getItem('individualCartItems') || '[]');
+    
+    setSharedCartCount(sharedItems.reduce((total, item) => total + item.quantity, 0));
+    setIndividualCartCount(individualItems.reduce((total, item) => total + item.quantity, 0));
+  }, []);
+
+  const updateQuantity = (itemId, change) => {
+    setQuantities(prev => ({
+      ...prev,
+      [itemId]: Math.max(0, (prev[itemId] || 0) + change)
+    }));
+  };
 
 
-   fetchProducts();
- }, []);
-
-
- const updateQuantity = (itemId, change) => {
-   setQuantities(prev => ({
-     ...prev,
-     [itemId]: Math.max(0, (prev[itemId] || 0) + change)
-   }));
- };
-
-
+ // Update handleAddToCart to handle shared/individual carts
  const handleAddToCart = (productId) => {
-   const quantity = quantities[productId] || 0;
-   if (quantity > 0) {
-     setCartCount(prev => prev + quantity);
-     setQuantities(prev => ({
-       ...prev,
-       [productId]: 0
-     }));
-   }
- };
+    const quantity = quantities[productId] || 0;
+    if (quantity > 0) {
+      const product = products.find(p => p.id === productId);
+      
+      const newItem = {
+        id: productId,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: quantity
+      };
+
+
+       // Update the appropriate cart count based on order type
+       if (isSharedOrder) {
+        setSharedCartCount(prev => prev + quantity);
+        // Save shared cart items in localStorage
+        const currentSharedItems = JSON.parse(localStorage.getItem('sharedCartItems') || '[]');
+        const updatedSharedItems = addOrUpdateItem(currentSharedItems, newItem);
+        localStorage.setItem('sharedCartItems', JSON.stringify(updatedSharedItems));
+      } else {
+        setIndividualCartCount(prev => prev + quantity);
+        // Save individual cart items in localStorage
+        const currentIndividualItems = JSON.parse(localStorage.getItem('individualCartItems') || '[]');
+        const updatedIndividualItems = addOrUpdateItem(currentIndividualItems, newItem);
+        localStorage.setItem('individualCartItems', JSON.stringify(updatedIndividualItems));
+      }
+      
+      // Reset quantity after adding to cart
+      setQuantities(prev => ({
+        ...prev,
+        [productId]: 0
+      }));
+    }
+  };
+
+
+   // Helper function to add or update item in cart
+   const addOrUpdateItem = (currentItems, newItem) => {
+    const existingItemIndex = currentItems.findIndex(item => item.id === newItem.id);
+    
+    if (existingItemIndex !== -1) {
+      // Update quantity if item exists
+      const updatedItems = [...currentItems];
+      updatedItems[existingItemIndex].quantity += newItem.quantity;
+      return updatedItems;
+    } else {
+      // Add new item if it doesn't exist
+      return [...currentItems, newItem];
+    }
+  };
+
+   // Update handleCartClick to route to correct cart
+   const handleCartClick = () => {
+    if (isSharedOrder) {
+      navigate('/sharedcart');
+    } else {
+      navigate('/individualCart');
+    }
+  };
+
 
 
  return (
@@ -388,15 +452,14 @@ function BeveragesPage() {
 
 
 <div className="bottom-nav">
-  <button onClick={() => navigate('/')}>Categories</button>
-  <button onClick={() => navigate('/')}>Home</button>
-  <button id="cart-btn">
-    <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
-    Cart ({cartCount})
-  </button>
-</div>
-     
-         
+        <button onClick={() => navigate('/categories')}>Categories</button>
+        <button onClick={() => navigate('/', { state: { isSharedOrder } })}>Home</button>
+        <button id="cart-btn" onClick={handleCartClick}>
+          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+          Cart ({isSharedOrder ? sharedCartCount : individualCartCount}) 
+          {isSharedOrder && '(Shared)'}
+        </button>
+      </div> 
   </>
 );
 }
