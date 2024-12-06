@@ -17,6 +17,7 @@ import Checkout from './components/checkout';
 import OrderConfirmation from './components/orderConfirmation';
 import FeedbackForm from './components/feedback';
 import InvoiceForm from './components/invoiceForm';
+import MyOrdersPage from './components/myorders';
 
 
 function App() {
@@ -76,6 +77,9 @@ function App() {
             <li>
               <Link to="/invoiceForm">InvoiceForm</Link>
             </li>
+            <li>
+            <li><Link to="/myorders">My Orders</Link></li>
+            </li>
           </ul>
         </nav>
 
@@ -101,6 +105,7 @@ function App() {
           <Route path="/confirmation" element={<OrderConfirmation />} />
           <Route path="/feedback" element={<FeedbackForm />} />
           <Route path="/invoice" element={<InvoiceForm />} />
+          <Route path="/myorders" element={<MyOrdersPage />} />
 
           {/* Catch all route for 404 */}
           <Route path="*" element={<Navigate to="/homepage" replace />} />

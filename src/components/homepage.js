@@ -41,8 +41,136 @@ function HomePage() {
   const [isSharedOrder, setIsSharedOrder] = useState(false);
   const [showInitialPopup, setShowInitialPopup] = useState(false);
   const [showSwitchModal, setShowSwitchModal] = useState(false);
+  const [completedOrders, setCompletedOrders] = useState([]);
+  const [showRefundModal, setShowRefundModal] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [currentOrder, setCurrentOrder] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+
+  // Add new useEffect for loading completed orders
+  useEffect(() => {
+    const savedOrders = JSON.parse(localStorage.getItem('completedOrders') || '[]');
+    setCompletedOrders(savedOrders);
+  }, []);
+
+  // Function to handle refund request
+  const handleRefundRequest = () => {
+    const updatedOrders = completedOrders.map(order => {
+      if (order.id === currentOrder.id) {
+        return {
+          ...order,
+          items: order.items.map(item => ({
+            ...item,
+            refundRequested: selectedItems.includes(item.id)
+          }))
+        };
+      }
+      return order;
+    });
+
+    localStorage.setItem('completedOrders', JSON.stringify(updatedOrders));
+    setCompletedOrders(updatedOrders);
+    setShowRefundModal(false);
+    setSelectedItems([]);
+    alert('Refund request submitted successfully!');
+  };
+
+  // Add Refund Modal Component
+  const RefundModal = () => (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h2>Request Refund</h2>
+          <p>Select items that weren't delivered</p>
+        </div>
+        <div className="modal-body">
+          {currentOrder?.items.map(item => (
+            <div key={item.id} className="refund-item">
+              <input
+                type="checkbox"
+                id={item.id}
+                checked={selectedItems.includes(item.id)}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setSelectedItems([...selectedItems, item.id]);
+                  } else {
+                    setSelectedItems(selectedItems.filter(id => id !== item.id));
+                  }
+                }}
+                disabled={item.refundRequested}
+              />
+              <label htmlFor={item.id}>
+                {item.name} (£{item.price.toFixed(2)})
+                {item.refundRequested && <span className="refund-status"> - Refund Requested</span>}
+              </label>
+            </div>
+          ))}
+        </div>
+        <div className="modal-footer">
+          <button 
+            className="modal-button join-button"
+            onClick={handleRefundRequest}
+            disabled={selectedItems.length === 0}
+          >
+            Submit Refund Request
+          </button>
+          <button 
+            className="modal-button cancel-button"
+            onClick={() => {
+              setShowRefundModal(false);
+              setSelectedItems([]);
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Add My Orders Modal Component
+  const MyOrdersModal = () => (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h2>My Orders</h2>
+        </div>
+        <div className="modal-body">
+          {completedOrders.length === 0 ? (
+            <p>No completed orders yet</p>
+          ) : (
+            completedOrders.map(order => (
+              <div key={order.id} className="order-item">
+                <h3>Order #{order.id}</h3>
+                <p>Date: {order.date}</p>
+                <p>Total: £{order.total.toFixed(2)}</p>
+                <button 
+                  className="refund-btn"
+                  onClick={() => {
+                    setCurrentOrder(order);
+                    setShowRefundModal(true);
+                  }}
+                >
+                  Request Refund
+                </button>
+              </div>
+            ))
+          )}
+        </div>
+        <div className="modal-footer">
+          <button 
+            className="modal-button cancel-button"
+            onClick={() => navigate('/')}
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
 
 
   const handleSwitchToIndividual = () => {
@@ -201,6 +329,44 @@ useEffect(() => {
       navigate(path);
     }
   };
+
+  // Add new style for refund components
+  const additionalStyles = `
+    .refund-item {
+      padding: 10px;
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .refund-status {
+      color: #e74c3c;
+      font-style: italic;
+      margin-left: 10px;
+    }
+
+    .order-item {
+      border: 1px solid #eee;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+
+    .refund-btn {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .refund-btn:hover {
+      background-color: #c0392b;
+    }
+  `;
 
   
 
@@ -794,14 +960,19 @@ useEffect(() => {
       </section>
 
       <div className="bottom-nav">
-        <button onClick={() => handleNavigate('/categories')}>Categories</button>
+        <button onClick={() => navigate('/categories')}>Categories</button>
         <button onClick={() => handleNavigate('/')}>Home</button>
-        <button id="cart-btn" onClick={handleCartClick}> 
+        <button onClick={() => navigate('/myorders')}>My Orders</button>
+        <button id="cart-btn" onClick={handleCartClick}>
           <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
           Cart ({cartCount}) {isSharedOrder && '(Shared)'}
         </button>
       </div>
+
+      {showRefundModal && <RefundModal />}
+      {location.pathname === '/myorders' && <MyOrdersModal />}
     </>
+    
   );
 }
 
