@@ -23,4 +23,11 @@ function BeveragesPage() {
   
     fetchProducts();  // Calls the fetch function when the component mounts
   }, []);
+  const updateQuantity = (itemId, change) => {
+    setQuantities(prev => ({
+      ...prev,
+      [itemId]: Math.max(0, (prev[itemId] || 0) + change)  // Ensures quantity is never negative
+    }));
+  };
+  
 };
