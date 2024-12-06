@@ -390,7 +390,7 @@ const handleCartClick = () => {
       </style>
 
       <div className="location-bar">
-        SSH Delivery
+      SSH Home Delivers
       </div>
 
       <header className="top-bar">

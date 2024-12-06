@@ -40,7 +40,7 @@ const Checkout = () => {
     return (
         <div style={styles.body}>
             <div style={styles.locationBar}>
-                SSH Home Grocers
+            SSH Home Delivers
                 {orderData.isSharedOrder && (
                     <div style={{ 
                         backgroundColor: '#2ecc71', 

@@ -362,7 +362,7 @@ function KitchenPage() {
         `}
           </style>
           <div className="location-bar">
-        SSH Delivery
+          SSH Home Delivers
       </div>
       <header className="top-bar">
         <div className="logo-search-location">

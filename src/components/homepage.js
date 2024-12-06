@@ -639,7 +639,7 @@ useEffect(() => {
       )}
 
       <div className="location-bar">
-        SSH Delivery
+        SSH Home Delivers
         {isSharedOrder && (
           <div style={{ 
             backgroundColor: '#2ecc71', 

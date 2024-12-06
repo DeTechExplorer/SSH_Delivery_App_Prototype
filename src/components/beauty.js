@@ -409,7 +409,7 @@ return (
 
 
     <div className="location-bar">
-      SSH Delivery
+    SSH Home Delivers
     </div>
 
 

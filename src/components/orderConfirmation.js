@@ -23,7 +23,7 @@ const OrderConfirmation = () => {
 
   return (
      <div style={styles.body}>
-        <div style={styles.locationBar}>SSH Home Grocers</div>
+        <div style={styles.locationBar}>SSH Home Delivers</div>
         
         <div style={styles.logoContainer}>
           <img src={Logo} alt="SSH Home Grocers Logo" style={styles.logoImg} />
