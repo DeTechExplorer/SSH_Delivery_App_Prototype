@@ -361,6 +361,31 @@ function BeveragesPage() {
          <button id="location-btn">SSH Home London, UK</button>
        </div>
      </header>
+     <section id="beverages-section">
+  <h2>Beverages</h2>
+  {loading ? (
+    <div className="loading">Loading products...</div>  // Displays loading message while data is being fetched
+  ) : (
+    <div className="beverages-container">
+      {products.map(product => (
+        <div key={product.id} className="beverages-item">
+          <div className="image-container">
+            <img src={product.image} alt={product.name} />
+          </div>
+          <p>{product.name}</p>
+          <div className="quantity-counter">
+            <button className="quantity-btn" onClick={() => updateQuantity(product.id, -1)}>-</button>
+            <span className="quantity-display">{quantities[product.id] || 0}</span>
+            <button className="quantity-btn" onClick={() => updateQuantity(product.id, 1)}>+</button>
+          </div>
+          <p className="price">£{product.price}</p>
+          <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
+        </div>
+      ))}
+    </div>
+  )}
+</section>
+
 
 
      
