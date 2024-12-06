@@ -649,7 +649,7 @@ useEffect(() => {
             marginTop: '4px',
             fontSize: '14px'
           }}>
-            Shared Order Active with 3 participants
+            Shared Order Active with 4 participants
           </div>
         )}
       </div>

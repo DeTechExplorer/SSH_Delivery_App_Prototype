@@ -13,6 +13,16 @@ function CartPage() {
   const location = useLocation();
   const [isSharedOrder, setIsSharedOrder] = useState(true);
   const [myItems, setMyItems] = useState([]); 
+  const [showCheckoutNotification, setShowCheckoutNotification] = useState(true);
+  const [hasSeenCheckoutNotification, setHasSeenCheckoutNotification] = useState(false);
+
+  useEffect(() => {
+    const notificationSeen = localStorage.getItem('checkoutNotificationSeen');
+    if (notificationSeen) {
+      setShowCheckoutNotification(false);
+      setHasSeenCheckoutNotification(true);
+    }
+  }, []);
 
    // Initial loading of cart items and shared order state
    useEffect(() => {
@@ -55,6 +65,11 @@ function CartPage() {
     });
   };
 
+
+  const handleCloseNotification = () => {
+    setShowCheckoutNotification(false);
+    localStorage.setItem('checkoutNotificationSeen', 'true');
+  };
 
 
 
@@ -181,10 +196,35 @@ function CartPage() {
   };
 
   const totals = calculateTotals();
+  
 
 
   return (
     <>
+
+{showCheckoutNotification && !hasSeenCheckoutNotification && isSharedOrder && (
+  <div className="notification-overlay">
+    <div className="notification-content">
+      <div className="notification-header">
+        <h2>Important Notice! ⚠️</h2>
+      </div>
+      <div className="notification-body">
+        <p>You're part of a shared order! Please note that if any participant checks out,
+          other participants will have 10 minutes to complete their checkout before their items
+          are removed from the cart.</p>
+        <div className="timer-indicator">
+          ⏰ 10-minute checkout window
+        </div>
+      </div>
+      <button 
+        className="notification-button"
+        onClick={handleCloseNotification}
+      >
+        I Understand
+      </button>
+    </div>
+  </div>
+)}
       <style>
         {`
           body {
@@ -614,6 +654,70 @@ function CartPage() {
             background-color: #2980b9;
           }
 
+          .notification-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.notification-content {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notification-header h2 {
+  color: #3498db;
+  margin: 0 0 15px 0;
+  font-size: 1.5rem;
+}
+
+.notification-body {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.notification-body p {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.timer-indicator {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 15px 0;
+  font-weight: bold;
+}
+
+.notification-button {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.notification-button:hover {
+  background-color: #2980b9;
+}
+
           @media (max-width: 1024px) {
             .container {
               grid-template-columns: 1fr;
@@ -641,7 +745,7 @@ function CartPage() {
             marginTop: '4px',
             fontSize: '14px'
           }}>
-            Shared Order Active with 3 participants
+            Shared Order Active with 4 participants
           </div>
         )}
       </div>
