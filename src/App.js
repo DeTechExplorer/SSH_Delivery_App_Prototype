@@ -15,6 +15,7 @@ import SnackPage from './components/snacks';
 import MeatPoultryPage from './components/meatandpoultry';
 import Checkout from './components/checkout';
 import OrderConfirmation from './components/orderConfirmation';
+import FeedbackForm from './components/feedback';
 
 
 function App() {
@@ -68,6 +69,9 @@ function App() {
             <li>
               <Link to="/confirmation">Order Confirmation</Link>
             </li>
+            <li>
+              <Link to="/feedback">Feedback</Link>
+            </li>
           </ul>
         </nav>
 
@@ -91,6 +95,7 @@ function App() {
           <Route path="/category/meat-poultry" element={<MeatPoultryPage />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/confirmation" element={<OrderConfirmation />} />
+          <Route path="/feedback" element={<FeedbackForm />} />
 
           {/* Catch all route for 404 */}
           <Route path="*" element={<Navigate to="/homepage" replace />} />
