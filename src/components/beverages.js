@@ -387,7 +387,14 @@ function BeveragesPage() {
 </section>
 
 
-
+<div className="bottom-nav">
+  <button onClick={() => navigate('/')}>Categories</button>
+  <button onClick={() => navigate('/')}>Home</button>
+  <button id="cart-btn">
+    <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+    Cart ({cartCount})
+  </button>
+</div>
      
          
   </>
