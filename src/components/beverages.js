@@ -39,5 +39,41 @@ function BeveragesPage() {
       }));
     }
   };
-  
+  <style>
+  {`
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e8f4fa;
+      color: #2c3e50;
+    }
+
+    .location-bar {
+      background-color: #3498db;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .top-bar {
+      background-color: white;
+      padding: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+    }
+
+    /* Other styles omitted for brevity */
+
+  `}
+</style>
+
 };
