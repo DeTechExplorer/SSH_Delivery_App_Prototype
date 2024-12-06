@@ -948,6 +948,15 @@ useEffect(() => {
 </div>
 </div>
 
+
+<div className="bottom-nav">
+        <button onClick={() => navigate('/categories')}>Categories</button>
+        <button onClick={() => navigate('/')}>Home</button>
+        <button id="cart-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+          Cart
+        </button>
+      </div>
     </>
   );
 }
