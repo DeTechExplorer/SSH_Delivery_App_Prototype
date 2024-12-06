@@ -29,5 +29,15 @@ function BeveragesPage() {
       [itemId]: Math.max(0, (prev[itemId] || 0) + change)  // Ensures quantity is never negative
     }));
   };
+  const handleAddToCart = (productId) => {
+    const quantity = quantities[productId] || 0;  // Retrieves the quantity for the product
+    if (quantity > 0) {
+      setCartCount(prev => prev + quantity);  // Updates the cart count
+      setQuantities(prev => ({
+        ...prev,
+        [productId]: 0  // Resets the quantity after adding to cart
+      }));
+    }
+  };
   
 };
