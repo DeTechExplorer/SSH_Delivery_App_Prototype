@@ -358,6 +358,30 @@ function DairyPage() {
       <button id="location-btn">SSH Home London, UK</button>
     </div>
   </header>
+  <div id="dairy-section">
+    <h2>Browse Dairy Products</h2>
+    <div className="dairy-container">
+      {loading ? (
+        <div className="loading">Loading products...</div>
+      ) : (
+        products.map(product => (
+          <div key={product.id} className="dairy-item">
+            <div className="image-container">
+              <img src={product.imageUrl} alt={product.name} />
+            </div>
+            <p>{product.name}</p>
+            <p className="price">${product.price}</p>
+            <div className="quantity-counter">
+              <button className="quantity-btn" onClick={() => updateQuantity(product.id, -1)}>-</button>
+              <span className="quantity-display">{quantities[product.id] || 0}</span>
+              <button className="quantity-btn" onClick={() => updateQuantity(product.id, 1)}>+</button>
+            </div>
+            <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
+          </div>
+        ))
+      )}
+    </div>
+  </div>
 
    
        
