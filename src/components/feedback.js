@@ -8,7 +8,8 @@ const FeedbackForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const feedback = { rating, suggestions };
-    console.log(feedback);
+    console.log(feedback); // Replace with actual API call if needed
+    alert('Feedback submitted!'); // Provide feedback to user after submitting
   };
 
   return (
@@ -66,7 +67,7 @@ const FeedbackForm = () => {
             <button 
               type="submit" 
               style={styles.submitButton}
-              disabled={rating === 0}
+              disabled={rating === 0} // Only enable button if rating is selected
             >
               Submit Feedback
             </button>
