@@ -9,6 +9,20 @@ function BeautyPage() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    
-};
+    useEffect(() => {
+        const fetchProducts = async () => {
+          try {
+            const data = await getProductsByCategory('beauty-personal-care');
+            setProducts(data.products);
+          } catch (error) {
+            console.error('Error fetching beauty products:', error);
+          } finally {
+            setLoading(false);
+          }
+        };
+      
+      
+        fetchProducts();
+      }, []);
+    };      
     
