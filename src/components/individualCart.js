@@ -57,6 +57,21 @@ useEffect(() => {
 
   const totals = calculateTotal();
 
+  const handleCheckout = () => {
+    const orderData = {
+      items: myItems,
+      totals: {
+        subtotal: totals.itemsTotal,
+        deliveryFee: totals.deliveryFee,
+        total: totals.grandTotal
+      },
+      isSharedOrder: false
+    };
+
+    localStorage.setItem('checkoutData', JSON.stringify(orderData));
+    navigate('/checkout');
+  };
+
   return (
     <>
       <style>
@@ -469,9 +484,17 @@ useEffect(() => {
             <span>Total</span>
             <span>£{totals.grandTotal.toFixed(2)}</span>
           </div>
-          <button className="checkout-btn">
-            Continue to checkout →
-          </button>
+          <button 
+          className="checkout-btn"
+          onClick={handleCheckout}
+          disabled={myItems.length === 0}
+          style={{ 
+            opacity: myItems.length === 0 ? '0.5' : '1',
+            cursor: myItems.length === 0 ? 'not-allowed' : 'pointer'
+          }}
+        >
+          Continue to checkout →
+        </button>
         </div>
       </div>
 

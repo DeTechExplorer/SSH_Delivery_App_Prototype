@@ -14,15 +14,18 @@ function CartPage() {
   const [isSharedOrder, setIsSharedOrder] = useState(true);
   const [myItems, setMyItems] = useState([]); 
   const [showCheckoutNotification, setShowCheckoutNotification] = useState(true);
-  const [hasSeenCheckoutNotification, setHasSeenCheckoutNotification] = useState(false);
+const [hasSeenCheckoutNotification, setHasSeenCheckoutNotification] = useState(false);
 
-  useEffect(() => {
-    const notificationSeen = localStorage.getItem('checkoutNotificationSeen');
-    if (notificationSeen) {
-      setShowCheckoutNotification(false);
-      setHasSeenCheckoutNotification(true);
-    }
-  }, []);
+// Replace the existing notification useEffect with this:
+useEffect(() => {
+  // Using sessionStorage instead of localStorage
+  const notificationSeen = sessionStorage.getItem('checkoutNotificationSeen');
+  
+  if (notificationSeen) {
+    setShowCheckoutNotification(false);
+    setHasSeenCheckoutNotification(true);
+  }
+}, []);
 
    // Initial loading of cart items and shared order state
    useEffect(() => {
@@ -68,7 +71,33 @@ function CartPage() {
 
   const handleCloseNotification = () => {
     setShowCheckoutNotification(false);
-    localStorage.setItem('checkoutNotificationSeen', 'true');
+    setHasSeenCheckoutNotification(true);
+    // Using sessionStorage instead of localStorage
+    sessionStorage.setItem('checkoutNotificationSeen', 'true');
+  };
+
+
+  const handleCheckout = () => {
+    const orderData = {
+      items: myItems,
+      totals: {
+        subtotal: totals.myTotal,
+        deliveryFee: Math.abs(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4),
+        total: totals.myTotal + Math.abs(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4)
+      },
+      isSharedOrder: true,
+      sharedOrderDetails: {
+        totalParticipants: 4,
+        otherParticipants: Object.keys(sharedOrders),
+        totalOrderValue: totals.myTotal + 
+          Math.abs(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4) + 
+          totals.totalShared + 
+          Math.abs((totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4) * 3)
+      }
+    };
+
+    localStorage.setItem('checkoutData', JSON.stringify(orderData));
+    navigate('/checkout');
   };
 
 
@@ -654,7 +683,7 @@ function CartPage() {
             background-color: #2980b9;
           }
 
-          .notification-overlay {
+  .notification-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -886,21 +915,20 @@ function CartPage() {
     </div>
   </div>
 
-  <button className="checkout-btn">
-    Continue to checkout (£{(totals.myTotal + Math.abs(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4)).toFixed(2)}) →
-  </button>
+  <button 
+  className="checkout-btn"
+  onClick={handleCheckout}
+  disabled={myItems.length === 0}
+  style={{ 
+    opacity: myItems.length === 0 ? '0.5' : '1', 
+    cursor: myItems.length === 0 ? 'not-allowed' : 'pointer' 
+  }}
+>
+  Continue to checkout (£{(totals.myTotal + Math.abs(totals.deliveryFee * (1 - SHARED_DISCOUNT) / 4)).toFixed(2)}) →
+</button>
 </div>
-      </div>
-
-
-      <div className="bottom-nav">
-  <button onClick={() => handleNavigate('/categories')}>Categories</button>
-  <button onClick={() => handleNavigate('/')}>Home</button>
-  <button id="cart-btn">
-    <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
-    Cart 
-  </button>
 </div>
+
     </>
   );
 }

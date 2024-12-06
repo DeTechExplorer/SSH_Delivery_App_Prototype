@@ -13,6 +13,9 @@ import BeautyPage from './components/beauty';
 import KitchenPage from './components/kitchen';
 import SnackPage from './components/snacks';
 import MeatPoultryPage from './components/meatandpoultry';
+import Checkout from './components/checkout';
+import OrderConfirmation from './components/orderConfirmation';
+
 
 function App() {
   return (
@@ -59,6 +62,12 @@ function App() {
             <li>
               <Link to="/sharedcart">CartPage</Link>
             </li>
+            <li>
+              <Link to="/checkout">Checkout</Link>
+            </li>
+            <li>
+              <Link to="/confirmation">Order Confirmation</Link>
+            </li>
           </ul>
         </nav>
 
@@ -80,6 +89,8 @@ function App() {
           <Route path="/category/kitchen-staples" element={<KitchenPage />} />
           <Route path="/category/snacks" element={<SnackPage />} />
           <Route path="/category/meat-poultry" element={<MeatPoultryPage />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/confirmation" element={<OrderConfirmation />} />
 
           {/* Catch all route for 404 */}
           <Route path="*" element={<Navigate to="/homepage" replace />} />
