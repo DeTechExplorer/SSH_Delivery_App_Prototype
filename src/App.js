@@ -10,6 +10,7 @@ import PromotionsPage from './components/promotions';
 import DairyPage from './components/dairy';
 import BeveragesPage from './components/beverages'; 
 import BeautyPage from './components/beauty';
+import KitchenPage from './components/kitchen';
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
             <Link to="/category/beauty-personal-care">Beauty & Personal Care</Link>
             </li>
             <li>
+            <Link to="/category/kitchen">kitchen-staples</Link>
+            </li>
+            <li>
               <Link to="/individualCart">IndividualCartPage</Link>
             </li>
             <li>
@@ -65,6 +69,7 @@ function App() {
           <Route path="/individualCart" element={<IndividualCartPage />} />
           <Route path="/sharedcart" element={<CartPage />} />
           <Route path="/promotions" element={<PromotionsPage />} />
+          <Route path="/category/kitchen-staples" element={<KitchenPage />} />
 
           {/* Catch all route for 404 */}
           <Route path="*" element={<Navigate to="/homepage" replace />} />
