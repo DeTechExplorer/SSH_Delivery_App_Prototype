@@ -8,6 +8,7 @@ import CartPage from './components/sharedcart';
 import Homepage from './components/homepage';
 import PromotionsPage from './components/promotions';
 import DairyPage from './components/dairy';
+import BeveragesPage from './components/beverages'; 
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
               <Link to="/category/dairy">Dairy</Link> {/* Add dairy link */}
             </li>
             <li>
+              <Link to="/category/beverages">Beverages</Link> {/* Add beverages link */}
+            </li>
+            <li>
               <Link to="/individualCart">IndividualCartPage</Link>
             </li>
             <li>
@@ -52,6 +56,7 @@ function App() {
           <Route path="/category/breakfast" element={<BreakfastPage />} />
           <Route path="/category/fruits-vegetables" element={<FruitesAndVegPage />} />
           <Route path="/category/dairy" element={<DairyPage />} /> 
+          <Route path="/category/beverages" element={<BeveragesPage />} /> 
           <Route path="/individualCart" element={<IndividualCartPage />} />
           <Route path="/sharedcart" element={<CartPage />} />
           <Route path="/promotions" element={<PromotionsPage />} />
