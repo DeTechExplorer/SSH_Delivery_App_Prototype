@@ -938,7 +938,7 @@ export const productsData = {
             name: 'Chicken Breast',
             price: 5.99,
             unit: 'kg',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Chicken_breast.jpg',
+            image: 'https://ip.prod.freshop.retail.ncrcloud.com/resize?url=https://images.freshop.ncrcloud.com/1564405684704788616/6fae648619eead19beb276cef45f8cda_large.png&width=512&type=webp&quality=90',
             category: 'meat-poultry',
             inStock: true
           },
@@ -947,16 +947,16 @@ export const productsData = {
             name: 'Ground Beef',
             price: 4.50,
             unit: '500g',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Ground_beef_1.jpg',
+            image: 'https://images-cdn.ubuy.ae/66893356c7cc944ffd104823-all-natural-93-lean-7-fat-lean-ground.jpg',
             category: 'meat-poultry',
             inStock: true
           },
           {
             id: 'meat-003',
-            name: 'minced meat',
+            name: 'minced chicken',
             price: 7.25,
             unit: 'kg',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/5/55/Raw_pork_chops.jpg',
+            image: 'https://ip.prod.freshop.retail.ncrcloud.com/resize?url=https://images.freshop.ncrcloud.com/00042222013147/143254489a4edb648a9a0bc406305c9a_large.png&width=512&type=webp&quality=90',
             category: 'meat-poultry',
             inStock: true
           },
@@ -965,7 +965,7 @@ export const productsData = {
             name: 'Whole Chicken',
             price: 8.99,
             unit: 'each',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Whole_Chicken.jpg',
+            image: 'https://cdn.mafrservices.com/sys-master-root/hcc/hc1/32768335446046/1795361_main.jpg?im=Resize=480',
             category: 'meat-poultry',
             inStock: true
           },
@@ -974,7 +974,7 @@ export const productsData = {
             name: 'Turkey Breast',
             price: 9.50,
             unit: 'kg',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/3/36/Raw_turkey_breast.jpg',
+            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGFGlql2ZwfZjxrmxLgYccL9LdNbtlqPo1lw&s',
             category: 'meat-poultry',
             inStock: true
           },
@@ -983,7 +983,7 @@ export const productsData = {
             name: 'Chicken Wings',
             price: 4.75,
             unit: 'kg',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/6/65/Chicken_wing.jpg',
+            image: 'https://www.instacart.com/image-server/1864x1864/www.instacart.com/assets/domains/product-image/file/large_dda60065-6fc4-4a82-b567-5755de9211a3.jpg',
             category: 'meat-poultry',
             inStock: true
           },
@@ -992,7 +992,7 @@ export const productsData = {
             name: 'Beef Steak',
             price: 12.00,
             unit: 'kg',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/7/73/Beef_steak.jpg',
+            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXUabtKYqcKyMPLYmGQ0tmo7FSXGqfUNaDIyF1gQtMH9MicU1KzG1ARvVBAN--0gnXUZY&usqp=CAU',
             category: 'meat-poultry',
             inStock: true
           },
@@ -1001,7 +1001,7 @@ export const productsData = {
             name: 'Duck Breast',
             price: 14.50,
             unit: 'kg',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Duck_breast.jpg',
+            image: 'https://s3.us-east-1.amazonaws.com/assets.mapleleaffarms.com/content/_500x500_crop_center_85_none/Boneless-Duck-Breast-2pk-14oz_2022-03-01-223644_pysj.jpg',
             category: 'meat-poultry',
             inStock: true
           },
@@ -1010,7 +1010,7 @@ export const productsData = {
             name: 'Lamb Chops',
             price: 15.00,
             unit: 'kg',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Lamb_chops.jpg',
+            image: 'https://images-cdn.ubuy.co.in/645429721168d6620d51ea93-the-lamb-co-fresh-new-zealand-lamb-rib.jpg',
             category: 'meat-poultry',
             inStock: true
           },
@@ -1019,16 +1019,16 @@ export const productsData = {
             name: 'Sausages',
             price: 3.25,
             unit: 'pack',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Fresh_sausages.jpg',
+            image: 'https://ip.prod.freshop.retail.ncrcloud.com/resize?url=https://images.freshop.ncrcloud.com/6388202/b69b0610b3dc3a23d5d5dfb9e6cd05d0_large.png&width=512&type=webp&quality=90',
             category: 'meat-poultry',
             inStock: true
           },
           {
             id: 'meat-011',
-            name: 'Bacon',
+            name: 'Chicken Bacon',
             price: 5.00,
             unit: 'pack',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/f/f6/Bacon_rashers.jpg',
+            image: 'https://assets.woolworths.com.au/images/2010/86457.jpg?impolicy=wowcdxwbjbx&w=500&h=500',
             category: 'meat-poultry',
             inStock: true
           },
@@ -1037,7 +1037,7 @@ export const productsData = {
             name: 'Chicken Thighs',
             price: 6.25,
             unit: 'kg',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Raw_chicken_thighs.jpg',
+            image: 'https://cdn.mafrservices.com/sys-master-root/hfd/h00/27486280712222/1683907_main.jpg?im=Resize=480',
             category: 'meat-poultry',
             inStock: true
           }

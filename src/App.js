@@ -12,6 +12,7 @@ import BeveragesPage from './components/beverages';
 import BeautyPage from './components/beauty';
 import KitchenPage from './components/kitchen';
 import SnackPage from './components/snacks';
+import MeatPoultryPage from './components/meatandpoultry';
 
 function App() {
   return (
@@ -47,6 +48,9 @@ function App() {
             <Link to="/category/snacks">Snacks</Link> 
             </li>
             <li>
+              <Link to="/category/meat-poultry">Meat & Poultry</Link> 
+            </li>
+            <li>
               <Link to="/individualCart">IndividualCartPage</Link>
             </li>
             <li>
@@ -75,6 +79,7 @@ function App() {
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/category/kitchen-staples" element={<KitchenPage />} />
           <Route path="/category/snacks" element={<SnackPage />} />
+          <Route path="/category/meat-poultry" element={<MeatPoultryPage />} />
 
           {/* Catch all route for 404 */}
           <Route path="*" element={<Navigate to="/homepage" replace />} />
