@@ -5,6 +5,7 @@ import SnackPage from './components/snack';
 import Login from './components/login'; // Import the Login component
 import OrderConfirmation from './components/confirmation'; // Import the Order Confirmation component
 import KitchenPage from './components/kitchen';
+import Checkout from './components/checkout';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
             </li>
             <li>
               <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/checkout">Checkout</Link>
             </li>
             <li>
               <Link to="/order-confirmation">Order Confirmation</Link>
@@ -34,6 +38,7 @@ function App() {
           <Route path="/order-confirmation" element={<OrderConfirmation />} />  
           <Route path="/category/snack" element={<SnackPage />} />
           <Route path="/category/kitchen" element={<KitchenPage />} />  
+          <Route path="/checkout" element={<Checkout />} />  
         </Routes>
       </div>
     </Router>
