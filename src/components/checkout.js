@@ -11,189 +11,183 @@ const Checkout = () => {
       const savedOrderData = localStorage.getItem('checkoutData');
       if (!savedOrderData) {
         navigate('/cart');
-    }
-    setOrderData(JSON.parse(savedOrderData));
-  }, [navigate]);
+      }
+      setOrderData(JSON.parse(savedOrderData));
+    }, [navigate]);
 
-  const handlePaymentMethodClick = (method) => {
-    setSelectedPaymentMethod(method);
-};
+    const handlePaymentMethodClick = (method) => {
+        setSelectedPaymentMethod(method);
+    };
 
-// New function to handle order placement
-const handlePlaceOrder = () => {
-    if (selectedPaymentMethod === 'credit-card') {
-        alert('Credit card processing will be implemented soon!');
-        return;
-    }
-    
-    // Clear cart data
-    if (orderData?.isSharedOrder) {
-        localStorage.removeItem('sharedCartItems');
-    } else {
-        localStorage.removeItem('individualCartItems');
-    }
-    localStorage.removeItem('checkoutData');
-    
-    // Navigate to confirmation
-    navigate('/confirmation');
-};
+    const handlePlaceOrder = () => {
+        if (selectedPaymentMethod === 'credit-card') {
+            navigate('/invoice');
+            return;
+        }
+        
+        if (orderData?.isSharedOrder) {
+            localStorage.removeItem('sharedCartItems');
+        } else {
+            localStorage.removeItem('individualCartItems');
+        }
+        localStorage.removeItem('checkoutData');
+        
+        navigate('/confirmation');
+    };
 
     if (!orderData) return null;
-  
+
     return (
         <div style={styles.body}>
-        <div style={styles.locationBar}>
-          SSH Home Grocers
-          {orderData.isSharedOrder && (
-            <div style={{ 
-              backgroundColor: '#2ecc71', 
-              color: 'white',
-              padding: '4px 8px',
-              borderRadius: '4px',
-              marginTop: '4px',
-              fontSize: '14px'
-            }}>
-              Shared Order with {orderData.sharedOrderDetails?.totalParticipants} participants
+            <div style={styles.locationBar}>
+                SSH Home Grocers
+                {orderData.isSharedOrder && (
+                    <div style={{ 
+                        backgroundColor: '#2ecc71', 
+                        color: 'white',
+                        padding: '4px 8px',
+                        borderRadius: '4px',
+                        marginTop: '4px',
+                        fontSize: '14px'
+                    }}>
+                        Shared Order with {orderData.sharedOrderDetails?.totalParticipants} participants
+                    </div>
+                )}
             </div>
-          )}
+            
+            <div style={styles.logoContainer}>
+                <img src={Logo} alt="Logo" style={styles.logoImg} />
+            </div>
+    
+            <div style={styles.mainContainer}>
+                <div style={styles.checkoutForm}>
+                    <h2 style={styles.heading}>Checkout</h2>
+                    <div style={styles.formGroup}>
+                        <label style={styles.label}>Contact Information</label>
+                        <input
+                            type="email"
+                            placeholder="Email address"
+                            style={{ ...styles.input, marginBottom: "10px" }}
+                        />
+                        <input 
+                            type="tel" 
+                            placeholder="Phone number" 
+                            style={styles.input} 
+                        />
+                    </div>
+    
+                    <div style={styles.formGroup}>
+                        <label style={styles.label}>Payment Method</label>
+                        <div style={styles.paymentMethods}>
+                            <div
+                                style={{
+                                    ...styles.paymentMethod,
+                                    ...(selectedPaymentMethod === "credit-card" && styles.selectedMethod),
+                                }}
+                                onClick={() => handlePaymentMethodClick("credit-card")}
+                            >
+                                <img
+                                    src="/api/placeholder/40/40"
+                                    alt="Credit Card"
+                                    style={styles.paymentIcon}
+                                />
+                                <div>
+                                    <strong>Credit / Debit Card</strong>
+                                    <div style={styles.methodDescription}>Visa and Mastercard</div>
+                                </div>
+                            </div>
+                            <div
+                                style={{
+                                    ...styles.paymentMethod,
+                                    ...(selectedPaymentMethod === "apple-pay" && styles.selectedMethod),
+                                }}
+                                onClick={() => handlePaymentMethodClick("apple-pay")}
+                            >
+                                <img
+                                    src="/api/placeholder/40/40"
+                                    alt="Apple Pay"
+                                    style={styles.paymentIcon}
+                                />
+                                <div>
+                                    <strong>Apple Pay</strong>
+                                    <div style={styles.methodDescription}>Quick and secure payment</div>
+                                </div>
+                            </div>
+                            <div
+                                style={{
+                                    ...styles.paymentMethod,
+                                    ...(selectedPaymentMethod === "cod" && styles.selectedMethod),
+                                }}
+                                onClick={() => handlePaymentMethodClick("cod")}
+                            >
+                                <img
+                                    src="/api/placeholder/40/40"
+                                    alt="Cash on Delivery"
+                                    style={styles.paymentIcon}
+                                />
+                                <div>
+                                    <strong>Cash on Delivery</strong>
+                                    <div style={styles.methodDescription}>Pay when you receive</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div style={styles.orderSummary}>
+                    <h2 style={styles.heading}>Order Summary</h2>
+                    <div style={styles.orderItem}>
+                        <span>Subtotal</span>
+                        <span style={styles.price}>£{orderData.totals.subtotal.toFixed(2)}</span>
+                    </div>
+                    <div style={styles.orderItem}>
+                        <span>Delivery Fee</span>
+                        <span style={styles.price}>£{orderData.totals.deliveryFee.toFixed(2)}</span>
+                    </div>
+    
+                    {orderData.isSharedOrder && (
+                        <div style={styles.sharedOrderInfo}>
+                            <div style={styles.deliverySavings}>
+                                <span>Shared order savings applied!</span>
+                            </div>
+                        </div>
+                    )}
+    
+                    <div style={styles.total}>
+                        <span>Total to Pay</span>
+                        <span style={styles.price}>£{orderData.totals.total.toFixed(2)}</span>
+                    </div>
+    
+                    {orderData.isSharedOrder && (
+                        <div style={styles.sharedTotalInfo}>
+                            <div style={styles.orderItem}>
+                                <span>Total Order Value</span>
+                                <span style={styles.price}>
+                                    £{orderData.sharedOrderDetails.totalOrderValue.toFixed(2)}
+                                </span>
+                            </div>
+                        </div>
+                    )}
+    
+                    <div style={styles.buttonContainer}>
+                        <button
+                            style={styles.button}
+                            onClick={handlePlaceOrder}
+                        >
+                            Place Order
+                        </button>
+                        <button
+                            style={{ ...styles.button, ...styles.secondaryButton }}
+                            onClick={() => navigate(-1)}
+                        >
+                            Back to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div style={styles.logoContainer}>
-          <img src={Logo} alt="Logo" style={styles.logoImg} />
-        </div>
-  
-        <div style={styles.mainContainer}>
-          <div style={styles.checkoutForm}>
-            <h2 style={styles.heading}>Checkout</h2>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Contact Information</label>
-              <input
-                type="email"
-                placeholder="Email address"
-                style={{ ...styles.input, marginBottom: "10px" }}
-              />
-              <input 
-                type="tel" 
-                placeholder="Phone number" 
-                style={styles.input} 
-              />
-            </div>
-  
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Payment Method</label>
-              <div style={styles.paymentMethods}>
-                <div
-                  style={{
-                    ...styles.paymentMethod,
-                    ...(selectedPaymentMethod === "credit-card" && styles.selectedMethod),
-                  }}
-                  onClick={() => handlePaymentMethodClick("credit-card")}
-                >
-                  <img
-                    src="/api/placeholder/40/40"
-                    alt="Credit Card"
-                    style={styles.paymentIcon}
-                  />
-                  <div>
-                    <strong>Credit / Debit Card</strong>
-                    <div style={styles.methodDescription}>Visa and Mastercard</div>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    ...styles.paymentMethod,
-                    ...(selectedPaymentMethod === "apple-pay" && styles.selectedMethod),
-                  }}
-                  onClick={() => handlePaymentMethodClick("apple-pay")}
-                >
-                  <img
-                    src="/api/placeholder/40/40"
-                    alt="Apple Pay"
-                    style={styles.paymentIcon}
-                  />
-                  <div>
-                    <strong>Apple Pay</strong>
-                    <div style={styles.methodDescription}>Quick and secure payment</div>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    ...styles.paymentMethod,
-                    ...(selectedPaymentMethod === "cod" && styles.selectedMethod),
-                  }}
-                  onClick={() => handlePaymentMethodClick("cod")}
-                >
-                  <img
-                    src="/api/placeholder/40/40"
-                    alt="Cash on Delivery"
-                    style={styles.paymentIcon}
-                  />
-                  <div>
-                    <strong>Cash on Delivery</strong>
-                    <div style={styles.methodDescription}>Pay when you receive</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          <div style={styles.orderSummary}>
-            <h2 style={styles.heading}>Order Summary</h2>
-            <div style={styles.orderItem}>
-              <span>Subtotal</span>
-              <span style={styles.price}>£{orderData.totals.subtotal.toFixed(2)}</span>
-            </div>
-            <div style={styles.orderItem}>
-              <span>Delivery Fee</span>
-              <span style={styles.price}>£{orderData.totals.deliveryFee.toFixed(2)}</span>
-            </div>
-  
-            {orderData.isSharedOrder && (
-              <div style={styles.sharedOrderInfo}>
-                <div style={styles.deliverySavings}>
-                  <span>Shared order savings applied!</span>
-                </div>
-              </div>
-            )}
-  
-            <div style={styles.total}>
-              <span>Total to Pay</span>
-              <span style={styles.price}>£{orderData.totals.total.toFixed(2)}</span>
-            </div>
-  
-            {orderData.isSharedOrder && (
-              <div style={styles.sharedTotalInfo}>
-                <div style={styles.orderItem}>
-                  <span>Total Order Value</span>
-                  <span style={styles.price}>£{orderData.sharedOrderDetails.totalOrderValue.toFixed(2)}</span>
-                </div>
-              </div>
-            )}
-  
-            <div style={styles.buttonContainer}>
-              <button
-                style={{
-                  ...styles.button,
-                  opacity: selectedPaymentMethod === 'credit-card' ? 0.5 : 1,
-                  cursor: selectedPaymentMethod === 'credit-card' ? 'not-allowed' : 'pointer'
-                }}
-                onClick={handlePlaceOrder}
-              >
-                Place Order
-              </button>
-              <button
-                style={{ ...styles.button, ...styles.secondaryButton }}
-                onClick={() => navigate(-1)}
-              >
-                Back to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     );
-  };
-  
+};
   const styles = {
     body: {
       fontFamily: "Arial, sans-serif",
