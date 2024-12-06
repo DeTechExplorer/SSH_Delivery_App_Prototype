@@ -344,53 +344,82 @@ function DairyPage() {
      <div className="location-bar">
        SSH Delivery
      </div>
-     <header className="top-bar">
-    <div className="logo-search-location">
-      <div id="logo">
-        <img src={logo} alt="Logo" id="logo-img" />
-      </div>
-      <div id="search-box">
-        <input type="text" placeholder="Search dairy products..." />
-      </div>
-    </div>
-    <div id="location-btn-container">
-      <span id="location-text">Deliver to:</span>
-      <button id="location-btn">SSH Home London, UK</button>
-    </div>
-  </header>
-  <div id="dairy-section">
-    <h2>Browse Dairy Products</h2>
-    <div className="dairy-container">
-      {loading ? (
-        <div className="loading">Loading products...</div>
-      ) : (
-        products.map(product => (
-          <div key={product.id} className="dairy-item">
-            <div className="image-container">
-              <img src={product.imageUrl} alt={product.name} />
-            </div>
-            <p>{product.name}</p>
-            <p className="price">${product.price}</p>
-            <div className="quantity-counter">
-              <button className="quantity-btn" onClick={() => updateQuantity(product.id, -1)}>-</button>
-              <span className="quantity-display">{quantities[product.id] || 0}</span>
-              <button className="quantity-btn" onClick={() => updateQuantity(product.id, 1)}>+</button>
-            </div>
-            <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
-          </div>
-        ))
-      )}
-    </div>
-  </div>
 
-   
-       
+
+     <header className="top-bar">
+       <div className="logo-search-location">
+         <div id="logo">
+         <img src={logo} alt="Logo" id="logo-img" />
+
+
+
+
+         </div>
+         <div id="search-box">
+           <input type="text" placeholder="Search dairy products..." />
+         </div>
+       </div>
+       <div id="location-btn-container">
+         <span id="location-text">Deliver to:</span>
+         <button id="location-btn">SSH Home London, UK</button>
+       </div>
+     </header>
+
+
+     <section id="dairy-section">
+       <h2>Dairy Products</h2>
+       {loading ? (
+         <div className="loading">Loading dairy products...</div>
+       ) : (
+         <div className="dairy-container">
+           {products.map(product => (
+             <div key={product.id} className="dairy-item">
+               <div className="image-container">
+                 <img src={product.image} alt={product.name} />
+               </div>
+               <p>{product.name}</p>
+               <p className="price">£{product.price.toFixed(2)} per {product.unit}</p>
+               <div className="quantity-counter">
+                 <button
+                   className="quantity-btn"
+                   onClick={() => updateQuantity(product.id, -1)}
+                 >
+                   -
+                 </button>
+                 <span className="quantity-display">
+                   {quantities[product.id] || 0}
+                 </span>
+                 <button
+                   className="quantity-btn"
+                   onClick={() => updateQuantity(product.id, 1)}
+                 >
+                   +
+                 </button>
+               </div>
+               <button onClick={() => handleAddToCart(product.id)}>
+                 Add to Cart
+               </button>
+             </div>
+           ))}
+         </div>
+       )}
+     </section>
+
+
+     <div className="bottom-nav">
+       <button onClick={() => navigate('/')}>Categories</button>
+       <button onClick={() => navigate('/')}>Home</button>
+       <button id="cart-btn">
+         <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+         Cart ({cartCount})
+       </button>
+     </div>
    </>
  );
 }
 
 
-
+export default DairyPage;
 
 
 
