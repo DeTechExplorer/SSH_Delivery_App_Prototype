@@ -221,6 +221,7 @@ useEffect(() => {
     });
   };
 
+
   const calculateTotals = () => {
     const myTotal = myItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     
@@ -777,8 +778,77 @@ useEffect(() => {
               width: 100%;
             
           }
+                 }
+     .frequent-items-section {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          }
+
+          .frequent-items-section h3 {
+            color: #3498db;
+            margin: 0 0 15px 0;
+            font-size: 18px;
+          }
+
+          .frequent-items-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 5px;
+          }
+
+          .frequent-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 100px;
+          }
+
+          .freq-item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+          }
+
+          .freq-item-image img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+          }
+
+          .freq-add-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+          }
+
+          .freq-add-btn:hover {
+            background: #2980b9;
+          }
+
+          @media (max-width: 768px) {
+            .frequent-items-container {
+              justify-content: flex-start;
+            }
+          }
         `}
-      </style>
+  </style>
+
 
        
 
@@ -813,6 +883,63 @@ useEffect(() => {
           <button id="location-btn">SSH Home London, UK</button>
         </div>
       </header>
+
+      <div className="frequent-items-section">
+        <h3>Frequently Bought</h3>
+        <div className="frequent-items-container">
+          <div className="frequent-item">
+            <div className="freq-item-image">
+              <img src="https://i0.wp.com/daddioskitchen.com/wp-content/uploads/2022/12/IMG-4832.jpg?fit=3024%2C3024&ssl=1" alt="Bread" />
+            </div>
+            <button 
+              className="freq-add-btn"
+              onClick={() => addToCart({
+                id: 'sourdough-bread',
+                name: 'Sourdough Bread',
+                price: 4.50,
+                image: 'https://i0.wp.com/daddioskitchen.com/wp-content/uploads/2022/12/IMG-4832.jpg?fit=3024%2C3024&ssl=1'
+              })}
+            >
+              Add
+            </button>
+          </div>
+
+          <div className="frequent-item">
+            <div className="freq-item-image">
+              <img src="https://www.fruitsbox.ae/cdn/shop/products/BrownEggs30_528x.jpg?v=1613217638" alt="Eggs" />
+            </div>
+            <button 
+              className="freq-add-btn"
+              onClick={() => addToCart({
+                id: 'fresh-eggs',
+                name: 'Fresh Eggs',
+                price: 3.99,
+                image: 'https://www.fruitsbox.ae/cdn/shop/products/BrownEggs30_528x.jpg?v=1613217638'
+              })}
+            >
+              Add
+            </button>
+          </div>
+
+          <div className="frequent-item">
+            <div className="freq-item-image">
+              <img src="https://pngimg.com/d/bagel_PNG72.png" alt="Bagels" />
+            </div>
+            <button 
+              className="freq-add-btn"
+              onClick={() => addToCart({
+                id: 'fresh-bagels',
+                name: 'Fresh Bagels',
+                price: 2.20,
+                image: 'https://pngimg.com/d/bagel_PNG72.png'
+              })}
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+
 
       <div className="container">
         <div className="cart-section">
