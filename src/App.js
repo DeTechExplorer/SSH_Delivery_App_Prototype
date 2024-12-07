@@ -6,6 +6,7 @@ import Login from './components/login'; // Import the Login component
 import OrderConfirmation from './components/confirmation'; // Import the Order Confirmation component
 import KitchenPage from './components/kitchen';
 import Checkout from './components/checkout';
+import MeatPoultryPage from './components/meatpoultry';
 
 function App() {
   return (
@@ -28,17 +29,19 @@ function App() {
             <li>
               <Link to="/category/kitchen">View Kitchen Staples</Link>
             </li>
+            <li>
+              <Link to="/category/meatpoultry">View Meat & Poultry</Link>
+            </li>
           </ul>
         </nav>
 
         <Routes>
         <Route path="/login" element={<Login />} />
-
-
-          <Route path="/order-confirmation" element={<OrderConfirmation />} />  
-          <Route path="/category/snack" element={<SnackPage />} />
-          <Route path="/category/kitchen" element={<KitchenPage />} />  
-          <Route path="/checkout" element={<Checkout />} />  
+        <Route path="/order-confirmation" element={<OrderConfirmation />} />  
+        <Route path="/category/snack" element={<SnackPage />} />
+        <Route path="/category/kitchen" element={<KitchenPage />} />  
+        <Route path="/category/meatpoultry" element={<MeatPoultryPage />} />  
+        <Route path="/checkout" element={<Checkout />} />  
         </Routes>
       </div>
     </Router>

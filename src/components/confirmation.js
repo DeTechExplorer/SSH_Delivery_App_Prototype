@@ -70,8 +70,8 @@ const styles = {
   },
   
   logoImg: {
-    height: "110px",
-    width: "110px",
+    height: "130px",
+    width: "130px",
     objectFit: "contain",
   },
   confirmationContainer: {

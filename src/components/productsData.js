@@ -953,7 +953,7 @@
             },
             {
               id: 'meat-003',
-              name: 'minced meat',
+              name: 'Minced Meat',
               price: 7.25,
               unit: 'kg',
               image: 'https://upload.wikimedia.org/wikipedia/commons/5/55/Raw_pork_chops.jpg',

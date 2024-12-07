@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logo from '../images/logo.jpeg';
 
 const Login = () => {
   // State hooks for form inputs
@@ -18,6 +19,9 @@ const Login = () => {
 
   return (
     <div style={styles.body}>
+       <div style={styles.logoContainer}>
+        <img src={logo} alt="Logo" style={styles.logoImg} />
+      </div>
       <div style={styles.loginContainer}>
         <h2 style={styles.h2}>Login</h2>
         <p style={styles.description}>Please enter your SSH credentials</p>
@@ -53,16 +57,26 @@ const Login = () => {
 const styles = {
   body: {
     fontFamily: "Arial, sans-serif",
-    backgroundColor: "#CAE9F5",
+    // backgroundColor: "#CAE9F5",
+    backgroundColor: "white",
     margin: 0,
     padding: 0,
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: "column", // Stack children (logo and form) vertically
+    justifyContent: "center", // Center vertically
+    alignItems: "center", // Center horizontally
     height: "100vh",
   },
+  logoContainer: {
+    marginBottom: "40px", // Add spacing between the logo and the form
+  },
+  logoImg: {
+    width: "150px", // Adjust as needed
+    height: "150px", // Adjust as needed
+    objectFit: "contain",
+  },
   loginContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#CAE9F5",
     fontFamily: "'Segoe UI', Tahoma, Geneva, sans-serif",
     padding: "20px",
     borderRadius: "8px",
@@ -101,5 +115,6 @@ const styles = {
     backgroundColor: "#0f6bce",
   },
 };
+
 
 export default Login;
