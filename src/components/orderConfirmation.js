@@ -13,12 +13,34 @@ const OrderConfirmation = () => {
     
     const orderNumber = generateOrderNumber();
 
+   
     const handleContinueShopping = () => {
-      navigate('/');  // Navigate to homepage
+      // Clear all cart data
+      localStorage.removeItem('sharedCartItems');
+      localStorage.removeItem('individualCartItems');
+      localStorage.removeItem('isSharedOrder');
+      localStorage.removeItem('checkoutData');
+      sessionStorage.removeItem('app_initialized');
+
+      // Navigate to homepage with fromConfirmation state
+      navigate('/', { 
+        state: { fromConfirmation: true },
+        replace: true 
+      });
     };
   
     const handleLeaveFeedback = () => {
-      navigate('/feedback');  // Navigate to feedback page
+      // Clear cart data
+      localStorage.removeItem('sharedCartItems');
+      localStorage.removeItem('individualCartItems');
+      localStorage.removeItem('isSharedOrder');
+      localStorage.removeItem('checkoutData');
+      sessionStorage.removeItem('app_initialized');
+
+      // Navigate to feedback page
+      navigate('/feedback', { 
+        state: { fromConfirmation: true }
+      });
     };
 
   return (

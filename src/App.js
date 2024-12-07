@@ -26,60 +26,8 @@ function App() {
       <div className="App">
         <nav>
           <ul>
-            <li>
-              <Link to="/homepage">Homepage</Link>
-            </li>
-            <li>
-              <Link to="/category/bakery">Bakery</Link>
-            </li>
-            <li>
-              <Link to="/category/breakfast">Breakfast</Link>
-            </li>
-            <li>
-              <Link to="/category/fruits-vegetables">Fruits and Vegetables</Link> 
-            </li>
-            <li>
-              <Link to="/category/dairy">Dairy</Link> 
-            </li>
-            <li>
-              <Link to="/category/beverages">Beverages</Link> 
-            </li>
-            <li>
-            <Link to="/category/beauty-personal-care">Beauty & Personal Care</Link>
-            </li>
-            <li>
-            <Link to="/category/kitchen">kitchen-staples</Link>
-            </li>
-            <li>
-            <Link to="/category/snacks">Snacks</Link> 
-            </li>
-            <li>
-              <Link to="/category/meat-poultry">Meat & Poultry</Link> 
-            </li>
-            <li>
-              <Link to="/individualCart">IndividualCartPage</Link>
-            </li>
-            <li>
-              <Link to="/promotions">Promotions</Link> 
-            </li>
-            <li>
-              <Link to="/sharedcart">CartPage</Link>
-            </li>
-            <li>
-              <Link to="/checkout">Checkout</Link>
-            </li>
-            <li>
-              <Link to="/confirmation">Order Confirmation</Link>
-            </li>
-            <li>
-              <Link to="/feedback">Feedback</Link>
-            </li>
-            <li>
-              <Link to="/invoiceForm">InvoiceForm</Link>
-            </li>
-            <li>
-            <li><Link to="/myorders">My Orders</Link></li>
-            </li>
+          
+            
           </ul>
         </nav>
 

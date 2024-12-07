@@ -84,28 +84,13 @@ useEffect(() => {
       isSharedOrder: false
     };
   
-    // Add completed order to localStorage
-    const existingOrders = JSON.parse(localStorage.getItem('completedOrders') || '[]');
-    const newOrder = {
-      id: Date.now(),
-      date: new Date().toLocaleDateString(),
-      items: myItems.map(item => ({
-        ...item,
-        id: item.id || Date.now() + Math.random(),
-        refundRequested: false
-      })),
-      total: orderData.totals.total,
-      isSharedOrder: false
-    };
-  
-    localStorage.setItem('completedOrders', JSON.stringify([newOrder, ...existingOrders]));
+    // Store checkout data without clearing cart
     localStorage.setItem('checkoutData', JSON.stringify(orderData));
     
-    // Clear cart
-    localStorage.removeItem('individualCartItems');
-    
+    // Navigate to checkout without clearing cart
     navigate('/checkout');
   };
+  
 
   return (
     <>

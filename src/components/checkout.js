@@ -28,12 +28,17 @@ const Checkout = () => {
         if (orderData?.isSharedOrder) {
             localStorage.removeItem('sharedCartItems');
         } else {
-            localStorage.removeItem('individualCartItems');
         }
         localStorage.removeItem('checkoutData');
         
         navigate('/confirmation');
     };
+
+    const handleBackToCart = () => {
+      // Only remove checkout data, preserve cart items
+      localStorage.removeItem('checkoutData');
+      navigate(-1);
+  };
 
     if (!orderData) return null;
 
@@ -178,7 +183,7 @@ const Checkout = () => {
                         </button>
                         <button
                             style={{ ...styles.button, ...styles.secondaryButton }}
-                            onClick={() => navigate(-1)}
+                            onClick={handleBackToCart}
                         >
                             Back to Cart
                         </button>

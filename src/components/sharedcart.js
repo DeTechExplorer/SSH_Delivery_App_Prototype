@@ -96,28 +96,14 @@ useEffect(() => {
       }
     };
   
-    // Add completed order to localStorage
-    const existingOrders = JSON.parse(localStorage.getItem('completedOrders') || '[]');
-    const newOrder = {
-      id: Date.now(),
-      date: new Date().toLocaleDateString(),
-      items: myItems.map(item => ({
-        ...item,
-        id: item.id || Date.now() + Math.random(),
-        refundRequested: false
-      })),
-      total: orderData.totals.total,
-      isSharedOrder: true
-    };
+    // Store checkout data without clearing cart
+  localStorage.setItem('checkoutData', JSON.stringify(orderData));
   
-    localStorage.setItem('completedOrders', JSON.stringify([newOrder, ...existingOrders]));
-    localStorage.setItem('checkoutData', JSON.stringify(orderData));
-    
-    // Clear cart
-    localStorage.removeItem('sharedCartItems');
-    
-    navigate('/checkout');
-  };
+  // Don't clear cart when going to checkout
+  // localStorage.removeItem('sharedCartItems');
+  
+  navigate('/checkout');
+};
 
 
 
@@ -195,6 +181,10 @@ useEffect(() => {
         const dummyItemsCount = Object.values(sharedOrders).flat().reduce((sum, item) => sum + item.quantity, 0);
         const myItemsCount = updatedItems.reduce((sum, item) => sum + item.quantity, 0);
         setCartCount(dummyItemsCount + myItemsCount);
+
+        // Save to localStorage
+      localStorage.setItem('sharedCartItems', JSON.stringify(updatedItems));
+      
         
         return updatedItems;
       });
@@ -216,6 +206,10 @@ useEffect(() => {
       const dummyItemsCount = Object.values(sharedOrders).flat().reduce((sum, item) => sum + item.quantity, 0);
       const myItemsCount = updatedItems.reduce((sum, item) => sum + item.quantity, 0);
       setCartCount(dummyItemsCount + myItemsCount);
+
+      // Save to localStorage
+    localStorage.setItem('sharedCartItems', JSON.stringify(updatedItems));
+
 
       return updatedItems;
     });

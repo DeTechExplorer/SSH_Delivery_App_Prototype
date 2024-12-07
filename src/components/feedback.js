@@ -12,12 +12,19 @@ const FeedbackForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setShowToast(true);
+        
+        // Clear all cart data
         localStorage.removeItem('sharedCartItems');
+        localStorage.removeItem('individualCartItems');
+        localStorage.removeItem('isSharedOrder');
         localStorage.removeItem('checkoutData');
-        localStorage.setItem('isSharedOrder', 'false');
+        sessionStorage.removeItem('app_initialized');
+
+        // Redirect after 2 seconds with fromFeedback state
         setTimeout(() => {
-            navigate('/categories', {
-                state: { isSharedOrder: false }
+            navigate('/', {
+                state: { fromFeedback: true },
+                replace: true
             });
         }, 2000);
     };
