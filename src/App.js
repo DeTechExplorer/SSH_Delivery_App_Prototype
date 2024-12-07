@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
 import BakeryPage from './components/bakery';
 import BreakfastPage from './components/breakfast';
@@ -18,24 +19,39 @@ import OrderConfirmation from './components/orderConfirmation';
 import FeedbackForm from './components/feedback';
 import InvoiceForm from './components/invoiceForm';
 import MyOrdersPage from './components/myorders';
+import Login from './components/login';
+
 
 
 function App() {
+  // Check if this is the first load of the application
+  useEffect(() => {
+    if (!sessionStorage.getItem('hasVisited')) {
+      sessionStorage.setItem('hasVisited', 'true');
+    }
+  }, []);
+
+  // Component to handle the root path
+  const RootRedirect = () => {
+    // If this is the first visit (no session storage), go to login
+    if (!sessionStorage.getItem('hasVisited')) {
+      return <Navigate to="/start-login" replace />;
+    }
+    // Otherwise, go to homepage
+    return <Navigate to="/homepage" replace />;
+  };
+
   return (
     <Router>
       <div className="App">
-        <nav>
-          <ul>
-          
-            
-          </ul>
-        </nav>
-
         <Routes>
-          {/* Default redirect to homepage */}
-          <Route path="/" element={<Navigate to="/homepage" replace />} />
+          {/* Root path handler */}
+          <Route path="/" element={<RootRedirect />} />
           
-          {/* Main routes */}
+          {/* Login route */}
+          <Route path="/start-login" element={<Login />} />
+          
+          {/* All other routes */}
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/category/bakery" element={<BakeryPage />} />
           <Route path="/category/breakfast" element={<BreakfastPage />} />

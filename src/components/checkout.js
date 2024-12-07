@@ -92,7 +92,7 @@ const Checkout = () => {
                                 onClick={() => handlePaymentMethodClick("credit-card")}
                             >
                                 <img
-                                    src="/api/placeholder/40/40"
+                                    src="https://www.mysecuritysign.com/img/lg/L/debit-credit-card-accepted-label-lb-2066.png"
                                     alt="Credit Card"
                                     style={styles.paymentIcon}
                                 />
@@ -109,7 +109,7 @@ const Checkout = () => {
                                 onClick={() => handlePaymentMethodClick("apple-pay")}
                             >
                                 <img
-                                    src="/api/placeholder/40/40"
+                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFCJdIEJaJjfZVBAYYB7Mnup7oPhUkv7ynVQwtyjAhiJE9BYSHUOsHkFhohtGNnRxO-_A&usqp=CAU"
                                     alt="Apple Pay"
                                     style={styles.paymentIcon}
                                 />
@@ -126,7 +126,7 @@ const Checkout = () => {
                                 onClick={() => handlePaymentMethodClick("cod")}
                             >
                                 <img
-                                    src="/api/placeholder/40/40"
+                                    src="https://png.pngtree.com/png-clipart/20210606/original/pngtree-cod-or-cash-on-delivery-with-a-blue-badge-style-gradations-png-image_6393885.jpg"
                                     alt="Cash on Delivery"
                                     style={styles.paymentIcon}
                                 />

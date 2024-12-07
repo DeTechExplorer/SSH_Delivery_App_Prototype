@@ -11,19 +11,78 @@ function InvoiceForm() {
         expiryYear: '',
         securityCode: '',
     });
+    
+    const [errors, setErrors] = useState({
+        cardNumber: '',
+        nameOnCard: '',
+        expiryMonth: '',
+        expiryYear: '',
+        securityCode: '',
+    });
  
     function handleChange(e) {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
+        
+        // Clear error when user starts typing
+        if (errors[name]) {
+            setErrors({
+                ...errors,
+                [name]: ''
+            });
+        }
+
+        // Validate month as user types
+        if (name === 'expiryMonth') {
+            if (value && (parseInt(value) < 1 || parseInt(value) > 12)) {
+                setErrors(prev => ({
+                    ...prev,
+                    expiryMonth: 'Please match the requested format.'
+                }));
+            }
+        }
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log('Form submitted:', formValues);
+        const { cardNumber, nameOnCard, expiryMonth, expiryYear, securityCode } = formValues;
+        let newErrors = {
+            cardNumber: '',
+            nameOnCard: '',
+            expiryMonth: '',
+            expiryYear: '',
+            securityCode: '',
+        };
+        let hasErrors = false;
+
+        // Validate card number: must be exactly 16 digits and numeric
+        if (!/^\d{16}$/.test(cardNumber)) {
+            newErrors.cardNumber = 'Please match the requested format.';
+            hasErrors = true;
+        }
+
+        // Validate security code: must be exactly 3 digits
+        if (!/^\d{3}$/.test(securityCode)) {
+            newErrors.securityCode = 'Please match the requested format.';
+            hasErrors = true;
+        }
+
+        // Validate expiry month: must be numeric and between 01 and 12
+        const monthNum = parseInt(expiryMonth);
+        if (!expiryMonth || !/^\d{1,2}$/.test(expiryMonth) || monthNum < 1 || monthNum > 12) {
+            newErrors.expiryMonth = 'Please match the requested format.';
+            hasErrors = true;
+        }
+
+        // Validate expiry year: must be greater than or equal to 2024
+        if (parseInt(expiryYear) < 2024) {
+            newErrors.expiryYear = 'Please match the requested format.';
+            hasErrors = true;
+        }
+
+        setErrors(newErrors);
         
-        if (formValues.cardNumber && formValues.nameOnCard && 
-            formValues.expiryMonth && formValues.expiryYear && 
-            formValues.securityCode) {
+        if (!hasErrors) {
             localStorage.removeItem('checkoutData');
             navigate('/confirmation');
         }
@@ -40,12 +99,12 @@ function InvoiceForm() {
             <div style={styles.formWrapper}>
                 <h2 style={styles.heading}>Invoice</h2>
                 <div style={styles.cardBrands}>
-                    <img src="/api/placeholder/50/50" alt="Visa" style={styles.brandImage} />
-                    <img src="/api/placeholder/50/50" alt="MasterCard" style={styles.brandImage} />
-                    <img src="/api/placeholder/50/50" alt="American Express" style={styles.brandImage} />
-                    <img src="/api/placeholder/50/50" alt="JCB" style={styles.brandImage} />
+                    <img src="/api/placeholder/50/30" alt="Visa" style={styles.brandImage} />
+                    <img src="/api/placeholder/50/30" alt="MasterCard" style={styles.brandImage} />
+                    <img src="/api/placeholder/50/30" alt="American Express" style={styles.brandImage} />
+                    <img src="/api/placeholder/50/30" alt="JCB" style={styles.brandImage} />
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} noValidate>
                     <div style={styles.formGroup}>
                         <label style={styles.label}>Card number</label>
                         <input
@@ -59,6 +118,12 @@ function InvoiceForm() {
                             required
                             style={styles.input}
                         />
+                        {errors.cardNumber && (
+                            <div style={styles.errorBubble}>
+                                <span style={styles.errorIcon}>!</span>
+                                {errors.cardNumber}
+                            </div>
+                        )}
                     </div>
                     <div style={styles.formGroup}>
                         <label style={styles.label}>Name on card</label>
@@ -71,6 +136,12 @@ function InvoiceForm() {
                             required
                             style={styles.input}
                         />
+                        {errors.nameOnCard && (
+                            <div style={styles.errorBubble}>
+                                <span style={styles.errorIcon}>!</span>
+                                {errors.nameOnCard}
+                            </div>
+                        )}
                     </div>
                     <div style={styles.formGroup}>
                         <label style={styles.label}>Expiry Month</label>
@@ -84,6 +155,12 @@ function InvoiceForm() {
                             required
                             style={styles.input}
                         />
+                        {errors.expiryMonth && (
+                            <div style={styles.errorBubble}>
+                                <span style={styles.errorIcon}>!</span>
+                                {errors.expiryMonth}
+                            </div>
+                        )}
                     </div>
                     <div style={styles.formGroup}>
                         <label style={styles.label}>Expiry Year</label>
@@ -97,6 +174,12 @@ function InvoiceForm() {
                             required
                             style={styles.input}
                         />
+                        {errors.expiryYear && (
+                            <div style={styles.errorBubble}>
+                                <span style={styles.errorIcon}>!</span>
+                                {errors.expiryYear}
+                            </div>
+                        )}
                     </div>
                     <div style={styles.formGroup}>
                         <label style={styles.label}>Security code (CVV)</label>
@@ -110,6 +193,12 @@ function InvoiceForm() {
                             required
                             style={styles.input}
                         />
+                        {errors.securityCode && (
+                            <div style={styles.errorBubble}>
+                                <span style={styles.errorIcon}>!</span>
+                                {errors.securityCode}
+                            </div>
+                        )}
                     </div>
                     <div style={styles.buttonContainer}>
                         <button 
@@ -183,6 +272,7 @@ const styles = {
     },
     formGroup: {
         marginBottom: "20px",
+        position: "relative",
     },
     label: {
         color: "#2c3e50",
@@ -199,6 +289,32 @@ const styles = {
         fontSize: "16px",
         backgroundColor: "#ffffff",
         boxSizing: "border-box",
+    },
+    errorBubble: {
+        position: "absolute",
+        backgroundColor: "white",
+        border: "1px solid #ccc",
+        borderRadius: "4px",
+        padding: "8px 12px",
+        marginTop: "4px",
+        fontSize: "14px",
+        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        zIndex: 1,
+    },
+    errorIcon: {
+        backgroundColor: "#f0ad4e",
+        color: "white",
+        width: "20px",
+        height: "20px",
+        borderRadius: "50%",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "14px",
+        fontWeight: "bold",
     },
     buttonContainer: {
         display: "flex",

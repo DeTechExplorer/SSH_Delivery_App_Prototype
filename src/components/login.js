@@ -1,30 +1,39 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from '../images/logo.jpeg';
 
+
+
 const Login = () => {
-  // State hooks for form inputs
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent the default form submission
-
-    if (email && password) {
-      // Redirect to homepage
-      window.location.href = "homepage.html";
-    } else {
-      alert("Please enter both email and password");
-    }
-  };
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      setError("");
+  
+      if (email && password) {
+        // Set session storage to indicate user has visited
+        sessionStorage.setItem('hasVisited', 'true');
+        // Navigate to homepage
+        navigate('/homepage');
+      } else {
+        setError("Please enter both email and password");
+      }
+    };
+  
 
   return (
     <div style={styles.body}>
-       <div style={styles.logoContainer}>
+      <div style={styles.logoContainer}>
         <img src={logo} alt="Logo" style={styles.logoImg} />
       </div>
       <div style={styles.loginContainer}>
         <h2 style={styles.h2}>Login</h2>
         <p style={styles.description}>Please enter your SSH credentials</p>
+        {error && <p style={styles.error}>{error}</p>}
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -52,6 +61,7 @@ const Login = () => {
     </div>
   );
 };
+
 
 // Inline styles
 const styles = {
