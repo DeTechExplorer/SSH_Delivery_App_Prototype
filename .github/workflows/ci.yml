@@ -21,7 +21,7 @@ jobs:
       - name: "Set up Node.js"
         uses: actions/setup-node@v3
         with:
-          node-version: 16 # You can adjust this to match your project's requirements
+          node-version: 22 # You can adjust this to match your project's requirements
           cache: "npm"
 
       # 3. Install dependencies
