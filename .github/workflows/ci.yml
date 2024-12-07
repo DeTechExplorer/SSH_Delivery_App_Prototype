@@ -1,0 +1,44 @@
+name: CI/CD for React App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: "Build and Test React App"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      # 1. Clone the repository
+      - name: "Clone repository"
+        uses: actions/checkout@v3
+
+      # 2. Set up Node.js environment
+      - name: "Set up Node.js"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16 # You can adjust this to match your project's requirements
+          cache: "npm"
+
+      # 3. Install dependencies
+      - name: "Install dependencies"
+        run: npm install
+
+      # 4. Run tests
+      - name: "Run tests"
+        run: npm test -- --watchAll=false
+
+      # 5. Build the React app
+      - name: "Build React App"
+        run: npm run build
+
+      # 6. Upload build artifact
+      - name: "Upload build artifact"
+        uses: actions/upload-artifact@v3
+        with:
+          path: build
+          name: react-app-build
