@@ -1,4 +1,4 @@
-name: CI/CD for React App
+name: "CI/CD for React App"
 
 on:
   push:
@@ -10,24 +10,36 @@ on:
 jobs:
   build:
     name: "Build"
-    runs-on: ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    
     strategy:
-        matrix:
-          node-version: [16, 18, 20]
-          os: [ubuntu-latest, macos-latest]
+      fail-fast: false
+      matrix:
+        node-version: [16, 18, 20]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - name: "Clone Repository"
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: "Set up Node.js"
         uses: actions/setup-node@v4
         with:
-          node-version: ${{matrix.node-version}}
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: subdir/package-lock.json
-    
-      - name: Install dependencies
+          cache-dependency-path: package-lock.json  # You can change this path if your lock file is in a subdirectory
+
+      - name: "Install dependencies"
         run: npm install
 
-     
+      - name: "Run tests"
+        run: npm test -- --watchAll=false
+
+      - name: "Build React app"
+        run: npm run build
+
+      - name: "Upload build artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          path: build
+          name: react-app-build-${{ matrix.node-version }}-${{ matrix.os }}
