@@ -10,35 +10,41 @@ on:
 jobs:
   build:
     name: "Build and Test React App"
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
 
     steps:
-      # 1. Clone the repository
-      - name: "Clone repository"
+      # Step 1: Clone the repository
+      - name: "Checkout Repository"
         uses: actions/checkout@v3
 
-      # 2. Set up Node.js environment
+      # Step 2: Set up Node.js environment
       - name: "Set up Node.js"
         uses: actions/setup-node@v3
         with:
-          node-version: 22 # You can adjust this to match your project's requirements
-          cache: "npm"
+          node-version: 18
+          cache: npm
 
-      # 3. Install dependencies
+      # Step 3: Debug Node.js and npm versions
+      - name: "Check Node.js and npm versions"
+        run: |
+          node --version
+          npm --version
+
+      # Step 4: Install dependencies
       - name: "Install dependencies"
-        run: npm install
+        run: npm ci # Faster and more reliable than npm install
 
-      # 4. Run tests
+      # Step 5: Run tests
       - name: "Run tests"
         run: npm test -- --watchAll=false
 
-      # 5. Build the React app
+      # Step 6: Build the React app
       - name: "Build React App"
         run: npm run build
 
-      # 6. Upload build artifact
-      - name: "Upload build artifact"
+      # Step 7: Upload build artifact
+      - name: "Upload Build Artifact"
         uses: actions/upload-artifact@v3
         with:
-          path: build
           name: react-app-build
+          path: build # Ensure this matches your build folder
