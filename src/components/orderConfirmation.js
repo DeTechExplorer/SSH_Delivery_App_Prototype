@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import  { useState, useEffect } from 'react';
 import Logo from '../images/logo.jpeg';
 
 const OrderConfirmation = () => {
-    const navigate = useNavigate();
-    
-    const generateOrderNumber = () => {
+  const navigate = useNavigate();
+     const generateOrderNumber = () => {
       const prefix = "SSH-2024-";
       const randomDigits = Math.floor(1000 + Math.random() * 9000);
       return `${prefix}${randomDigits}`;
@@ -13,21 +13,50 @@ const OrderConfirmation = () => {
     
     const orderNumber = generateOrderNumber();
 
-   
-    const handleContinueShopping = () => {
-      // Clear all cart data
-      localStorage.removeItem('sharedCartItems');
-      localStorage.removeItem('individualCartItems');
-      localStorage.removeItem('isSharedOrder');
-      localStorage.removeItem('checkoutData');
-      sessionStorage.removeItem('app_initialized');
+    useEffect(() => {
+      const checkoutData = JSON.parse(localStorage.getItem('checkoutData') || '{}');
+      const existingOrders = JSON.parse(localStorage.getItem('completedOrders') || '[]');
+      
+      // More robust duplicate check using order number
+      const orderAlreadyExists = existingOrders.some(order => order.id === orderNumber);
+    
+      if (checkoutData && checkoutData.items && !orderAlreadyExists) {
+        const newOrder = {
+          id: orderNumber,
+          date: new Date().toLocaleDateString(),
+          total: checkoutData.totals?.total || 0,
+          isSharedOrder: checkoutData.isSharedOrder || false,
+          items: (checkoutData.items || []).map(item => ({
+            id: item.id || Math.random().toString(36).substr(2, 9),
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+            refundRequested: false
+          }))
+        };
+    
+        const updatedOrders = [newOrder, ...existingOrders];
+        localStorage.setItem('completedOrders', JSON.stringify(updatedOrders));
+      }
+    }, [orderNumber]);
 
-      // Navigate to homepage with fromConfirmation state
-      navigate('/', { 
+
+
+
+   
+  const handleContinueShopping = () => {
+    // Clear all cart data only after confirming order was saved
+    localStorage.removeItem('sharedCartItems');
+    localStorage.removeItem('individualCartItems');
+    localStorage.removeItem('isSharedOrder');
+    localStorage.removeItem('checkoutData');
+    sessionStorage.removeItem('app_initialized');
+
+    navigate('/', { 
         state: { fromConfirmation: true },
         replace: true 
-      });
-    };
+    });
+};
   
     const handleLeaveFeedback = () => {
       // Clear cart data
