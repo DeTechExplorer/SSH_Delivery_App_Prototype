@@ -6,6 +6,7 @@ import Logo from '../images/logo.jpeg';
 
 function KitchenPage() {
     const [cartCount, setCartCount] = useState(0);
+    const [addedItems, setAddedItems] = useState({}); 
     const [quantities, setQuantities] = useState({});
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -63,6 +64,20 @@ function KitchenPage() {
          image: product.image,
          quantity: quantity
        };
+
+       // Show "Added to cart" feedback
+      setAddedItems(prev => ({
+        ...prev,
+        [productId]: true
+      }));
+  
+      // Clear the feedback after 2 seconds
+      setTimeout(() => {
+        setAddedItems(prev => ({
+          ...prev,
+          [productId]: false
+        }));
+      }, 1000);
  
  
         // Update the appropriate cart count based on order type
@@ -334,10 +349,38 @@ function KitchenPage() {
             cursor: pointer;
         }
 
-        #cart-btn img {
-            max-height: 20px;
-            margin-right: 10px;
+        .bottom-nav button:hover {
+          background-color: #2980b9;
         }
+
+        #cart-btn img {
+          max-height: 20px;
+          margin-right: 10px;
+        }
+
+        .loading {
+          text-align: center;
+          padding: 20px;
+          font-size: 1.2rem;
+          color: #3498db;
+        }
+
+
+       .added-to-cart {
+        background-color: #e2e8f0 !important;
+        color: #718096 !important;
+        position: relative;
+      }
+      
+      .added-feedback {
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: #718096;
+        white-space: nowrap;
+      }
 
         @media (max-width: 768px) {
             .kitchen-container {
@@ -408,8 +451,14 @@ function KitchenPage() {
                     +
                   </button>
                 </div>
-                <button onClick={() => handleAddToCart(product.id)}>
-                  Add to Cart
+                <button onClick={() => handleAddToCart(product.id)}
+  className={addedItems[product.id] ? 'added-to-cart' : ''}
+  disabled={addedItems[product.id]}
+>
+  {addedItems[product.id] ? 'Added to Cart' : 'Add to Cart'}
+  {addedItems[product.id] && (
+    <span className="added-feedback">Item added to cart</span>
+  )}
                 </button>
               </div>
             ))}
