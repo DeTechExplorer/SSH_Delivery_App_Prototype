@@ -4,12 +4,14 @@ import { getProductsByCategory } from './productsData'; // Make sure to import t
 import Logo from '../images/logo.jpeg';
 
 function BakeryPage() {
+  const [addedItems, setAddedItems] = useState({}); 
   const [cartCount, setCartCount] = useState(0);
   const [quantities, setQuantities] = useState({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+
 
   // Add new state for tracking both cart counts
 const [individualCartCount, setIndividualCartCount] = useState(0);
@@ -55,6 +57,20 @@ const handleAddToCart = (productId) => {
       image: product.image,
       quantity: quantity
     };
+
+    // Show "Added to cart" feedback
+    setAddedItems(prev => ({
+      ...prev,
+      [productId]: true
+    }));
+
+    // Clear the feedback after 2 seconds
+    setTimeout(() => {
+      setAddedItems(prev => ({
+        ...prev,
+        [productId]: false
+      }));
+    }, 1000);
 
     // Update the appropriate cart count based on order type
     if (isSharedOrder) {
@@ -339,6 +355,22 @@ useEffect(() => {
             cursor: pointer;
           }
 
+          .added-to-cart {
+            background-color: #e2e8f0 !important;
+            color: #718096 !important;
+            position: relative;
+          }
+          
+          .added-feedback {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #718096;
+            white-space: nowrap;
+          }
+
           #cart-btn img {
             max-height: 20px;
             margin-right: 10px;
@@ -407,8 +439,14 @@ useEffect(() => {
                     +
                   </button>
                 </div>
-                <button onClick={() => handleAddToCart(product.id)}>
-                  Add to Cart
+                <button onClick={() => handleAddToCart(product.id)}
+  className={addedItems[product.id] ? 'added-to-cart' : ''}
+  disabled={addedItems[product.id]}
+>
+  {addedItems[product.id] ? 'Added to Cart' : 'Add to Cart'}
+  {addedItems[product.id] && (
+    <span className="added-feedback">Item added to cart</span>
+  )}
                 </button>
               </div>
             ))}
