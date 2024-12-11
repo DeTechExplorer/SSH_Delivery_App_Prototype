@@ -20,19 +20,31 @@ const Checkout = () => {
     };
 
     const handlePlaceOrder = () => {
-        if (selectedPaymentMethod === 'credit-card') {
-            navigate('/invoice');
-            return;
-        }
-        
-        if (orderData?.isSharedOrder) {
-            localStorage.removeItem('sharedCartItems');
-        } else {
-        }
-        localStorage.removeItem('checkoutData');
-        
-        navigate('/confirmation');
-    };
+      if (selectedPaymentMethod === 'credit-card') {
+          navigate('/invoice');
+          return;
+      }
+      
+      // ONLY save the order data for the confirmation page to use
+      if (orderData) {
+          const orderDetails = {
+              items: orderData.items,
+              totals: orderData.totals,
+              isSharedOrder: orderData.isSharedOrder,
+              sharedOrderDetails: orderData.sharedOrderDetails
+          };
+          localStorage.setItem('checkoutData', JSON.stringify(orderDetails));
+      }
+  
+      // Clear cart items but NOT the checkout data (confirmation page needs it)
+      if (orderData?.isSharedOrder) {
+          localStorage.removeItem('sharedCartItems');
+      } else {
+          localStorage.removeItem('individualCartItems');
+      }
+      
+      navigate('/confirmation');
+  };
 
     const handleBackToCart = () => {
       // Only remove checkout data, preserve cart items
