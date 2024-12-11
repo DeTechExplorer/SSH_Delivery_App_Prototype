@@ -106,7 +106,7 @@ function InvoiceForm() {
                 </div>
                 <form onSubmit={handleSubmit} noValidate>
                     <div style={styles.formGroup}>
-                        <label style={styles.label}>Card number</label>
+                        <label id="cardNumberLabel" style={styles.label}>Card number</label>
                         <input
                             type="text"
                             name="cardNumber"
@@ -117,6 +117,8 @@ function InvoiceForm() {
                             onChange={handleChange}
                             required
                             style={styles.input}
+                            aria-labelledby="cardNumberLabel"  // Linking input to label
+
                         />
                         {errors.cardNumber && (
                             <div style={styles.errorBubble}>
@@ -126,7 +128,7 @@ function InvoiceForm() {
                         )}
                     </div>
                     <div style={styles.formGroup}>
-                        <label style={styles.label}>Name on card</label>
+                        <label id="name" style={styles.label}>Name on card</label>
                         <input
                             type="text"
                             name="nameOnCard"
@@ -135,6 +137,7 @@ function InvoiceForm() {
                             onChange={handleChange}
                             required
                             style={styles.input}
+                            aria-labelledby="name"  // Linking input to label
                         />
                         {errors.nameOnCard && (
                             <div style={styles.errorBubble}>
@@ -144,7 +147,7 @@ function InvoiceForm() {
                         )}
                     </div>
                     <div style={styles.formGroup}>
-                        <label style={styles.label}>Expiry Month</label>
+                        <label id="expirymonth" style={styles.label}>Expiry Month</label>
                         <input
                             type="text"
                             name="expiryMonth"
@@ -154,6 +157,7 @@ function InvoiceForm() {
                             onChange={handleChange}
                             required
                             style={styles.input}
+                            aria-labelledby="expirymonth"  // Linking input to label
                         />
                         {errors.expiryMonth && (
                             <div style={styles.errorBubble}>
@@ -163,7 +167,7 @@ function InvoiceForm() {
                         )}
                     </div>
                     <div style={styles.formGroup}>
-                        <label style={styles.label}>Expiry Year</label>
+                        <label id="expiryyear" style={styles.label}>Expiry Year</label>
                         <input
                             type="text"
                             name="expiryYear"
@@ -173,6 +177,7 @@ function InvoiceForm() {
                             onChange={handleChange}
                             required
                             style={styles.input}
+                            aria-labelledby="expiryyear"  // Linking input to label
                         />
                         {errors.expiryYear && (
                             <div style={styles.errorBubble}>
@@ -182,7 +187,7 @@ function InvoiceForm() {
                         )}
                     </div>
                     <div style={styles.formGroup}>
-                        <label style={styles.label}>Security code (CVV)</label>
+                        <label id="securityCode" style={styles.label}>Security code</label>
                         <input
                             type="text"
                             name="securityCode"
@@ -192,6 +197,7 @@ function InvoiceForm() {
                             onChange={handleChange}
                             required
                             style={styles.input}
+                            aria-labelledby="securityCode"  // Linking input to label
                         />
                         {errors.securityCode && (
                             <div style={styles.errorBubble}>
