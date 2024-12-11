@@ -12,10 +12,11 @@ function CartPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSharedOrder, setIsSharedOrder] = useState(true);
-  const [myItems, setMyItems] = useState([]); 
+  const [myItems, setMyItems] = useState([]);
   const [showCheckoutNotification, setShowCheckoutNotification] = useState(true);
-const [hasSeenCheckoutNotification, setHasSeenCheckoutNotification] = useState(false);
-
+  const [hasSeenCheckoutNotification, setHasSeenCheckoutNotification] = useState(false);
+  const [showRemovedNotification, setShowRemovedNotification] = useState(false);
+  
 // Replace the existing notification useEffect with this:
 useEffect(() => {
   // Using sessionStorage instead of localStorage
@@ -68,14 +69,25 @@ useEffect(() => {
     });
   };
 
-
   const handleCloseNotification = () => {
-    setShowCheckoutNotification(false);
-    setHasSeenCheckoutNotification(true);
-    // Using sessionStorage instead of localStorage
-    sessionStorage.setItem('checkoutNotificationSeen', 'true');
-  };
-
+  setShowCheckoutNotification(false);
+  setHasSeenCheckoutNotification(true);
+  sessionStorage.setItem('checkoutNotificationSeen', 'true');
+  
+  // Remove Mike's orders after 2 seconds
+  setTimeout(() => {
+    setSharedOrders(prev => {
+      const { Mike, ...othersOrders } = prev;
+      return othersOrders;
+    });
+    // Show the removed notification
+    setShowRemovedNotification(true);
+    // Hide it after 3 seconds
+    setTimeout(() => {
+      setShowRemovedNotification(false);
+    }, 2000);
+  }, 3000);
+};
 
   const handleCheckout = () => {
     const orderData = {
@@ -108,7 +120,7 @@ useEffect(() => {
 
 
   // Group shared items by user
-  const [sharedOrders] = useState({
+  const [sharedOrders, setSharedOrders] = useState({
     'John': [
       {
         id: 'sourdough-bread',
@@ -355,6 +367,7 @@ useEffect(() => {
             position: relative;
           }
 
+
           .cart-section {
             flex: 1;
             max-width: 70%;
@@ -410,6 +423,8 @@ useEffect(() => {
           .cart-item:hover {
             transform: scale(1.02);
           }
+
+
 
           .item-image {
             width: 130px;
@@ -761,6 +776,20 @@ useEffect(() => {
   background-color: #2980b9;
 }
 
+.removed-notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
           @media (max-width: 1024px) {
             .container {
               grid-template-columns: 1fr;
@@ -1068,6 +1097,12 @@ useEffect(() => {
 </button>
 </div>
 </div>
+
+{showRemovedNotification && (
+    <div className="removed-notification">
+      Mike's items removed
+    </div>
+  )}
 
 
 <div className="bottom-nav">
