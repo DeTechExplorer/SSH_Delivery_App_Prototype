@@ -10,11 +10,43 @@ function MyOrdersPage() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [currentOrder, setCurrentOrder] = useState(null);
 
-  useEffect(() => {
-    const savedOrders = JSON.parse(localStorage.getItem('completedOrders') || '[]');
-    setCompletedOrders(savedOrders);
+  
+    useEffect(() => {
+      const loadOrders = () => {
+          // Get saved orders from localStorage
+          const savedOrders = JSON.parse(localStorage.getItem('completedOrders') || '[]');
+          
+          // Remove duplicates based on order ID
+          const uniqueOrders = savedOrders.reduce((acc, current) => {
+              // Check if we already have this order ID in our accumulator
+              const exists = acc.find(item => item.id === current.id);
+              if (!exists) {
+                  // If no duplicate found, add to accumulator
+                  return [...acc, current];
+              }
+              return acc;
+          }, []);
+  
+          // If we found and removed duplicates, update localStorage
+          if (uniqueOrders.length !== savedOrders.length) {
+              localStorage.setItem('completedOrders', JSON.stringify(uniqueOrders));
+          }
+  
+          // Update state with unique orders
+          setCompletedOrders(uniqueOrders);
+      };
+  
+      // Initial load
+      loadOrders();
+      
+      // Set up interval to check for updates every 30 seconds
+      const interval = setInterval(loadOrders, 30000);
+      
+      // Cleanup interval on component unmount
+      return () => clearInterval(interval);
   }, []);
 
+       
   const handleRefundRequest = () => {
     if (!currentOrder || selectedItems.length === 0) return;
 
