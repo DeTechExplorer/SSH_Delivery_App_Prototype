@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import HomePage from '../components/homepage'; // Adjust the import according to your file structure
+import HomePage from '../components/homepage'; 
 import { BrowserRouter as Router } from 'react-router-dom'; // Wrap with Router
 
 test('clicking the cart button redirects to the cart page', () => {
