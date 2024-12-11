@@ -963,7 +963,7 @@ useEffect(() => {
         <button onClick={() => navigate('/categories')}>Categories</button>
         <button onClick={() => handleNavigate('/')}>Home</button>
         <button onClick={() => navigate('/myorders')}>My Orders</button>
-        <button id="cart-btn" onClick={handleCartClick}>
+        <button id="cart-btn" data-testid = "cart-btn" onClick={handleCartClick}>
           <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
           Cart ({cartCount}) {isSharedOrder && '(Shared)'}
         </button>
