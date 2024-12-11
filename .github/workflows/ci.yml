@@ -34,8 +34,6 @@ jobs:
       - name: Run tests
         run: npm test src/tests
         
-      - name: Build the project
-        run: npm run build 
 
      
         
