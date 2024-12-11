@@ -2,28 +2,71 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from '../images/logo.jpeg';
 
-
-
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
-  
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      setError("");
-  
-      if (email && password) {
-        // Set session storage to indicate user has visited
-        sessionStorage.setItem('hasVisited', 'true');
-        // Navigate to homepage
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
+  const navigate = useNavigate();
+
+  // Predefined valid users
+  const validUsers = [
+    { email: "johnsmith@ssh.ac.uk", password: "John_s2204" },
+    { email: "sarahjohnson@ssh.ac.uk", password: "Sarah_j2567" },
+    { email: "mikechen@ssh.ac.uk", password: "Mike_c2031" }
+  ];
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    // Reset previous messages
+    setMessage("");
+    setMessageType("");
+
+    // Check if email is empty
+    if (!email) {
+      setMessage("Email cannot be empty");
+      setMessageType("error");
+      return;
+    }
+
+    // Check if password is empty
+    if (!password) {
+      setMessage("Password cannot be empty");
+      setMessageType("error");
+      return;
+    }
+
+    // Validate email and password
+    const user = validUsers.find(
+      u => u.email === email && u.password === password
+    );
+
+    if (user) {
+      // Successful login
+      setMessage("Logged in successfully!");
+      setMessageType("success");
+      
+      // Set session storage to indicate user has visited
+      sessionStorage.setItem('hasVisited', 'true');
+      
+      // Navigate to homepage after a short delay to show success message
+      setTimeout(() => {
         navigate('/homepage');
+      }, 1500);
+    } else {
+      // Check if email exists
+      const emailExists = validUsers.some(u => u.email === email);
+      
+      if (emailExists) {
+        setMessage("Incorrect password. Please try again.");
+        setMessageType("error");
       } else {
-        setError("Please enter both email and password");
+        setMessage("Email not found. Please check your email address.");
+        setMessageType("error");
       }
-    };
-  
+    }
+  };
 
   return (
     <div style={styles.body}>
@@ -33,7 +76,13 @@ const Login = () => {
       <div style={styles.loginContainer}>
         <h2 style={styles.h2}>Login</h2>
         <p style={styles.description}>Please enter your SSH credentials</p>
-        {error && <p style={styles.error}>{error}</p>}
+        
+        {message && (
+          <p style={messageType === 'error' ? styles.errorMessage : styles.successMessage}>
+            {message}
+          </p>
+        )}
+        
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -62,27 +111,25 @@ const Login = () => {
   );
 };
 
-
-// Inline styles
+// Updated styles with new message styling
 const styles = {
   body: {
     fontFamily: "Arial, sans-serif",
-    // backgroundColor: "#CAE9F5",
     backgroundColor: "white",
     margin: 0,
     padding: 0,
     display: "flex",
-    flexDirection: "column", // Stack children (logo and form) vertically
-    justifyContent: "center", // Center vertically
-    alignItems: "center", // Center horizontally
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     height: "100vh",
   },
   logoContainer: {
-    marginBottom: "40px", // Add spacing between the logo and the form
+    marginBottom: "40px",
   },
   logoImg: {
-    width: "150px", // Adjust as needed
-    height: "150px", // Adjust as needed
+    width: "150px",
+    height: "150px",
     objectFit: "contain",
   },
   loginContainer: {
@@ -121,10 +168,16 @@ const styles = {
     width: "100%",
     fontSize: "16px",
   },
-  buttonHover: {
-    backgroundColor: "#0f6bce",
+  errorMessage: {
+    color: "red",
+    marginBottom: "15px",
+    fontWeight: "bold",
   },
+  successMessage: {
+    color: "green",
+    marginBottom: "15px",
+    fontWeight: "bold",
+  }
 };
-
 
 export default Login;
